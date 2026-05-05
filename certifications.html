@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Certifications</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="certifications">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <div class="brand-flame" aria-hidden="true"></div>
+      <strong>SOC Bootcamp</strong>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Certifications</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="kali.html">Open Labs</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">
+          <span class="nav-icon">H</span>
+          Home
+        </a>
+        <a href="certifications.html" data-nav="certifications">
+          <span class="nav-icon">C</span>
+          Certifications
+        </a>
+        <a href="kali.html" data-nav="kali">
+          <span class="nav-icon">K</span>
+          Kali Guide
+        </a>
+        <a href="login.html" data-nav="login">
+          <span class="nav-icon">A</span>
+          Login
+        </a>
+        <a href="certifications.html">
+          <span class="nav-icon">Q</span>
+          Question Bank
+        </a>
+        <a href="kali.html">
+          <span class="nav-icon">L</span>
+          Practice Labs
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="ghost-link" id="feedbackButton" type="button">
+          <span class="nav-icon">F</span>
+          Feedback
+        </button>
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="practice-heading page-enter">
+        <h1>Certification Practice Mode</h1>
+        <p>Practice with structured certification paths across networking, network security, and cybersecurity.</p>
+      </section>
+
+      <section class="practice-tabs" aria-label="Certification mode tabs">
+        <button class="practice-tab active" type="button" data-cert-mode="tracks">Certification Tracks</button>
+        <button class="practice-tab" type="button" data-cert-mode="exams">Practice Exams</button>
+      </section>
+
+      <section class="practice-layout cert-mode-panel" id="certTrackControls">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Customize your certification session</p>
+
+          <div class="session-row">
+            <h2>Domain:</h2>
+            <div class="pill-cluster filter-row" aria-label="Certification filters">
+              <button class="filter-pill active" type="button" data-filter="all">All</button>
+              <button class="filter-pill" type="button" data-filter="networking">Networking</button>
+              <button class="filter-pill" type="button" data-filter="network-security">Network Security</button>
+              <button class="filter-pill" type="button" data-filter="cybersecurity">CyberSecurity</button>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Skill:</h2>
+            <p class="helper-line">Select exactly one domain to focus the visible certification cards.</p>
+          </div>
+
+          <div class="session-row">
+            <h2>Difficulty:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">All</span>
+              <span class="filter-pill">Beginner</span>
+              <span class="filter-pill">Intermediate</span>
+              <span class="filter-pill">Advanced</span>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Source:</h2>
+            <div class="pill-cluster">
+              <span class="source-pill">Official Objectives</span>
+              <span class="source-pill">Lab Notes</span>
+              <span class="source-pill active">SOC Bootcamp</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Tracks available</p>
+          <strong class="mega-number">6</strong>
+          <div class="study-summary">
+            <h3 id="currentStudyText">No certification selected yet.</h3>
+            <p id="lastAccessedText">Last Accessed Certification: none</p>
+          </div>
+          <button class="secondary-button full-width" type="button">Reset All Settings</button>
+          <button class="primary-button full-width" id="resumeCertificationButton" type="button">Resume</button>
+        </aside>
+      </section>
+
+      <section class="cert-grid" id="certGrid">
+        <article class="cert-card glass-card" data-category="networking" data-cert="CompTIA Network+">
+          <div class="card-topline">
+            <span class="category-chip">Networking</span>
+            <span class="difficulty-badge beginner">Beginner</span>
+          </div>
+          <h3>CompTIA Network+</h3>
+          <p>Master core networking concepts, devices, ports, protocols, and troubleshooting workflows.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="networking" data-cert="Cisco CCNA">
+          <div class="card-topline">
+            <span class="category-chip">Networking</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>Cisco CCNA</h3>
+          <p>Build routing, switching, IP services, automation, and practical network operations skills.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="network-security" data-cert="CompTIA Security+">
+          <div class="card-topline">
+            <span class="category-chip">Network Security</span>
+            <span class="difficulty-badge beginner">Beginner</span>
+          </div>
+          <h3>CompTIA Security+</h3>
+          <p>Study threats, architecture, risk, identity, cryptography, and defensive operations fundamentals.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="network-security" data-cert="Cisco CyberOps Associate">
+          <div class="card-topline">
+            <span class="category-chip">Network Security</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>Cisco CyberOps Associate</h3>
+          <p>Focus on SOC monitoring, alert triage, endpoint evidence, and incident response process.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="cybersecurity" data-cert="Certified Ethical Hacker">
+          <div class="card-topline">
+            <span class="category-chip">CyberSecurity</span>
+            <span class="difficulty-badge advanced">Advanced</span>
+          </div>
+          <h3>Certified Ethical Hacker</h3>
+          <p>Review attacker methodology, scanning concepts, vulnerability discovery, and defensive context.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="cybersecurity" data-cert="CompTIA CySA+">
+          <div class="card-topline">
+            <span class="category-chip">CyberSecurity</span>
+            <span class="difficulty-badge advanced">Advanced</span>
+          </div>
+          <h3>CompTIA CySA+</h3>
+          <p>Prepare for detection engineering, vulnerability management, threat hunting, and response analysis.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+      </section>
+
+      <section class="practice-layout cert-mode-panel hidden" id="practiceExamMode">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Practice exam command center</p>
+
+          <div class="session-row">
+            <h2>Exam Mode:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">Timed</span>
+              <span class="filter-pill">Untimed</span>
+              <span class="filter-pill">Review Mode</span>
+              <span class="filter-pill">Weak Areas</span>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Exam Bank:</h2>
+            <p class="helper-line">Choose a practice exam to simulate certification pacing and save your latest exam target.</p>
+          </div>
+
+          <div class="exam-grid">
+            <article class="exam-card" data-exam="Network+ Readiness Exam">
+              <span class="category-chip">Networking</span>
+              <h3>Network+ Readiness Exam</h3>
+              <p>45-question checkpoint for ports, protocols, routing, wireless, and troubleshooting.</p>
+              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam="Security+ SOC Drill">
+              <span class="category-chip">Network Security</span>
+              <h3>Security+ SOC Drill</h3>
+              <p>Scenario-heavy practice covering threats, identity, security operations, and risk response.</p>
+              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam="CySA+ Analyst Simulation">
+              <span class="category-chip">CyberSecurity</span>
+              <h3>CySA+ Analyst Simulation</h3>
+              <p>Threat hunting and incident triage exam mode for analyst-level readiness.</p>
+              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            </article>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Exam questions</p>
+          <strong class="mega-number">180</strong>
+          <div class="study-summary">
+            <h3 id="currentExamText">No practice exam selected yet.</h3>
+            <p id="lastExamText">Last Practice Exam: none</p>
+          </div>
+          <button class="primary-button full-width" id="resumeExamButton" type="button">Resume Exam</button>
+        </aside>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

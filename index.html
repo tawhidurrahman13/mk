@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Home</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="home">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <div class="brand-flame" aria-hidden="true"></div>
+      <strong>SOC Bootcamp</strong>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Practice Mode</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="login.html">Login</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">
+          <span class="nav-icon">H</span>
+          Home
+        </a>
+        <a href="certifications.html" data-nav="certifications">
+          <span class="nav-icon">C</span>
+          Certifications
+        </a>
+        <a href="kali.html" data-nav="kali">
+          <span class="nav-icon">K</span>
+          Kali Guide
+        </a>
+        <a href="login.html" data-nav="login">
+          <span class="nav-icon">A</span>
+          Login
+        </a>
+        <a href="certifications.html">
+          <span class="nav-icon">Q</span>
+          Question Bank
+        </a>
+        <a href="kali.html">
+          <span class="nav-icon">L</span>
+          Practice Labs
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="ghost-link" id="feedbackButton" type="button">
+          <span class="nav-icon">F</span>
+          Feedback
+        </button>
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="practice-heading page-enter">
+        <h1>SOC Practice Mode</h1>
+        <p>Practice with real cybersecurity certification prep, Kali Linux drills, and SOC analyst workflows.</p>
+      </section>
+
+      <section class="practice-tabs" aria-label="Dashboard tabs">
+        <button class="practice-tab active" type="button">Cyber Defense</button>
+        <button class="practice-tab" id="startLearningButton" type="button">Certification Prep</button>
+      </section>
+
+      <section class="practice-layout">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Customize your learning session</p>
+
+          <div class="session-row">
+            <h2>Session:</h2>
+            <div class="account-status" id="homeAccountStatus">
+              <span class="status-dot"></span>
+              <span id="homeAccountText">Guest analyst mode</span>
+            </div>
+          </div>
+
+          <div class="home-command-row">
+            <a class="primary-button" href="login.html" id="homeLoginButton">Login / Create Account</a>
+            <button class="danger-button hidden" id="homeLogoutButton" type="button">Logout</button>
+          </div>
+
+          <div class="session-row">
+            <h2>Domains:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">All</span>
+              <span class="filter-pill">Networking</span>
+              <span class="filter-pill">Network Security</span>
+              <span class="filter-pill">Kali Linux</span>
+              <span class="filter-pill">Threat Analysis</span>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Difficulty:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">All</span>
+              <span class="filter-pill">Easy</span>
+              <span class="filter-pill">Medium</span>
+              <span class="filter-pill">Hard</span>
+            </div>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Labs available</p>
+          <strong class="mega-number">592</strong>
+          <div class="summary-spacer"></div>
+          <button class="secondary-button full-width" type="button">Reset All Settings</button>
+          <a class="primary-button full-width" href="certifications.html">Begin Practice</a>
+          <p class="micro-copy">Use the standalone login page to track your progress across this browser.</p>
+        </aside>
+      </section>
+
+      <section class="bottom-actions" aria-label="Quick links">
+        <a class="resource-button" href="certifications.html">Certification Tracks</a>
+        <a class="resource-button" href="kali.html">Kali Study Resources</a>
+      </section>
+
+      <p class="activity-line">SOC students have solved 2,378,342 practice prompts on SOC Bootcamp...and counting.</p>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
