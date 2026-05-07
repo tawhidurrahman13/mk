@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Login</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="login">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <div class="brand-flame" aria-hidden="true"></div>
+      <strong>SOC Bootcamp</strong>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Login</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="certifications.html">Practice</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">
+          <span class="nav-icon">H</span>
+          Home
+        </a>
+        <a href="certifications.html" data-nav="certifications">
+          <span class="nav-icon">C</span>
+          Certifications
+        </a>
+        <a href="kali.html" data-nav="kali">
+          <span class="nav-icon">K</span>
+          Kali Guide
+        </a>
+        <a href="login.html" data-nav="login">
+          <span class="nav-icon">A</span>
+          Login
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="ghost-link" id="feedbackButton" type="button">
+          <span class="nav-icon">F</span>
+          Feedback
+        </button>
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content login-main">
+      <section class="practice-heading page-enter">
+        <h1>Analyst Login</h1>
+        <p>Create or open your SOC Bootcamp profile. Progress is saved locally in this browser.</p>
+      </section>
+
+      <section class="login-layout">
+        <article class="login-card glass-card">
+          <p class="panel-note">Access Terminal</p>
+
+          <div class="session-row">
+            <h2 id="authTitle">Login</h2>
+            <div class="segmented-control" aria-label="Account mode">
+              <button class="segment active" id="loginTab" type="button" data-auth-mode="login">Login</button>
+              <button class="segment" id="createTab" type="button" data-auth-mode="create">Create Account</button>
+            </div>
+          </div>
+
+          <div class="welcome-state hidden" id="welcomeState">
+            <div class="welcome-orb"></div>
+            <div>
+              <h3 id="welcomeMessage">Welcome, analyst</h3>
+              <p>Your account is active. Certification selections, Kali progress, and quiz scores will keep saving.</p>
+            </div>
+            <button class="danger-button" id="logoutButton" type="button">Logout</button>
+          </div>
+
+          <form class="auth-form" id="authForm" novalidate>
+            <div class="field-grid">
+              <div>
+                <label for="usernameInput">Username</label>
+                <input id="usernameInput" name="username" type="text" autocomplete="username" placeholder="analyst01">
+                <p class="input-error" id="usernameError"></p>
+              </div>
+
+              <div>
+                <label for="passwordInput">Password</label>
+                <input id="passwordInput" name="password" type="password" autocomplete="current-password" placeholder="6+ characters">
+                <p class="input-error" id="passwordError"></p>
+              </div>
+            </div>
+            <button class="primary-button" id="authSubmitButton" type="submit">Login</button>
+          </form>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Profile perks</p>
+          <strong class="mega-number">SOC</strong>
+          <div class="session-row">
+            <h2>Saved locally:</h2>
+            <div class="pill-cluster">
+              <span class="source-pill active">Accounts</span>
+              <span class="source-pill">Cert Progress</span>
+              <span class="source-pill">Kali Guide</span>
+              <span class="source-pill">Quiz Scores</span>
+            </div>
+          </div>
+          <a class="primary-button full-width" href="certifications.html">Continue to Practice</a>
+        </aside>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

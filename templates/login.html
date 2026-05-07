@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOC Bootcamp | Google Login</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="auth-page">
+    <section class="auth-card">
+      <div class="brand-mark" aria-hidden="true">SOC</div>
+      <p class="eyebrow">Secure Google Access</p>
+      <h1>Sign in to SOC Bootcamp</h1>
+      <p class="lede">
+        Use Google OAuth to access your dashboard. No passwords are stored by this app.
+      </p>
+
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="flash-stack">
+            {% for category, message in messages %}
+              <p class="flash {{ category }}">{{ message }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+
+      <a class="google-button" href="{{ url_for('auth.login_google') }}">
+        <span class="google-icon" aria-hidden="true">G</span>
+        Continue with Google
+      </a>
+
+      <p class="security-note">
+        Protected with OAuth state validation, secure Flask sessions, CSRF protection, and SQLAlchemy.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

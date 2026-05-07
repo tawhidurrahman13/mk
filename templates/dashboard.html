@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SOC Bootcamp | Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <main class="dashboard-page">
+    <section class="dashboard-shell">
+      <header class="dashboard-header">
+        <div>
+          <p class="eyebrow">Authenticated Dashboard</p>
+          <h1>Welcome, {{ current_user.name }}</h1>
+        </div>
+
+        <form action="{{ url_for('auth.logout') }}" method="post">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="logout-button" type="submit">Logout</button>
+        </form>
+      </header>
+
+      <article class="profile-card">
+        {% if current_user.profile_image %}
+          <img class="profile-image" src="{{ current_user.profile_image }}" alt="{{ current_user.name }} profile image">
+        {% else %}
+          <div class="profile-fallback" aria-hidden="true">{{ current_user.name[:1] }}</div>
+        {% endif %}
+
+        <div>
+          <p class="profile-label">Google Account</p>
+          <h2>{{ current_user.name }}</h2>
+          <p>{{ current_user.email }}</p>
+          <dl class="profile-meta">
+            <div>
+              <dt>Created</dt>
+              <dd>{{ current_user.created_at.strftime("%Y-%m-%d %H:%M") }}</dd>
+            </div>
+            <div>
+              <dt>Last Login</dt>
+              <dd>
+                {% if current_user.last_login %}
+                  {{ current_user.last_login.strftime("%Y-%m-%d %H:%M") }}
+                {% else %}
+                  First login
+                {% endif %}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </article>
+    </section>
+  </main>
+</body>
+</html>
