@@ -1,0 +1,11 @@
+{
+  "name": "soc-bootcamp",
+  "version": "1.0.0",
+  "private": true,
+  "description": "SOC Bootcamp cybersecurity dashboard with local Node authentication.",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check script.js && node --check qa-auth.test.js",
+    "test": "node qa-auth.test.js"
+  }
+}

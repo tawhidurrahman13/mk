@@ -468,17 +468,10 @@ function getCurrentPageName() {
 }
 
 function getApiBase() {
-  const isLocalHost = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
-
-  if (isLocalHost && window.location.port === "3000") {
+  if (window.location.port === "3000") {
     return "";
   }
-
-  if (isLocalHost) {
-    return "http://localhost:3000";
-  }
-
-  return "";
+  return "http://localhost:3000";
 }
 
 function getApiUrl(path) {

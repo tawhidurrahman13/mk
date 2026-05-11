@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+  <title id="title">E-LUSTIVE TECH SOC badge light</title>
+  <desc id="desc">Light-mode circular E-LUSTIVE TECH cybersecurity chip badge.</desc>
+  <defs>
+    <radialGradient id="badgeBg" cx="50%" cy="44%" r="58%">
+      <stop offset="0" stop-color="#53309a"/>
+      <stop offset=".62" stop-color="#3a2073"/>
+      <stop offset="1" stop-color="#21123e"/>
+    </radialGradient>
+    <linearGradient id="outerRing" x1="80" y1="72" x2="430" y2="438" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f073ff"/>
+      <stop offset=".55" stop-color="#d65aec"/>
+      <stop offset="1" stop-color="#7c3aed"/>
+    </linearGradient>
+    <linearGradient id="chipGlow" x1="150" y1="138" x2="360" y2="368" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset=".52" stop-color="#4f86ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <path id="topArc" d="M132 212a128 128 0 0 1 248 0"/>
+    <path id="bottomArc" d="M384 302a138 138 0 0 1-256 0"/>
+  </defs>
+  <circle cx="256" cy="256" r="210" fill="#f8f5ff"/>
+  <circle cx="256" cy="256" r="199" fill="none" stroke="url(#outerRing)" stroke-width="18"/>
+  <circle cx="256" cy="256" r="168" fill="url(#badgeBg)" stroke="#6d28d9" stroke-width="6"/>
+  <path fill="#4c1d95" d="M91 222h330v72H91z"/>
+  <path fill="none" stroke="#14091f" stroke-opacity=".54" stroke-width="6" d="M98 222h316M98 294h316"/>
+  <text fill="#60a5fa" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" letter-spacing="2">
+    <textPath href="#topArc" startOffset="50%" text-anchor="middle">E-LUSTIVE</textPath>
+  </text>
+  <text fill="#60a5fa" font-family="Arial, Helvetica, sans-serif" font-size="42" font-weight="900" letter-spacing="3">
+    <textPath href="#bottomArc" startOffset="50%" text-anchor="middle">TECH</textPath>
+  </text>
+  <text x="114" y="282" fill="#60a5fa" font-family="Arial, Helvetica, sans-serif" font-size="65" font-weight="900">20</text>
+  <text x="338" y="282" fill="#60a5fa" font-family="Arial, Helvetica, sans-serif" font-size="65" font-weight="900">24</text>
+  <g fill="#f073ff">
+    <path d="m142 166 7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z"/>
+    <path d="m370 166 7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z"/>
+    <path d="m142 328 7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z"/>
+    <path d="m370 328 7 14 16 2-12 11 3 16-14-8-14 8 3-16-12-11 16-2z"/>
+  </g>
+  <g fill="none" stroke="url(#chipGlow)" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="14" d="M192 198h128v128H192z"/>
+    <path stroke-width="12" d="M210 216h92v92h-92z"/>
+    <path stroke-width="11" d="M222 160v38M256 160v38M290 160v38M222 326v38M256 326v38M290 326v38M154 222h38M154 256h38M154 290h38M320 222h38M320 256h38M320 290h38"/>
+  </g>
+  <g fill="#60a5fa">
+    <circle cx="236" cy="242" r="8"/>
+    <circle cx="276" cy="242" r="8"/>
+    <circle cx="236" cy="282" r="8"/>
+    <circle cx="276" cy="282" r="8"/>
+  </g>
+</svg>

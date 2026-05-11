@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Certification</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="certifications">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Certifications</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="kali.html">Open Labs</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">
+          <span class="nav-icon">H</span>
+          Home
+        </a>
+        <a href="certifications.html" data-nav="certifications">
+          <span class="nav-icon">C</span>
+          Certification
+        </a>
+        <a href="quizzes.html" data-nav="quizzes">
+          <span class="nav-icon">Q</span>
+          Quizzes
+        </a>
+        <a href="kali.html" data-nav="kali">
+          <span class="nav-icon">K</span>
+          Kali Guide
+        </a>
+        <a href="login.html" data-nav="login">
+          <span class="nav-icon">A</span>
+          Login
+        </a>
+        <a href="quizzes.html">
+          <span class="nav-icon">Q</span>
+          Question Bank
+        </a>
+        <a href="kali.html">
+          <span class="nav-icon">L</span>
+          Practice Labs
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <button class="ghost-link" id="feedbackButton" type="button">
+          <span class="nav-icon">F</span>
+          Feedback
+        </button>
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="practice-heading page-enter">
+          <h1>Certification Practice Mode</h1>
+          <p>Practice with the five approved certification paths across Pearson and CompTIA readiness tracks.</p>
+      </section>
+
+      <section class="practice-tabs" aria-label="Certification mode tabs">
+        <button class="practice-tab active" type="button" data-cert-mode="tracks">Certification Tracks</button>
+        <button class="practice-tab" type="button" data-cert-mode="exams">Practice Exams</button>
+      </section>
+
+      <section class="practice-layout cert-mode-panel" id="certTrackControls">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Customize your certification session</p>
+
+          <div class="session-row">
+            <h2>Domain:</h2>
+            <div class="pill-cluster filter-row" aria-label="Certification filters">
+              <button class="filter-pill active" type="button" data-filter="all">All</button>
+              <button class="filter-pill" type="button" data-filter="pearson">Pearson</button>
+              <button class="filter-pill" type="button" data-filter="comptia">CompTIA</button>
+              <button class="filter-pill" type="button" data-filter="networking">Networking</button>
+              <button class="filter-pill" type="button" data-filter="security">Security</button>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Skill:</h2>
+            <p class="helper-line">Select exactly one domain to focus the visible certification cards.</p>
+          </div>
+
+          <div class="session-row">
+            <h2>Difficulty:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">All</span>
+              <span class="filter-pill">Beginner</span>
+              <span class="filter-pill">Intermediate</span>
+              <span class="filter-pill">Advanced</span>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Source:</h2>
+            <div class="pill-cluster">
+              <span class="source-pill">Official Objectives</span>
+              <span class="source-pill">Lab Notes</span>
+              <span class="source-pill active">SOC Bootcamp</span>
+            </div>
+          </div>
+
+          <div class="score-entry-panel">
+            <div>
+              <h2>Score Checkpoint:</h2>
+              <p class="helper-line">Save your latest certification and question bank scores to your user record for Admin dashboard review.</p>
+            </div>
+            <div class="score-entry-grid">
+              <label>
+                Certification Prep Score
+                <input id="certificationScoreInput" type="number" min="0" max="100" placeholder="0-100">
+              </label>
+              <label>
+                Question Bank Score
+                <input id="questionBankScoreInput" type="number" min="0" max="100" placeholder="0-100">
+              </label>
+            </div>
+            <button class="secondary-button" id="saveScoreCheckpointButton" type="button">Save Score Checkpoint</button>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Tracks available</p>
+          <strong class="mega-number">6</strong>
+          <div class="study-summary">
+            <h3 id="currentStudyText">No certification selected yet.</h3>
+            <p id="lastAccessedText">Last Accessed Certification: none</p>
+          </div>
+          <button class="secondary-button full-width" type="button">Reset All Settings</button>
+          <button class="primary-button full-width" id="resumeCertificationButton" type="button">Resume</button>
+        </aside>
+      </section>
+
+      <section class="cert-grid" id="certGrid">
+        <article class="cert-card glass-card" data-category="pearson networking" data-cert="Pearson Networking">
+          <div class="card-topline">
+            <span class="category-chip">Pearson</span>
+            <span class="difficulty-badge beginner">Beginner</span>
+          </div>
+          <h3>Pearson Networking</h3>
+          <p>Build core networking vocabulary, ports, routing basics, and troubleshooting habits.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="pearson security" data-cert="Pearson Network Security">
+          <div class="card-topline">
+            <span class="category-chip">Pearson</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>Pearson Network Security</h3>
+          <p>Study firewall concepts, segmentation, secure network operations, and defensive monitoring.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="pearson security" data-cert="Pearson Cybersecurity">
+          <div class="card-topline">
+            <span class="category-chip">Pearson</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>Pearson Cybersecurity</h3>
+          <p>Practice SOC foundations, threats, controls, incident response, and risk-aware analysis.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="comptia networking" data-cert="CompTIA Network Plus">
+          <div class="card-topline">
+            <span class="category-chip">CompTIA</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>CompTIA Network Plus</h3>
+          <p>Prepare for network devices, protocols, subnetting, wireless, and operational troubleshooting.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+
+        <article class="cert-card glass-card" data-category="comptia security" data-cert="CompTIA Security Plus">
+          <div class="card-topline">
+            <span class="category-chip">CompTIA</span>
+            <span class="difficulty-badge advanced">Advanced</span>
+          </div>
+          <h3>CompTIA Security Plus</h3>
+          <p>Review security architecture, identity, risk, incident response, and defensive controls.</p>
+          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+        </article>
+      </section>
+
+      <section class="practice-layout cert-mode-panel hidden" id="practiceExamMode">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Practice exam command center</p>
+
+          <div class="session-row">
+            <h2>Exam Mode:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">Timed</span>
+              <span class="filter-pill">Untimed</span>
+              <span class="filter-pill">Review Mode</span>
+              <span class="filter-pill">Weak Areas</span>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Exam Bank:</h2>
+            <p class="helper-line">Choose a practice exam to simulate certification pacing and save your latest exam target.</p>
+          </div>
+
+          <div class="exam-grid">
+            <article class="exam-card" data-exam="Pearson Networking Readiness Exam">
+              <span class="category-chip">Pearson Networking</span>
+              <h3>Pearson Networking Readiness Exam</h3>
+              <p>Checkpoint for ports, protocols, routing, wireless, and troubleshooting basics.</p>
+              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam="Pearson Network Security Drill">
+              <span class="category-chip">Pearson Network Security</span>
+              <h3>Pearson Network Security Drill</h3>
+              <p>Scenario-heavy practice covering firewalls, segmentation, packet review, and controls.</p>
+              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam="CompTIA Security Plus SOC Simulation">
+              <span class="category-chip">CompTIA Security Plus</span>
+              <h3>CompTIA Security Plus SOC Simulation</h3>
+              <p>Incident triage and security controls practice for certification readiness.</p>
+              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            </article>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Exam questions</p>
+          <strong class="mega-number">180</strong>
+          <div class="study-summary">
+            <h3 id="currentExamText">No practice exam selected yet.</h3>
+            <p id="lastExamText">Last Practice Exam: none</p>
+          </div>
+          <button class="primary-button full-width" id="resumeExamButton" type="button">Resume Exam</button>
+          <div class="score-entry-panel compact-score-panel">
+            <label>
+              Practice Exam Score
+              <input id="practiceExamScoreInput" type="number" min="0" max="100" placeholder="0-100">
+            </label>
+            <button class="secondary-button full-width" id="savePracticeExamScoreButton" type="button">Save Exam Score</button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>
