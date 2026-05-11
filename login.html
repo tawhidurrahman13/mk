@@ -141,8 +141,8 @@
           </form>
 
           <section class="oauth-panel" id="oauthPanel">
-            <p class="panel-note">Google OAuth</p>
-            <p class="helper-line">Uses the server OAuth route when configured. Real Google OAuth requires Google client credentials in environment variables.</p>
+            <p class="panel-note">Google / Chrome Sign-In</p>
+            <p class="helper-line">Use the Google account already signed into Chrome when Google asks you to choose an account. Email MFA is sent after Google confirms your identity.</p>
             <div class="score-entry-grid">
               <label>
                 Google Email
@@ -150,7 +150,10 @@
               </label>
             </div>
             <p class="input-error" id="googleSignupError"></p>
-            <button class="secondary-button full-width" id="googleSignupButton" type="button">Continue with Google</button>
+            <button class="secondary-button full-width google-auth-button" id="googleSignupButton" type="button">
+              <span class="google-glyph" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
           </section>
 
           <section class="mfa-panel hidden" id="mfaPanel">

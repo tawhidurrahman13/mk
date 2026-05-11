@@ -582,6 +582,27 @@ button {
   box-shadow: 0 0 26px rgba(168, 85, 247, 0.3);
 }
 
+.google-auth-button {
+  justify-content: center;
+  gap: 10px;
+  background:
+    linear-gradient(#111827, #111827) padding-box,
+    linear-gradient(135deg, rgba(66, 133, 244, 0.85), rgba(168, 85, 247, 0.85), rgba(52, 211, 153, 0.7)) border-box;
+  border-color: transparent;
+}
+
+.google-glyph {
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  place-items: center;
+  border-radius: 50%;
+  background: #f8fafc;
+  color: #2563eb;
+  font-weight: 900;
+  box-shadow: 0 0 18px rgba(66, 133, 244, 0.28);
+}
+
 .full-width {
   width: 100%;
 }

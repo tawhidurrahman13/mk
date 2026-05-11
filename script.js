@@ -467,11 +467,19 @@ function getCurrentPageName() {
   return pageName || "index.html";
 }
 
-function isServerApiEnabled() {
+function isServerApiEnabled(path = "") {
   const localHosts = ["localhost", "127.0.0.1", "::1"];
-  return window.location.protocol !== "file:"
+  const isLocalServer = window.location.protocol !== "file:"
     && localHosts.includes(window.location.hostname)
     && window.location.port === "3000";
+  const isHostedSite = window.location.protocol === "https:"
+    && !localHosts.includes(window.location.hostname);
+
+  if (isLocalServer) {
+    return true;
+  }
+
+  return isHostedSite && String(path).startsWith("/api/auth/");
 }
 
 function getApiBase() {
@@ -483,7 +491,7 @@ function getApiUrl(path) {
 }
 
 async function hydrateServerSession() {
-  if (!isServerApiEnabled()) {
+  if (!isServerApiEnabled("/api/auth/me")) {
     return;
   }
 
@@ -498,7 +506,7 @@ async function hydrateServerSession() {
 }
 
 async function apiFetch(path, options = {}) {
-  if (!isServerApiEnabled()) {
+  if (!isServerApiEnabled(path)) {
     return { offline: true };
   }
 
@@ -871,7 +879,7 @@ function initializeLoginPage() {
   }
 
   async function submitServerAuth({ authMode, username, password, email, selectedRole }) {
-    if (!isServerApiEnabled()) {
+    if (!isServerApiEnabled(authMode === "create" ? "/api/auth/signup" : "/api/auth/login")) {
       return false;
     }
 
@@ -1026,7 +1034,7 @@ function initializeLoginPage() {
   }
 
   async function verifyMfaChallenge() {
-    if (serverMfaChallengeId && isServerApiEnabled()) {
+    if (serverMfaChallengeId && isServerApiEnabled("/api/auth/mfa/verify")) {
       try {
         const data = await apiFetch("/api/auth/mfa/verify", {
           method: "POST",
@@ -1044,7 +1052,7 @@ function initializeLoginPage() {
       return;
     }
 
-    if (serverMfaChallengeId && !isServerApiEnabled()) {
+    if (serverMfaChallengeId && !isServerApiEnabled("/api/auth/mfa/verify")) {
       serverMfaChallengeId = "";
     }
 
@@ -1088,7 +1096,7 @@ function initializeLoginPage() {
     resetError.textContent = "";
     const email = resetEmailInput.value.trim().toLowerCase();
     const newPassword = resetPasswordInput.value;
-    if (isServerApiEnabled()) {
+    if (isServerApiEnabled("/api/auth/password-reset/request")) {
       try {
         const data = await apiFetch("/api/auth/password-reset/request", {
           method: "POST",
@@ -1139,7 +1147,7 @@ function initializeLoginPage() {
   }
 
   async function confirmPasswordReset() {
-    if (serverResetChallengeId && isServerApiEnabled()) {
+    if (serverResetChallengeId && isServerApiEnabled("/api/auth/password-reset/confirm")) {
       try {
         await apiFetch("/api/auth/password-reset/confirm", {
           method: "POST",
@@ -1163,7 +1171,7 @@ function initializeLoginPage() {
       return;
     }
 
-    if (serverResetChallengeId && !isServerApiEnabled()) {
+    if (serverResetChallengeId && !isServerApiEnabled("/api/auth/password-reset/confirm")) {
       serverResetChallengeId = "";
     }
 
@@ -1202,7 +1210,7 @@ function initializeLoginPage() {
   }
 
   function handleGoogleSignup() {
-    if (isServerApiEnabled()) {
+    if (isServerApiEnabled("/api/auth/google/start")) {
       window.location.href = getApiUrl("/api/auth/google/start");
       return;
     }

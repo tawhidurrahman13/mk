@@ -131,6 +131,41 @@ create table if not exists public.kali_progress (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.site_users (
+  id uuid primary key default gen_random_uuid(),
+  email text not null unique,
+  display_name text not null default 'SOC Analyst',
+  role public.user_role not null default 'student',
+  password_hash text,
+  google_id text unique,
+  profile_image text,
+  created_at timestamptz not null default now(),
+  last_login timestamptz,
+  updated_at timestamptz not null default now()
+);
+
+create table if not exists public.email_mfa_challenges (
+  id uuid primary key default gen_random_uuid(),
+  site_user_id uuid not null references public.site_users(id) on delete cascade,
+  email text not null,
+  code_hash text not null,
+  purpose text not null default 'login',
+  expires_at timestamptz not null,
+  used_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
+create table if not exists public.password_reset_challenges (
+  id uuid primary key default gen_random_uuid(),
+  site_user_id uuid not null references public.site_users(id) on delete cascade,
+  email text not null,
+  code_hash text not null,
+  pending_password_hash text not null,
+  expires_at timestamptz not null,
+  used_at timestamptz,
+  created_at timestamptz not null default now()
+);
+
 create index if not exists users_email_idx on public.users (lower(email));
 create index if not exists users_role_idx on public.users (role);
 create index if not exists certifications_slug_idx on public.certifications (slug);
@@ -138,6 +173,12 @@ create index if not exists certification_scores_user_idx on public.certification
 create index if not exists certification_scores_certification_idx on public.certification_scores (certification_id);
 create index if not exists quiz_attempts_user_created_idx on public.quiz_attempts (user_id, created_at desc);
 create index if not exists quiz_attempts_certification_idx on public.quiz_attempts (certification_id);
+create index if not exists site_users_email_idx on public.site_users (lower(email));
+create index if not exists site_users_role_idx on public.site_users (role);
+create index if not exists email_mfa_challenges_user_idx on public.email_mfa_challenges (site_user_id, created_at desc);
+create index if not exists email_mfa_challenges_expiry_idx on public.email_mfa_challenges (expires_at);
+create index if not exists password_reset_challenges_user_idx on public.password_reset_challenges (site_user_id, created_at desc);
+create index if not exists password_reset_challenges_expiry_idx on public.password_reset_challenges (expires_at);
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -434,6 +475,9 @@ alter table public.practice_exams enable row level security;
 alter table public.certification_scores enable row level security;
 alter table public.quiz_attempts enable row level security;
 alter table public.kali_progress enable row level security;
+alter table public.site_users enable row level security;
+alter table public.email_mfa_challenges enable row level security;
+alter table public.password_reset_challenges enable row level security;
 
 drop policy if exists admin_emails_select on public.admin_emails;
 create policy admin_emails_select
@@ -604,6 +648,9 @@ grant select, insert, update, delete on public.users to authenticated;
 grant select, insert, update, delete on public.certification_scores to authenticated;
 grant select, insert, update, delete on public.quiz_attempts to authenticated;
 grant select, insert, update, delete on public.kali_progress to authenticated;
+grant select, insert, update, delete on public.site_users to service_role;
+grant select, insert, update, delete on public.email_mfa_challenges to service_role;
+grant select, insert, update, delete on public.password_reset_challenges to service_role;
 
 -- Optional bootstrap command after you replace the email:
 -- insert into public.admin_emails (email) values ('your-admin@gmail.com') on conflict do nothing;
