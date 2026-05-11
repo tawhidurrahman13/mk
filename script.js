@@ -467,17 +467,14 @@ function getCurrentPageName() {
   return pageName || "index.html";
 }
 
+function isServerApiEnabled() {
+  const localHosts = ["localhost", "127.0.0.1", "::1"];
+  return window.location.protocol !== "file:"
+    && localHosts.includes(window.location.hostname)
+    && window.location.port === "3000";
+}
+
 function getApiBase() {
-  const isLocalHost = ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
-
-  if (isLocalHost && window.location.port === "3000") {
-    return "";
-  }
-
-  if (isLocalHost) {
-    return "http://localhost:3000";
-  }
-
   return "";
 }
 
@@ -486,7 +483,7 @@ function getApiUrl(path) {
 }
 
 async function hydrateServerSession() {
-  if (window.location.protocol === "file:") {
+  if (!isServerApiEnabled()) {
     return;
   }
 
@@ -501,6 +498,10 @@ async function hydrateServerSession() {
 }
 
 async function apiFetch(path, options = {}) {
+  if (!isServerApiEnabled()) {
+    return { offline: true };
+  }
+
   const headers = {
     "Content-Type": "application/json",
     ...(options.headers || {})
@@ -870,6 +871,10 @@ function initializeLoginPage() {
   }
 
   async function submitServerAuth({ authMode, username, password, email, selectedRole }) {
+    if (!isServerApiEnabled()) {
+      return false;
+    }
+
     const isCreate = authMode === "create";
     const primaryEmail = isCreate ? email : normalizeLoginIdentifier(username);
     const displayName = isCreate ? username : "";
@@ -1021,7 +1026,7 @@ function initializeLoginPage() {
   }
 
   async function verifyMfaChallenge() {
-    if (serverMfaChallengeId) {
+    if (serverMfaChallengeId && isServerApiEnabled()) {
       try {
         const data = await apiFetch("/api/auth/mfa/verify", {
           method: "POST",
@@ -1037,6 +1042,10 @@ function initializeLoginPage() {
         mfaError.textContent = error.message;
       }
       return;
+    }
+
+    if (serverMfaChallengeId && !isServerApiEnabled()) {
+      serverMfaChallengeId = "";
     }
 
     const challenge = getStoredObject(storageKeys.mfaChallenge, null);
@@ -1079,20 +1088,22 @@ function initializeLoginPage() {
     resetError.textContent = "";
     const email = resetEmailInput.value.trim().toLowerCase();
     const newPassword = resetPasswordInput.value;
-    try {
-      const data = await apiFetch("/api/auth/password-reset/request", {
-        method: "POST",
-        body: JSON.stringify({ email, newPassword })
-      });
-      serverResetChallengeId = data.challengeId || "";
-      resetCodeInput.value = "";
-      resetDemoCode.textContent = data.devCode ? `Development reset email code: ${data.devCode}` : "Reset code sent by email.";
-      showToast("Password reset email sent.");
-      return;
-    } catch (error) {
-      if (error.message !== "Failed to fetch") {
-        resetError.textContent = error.message;
+    if (isServerApiEnabled()) {
+      try {
+        const data = await apiFetch("/api/auth/password-reset/request", {
+          method: "POST",
+          body: JSON.stringify({ email, newPassword })
+        });
+        serverResetChallengeId = data.challengeId || "";
+        resetCodeInput.value = "";
+        resetDemoCode.textContent = data.devCode ? `Development reset email code: ${data.devCode}` : "Reset code sent by email.";
+        showToast("Password reset email sent.");
         return;
+      } catch (error) {
+        if (error.message !== "Failed to fetch") {
+          resetError.textContent = error.message;
+          return;
+        }
       }
     }
 
@@ -1128,7 +1139,7 @@ function initializeLoginPage() {
   }
 
   async function confirmPasswordReset() {
-    if (serverResetChallengeId) {
+    if (serverResetChallengeId && isServerApiEnabled()) {
       try {
         await apiFetch("/api/auth/password-reset/confirm", {
           method: "POST",
@@ -1150,6 +1161,10 @@ function initializeLoginPage() {
         resetError.textContent = error.message;
       }
       return;
+    }
+
+    if (serverResetChallengeId && !isServerApiEnabled()) {
+      serverResetChallengeId = "";
     }
 
     const challenge = getStoredObject(storageKeys.resetChallenge, null);
@@ -1187,8 +1202,10 @@ function initializeLoginPage() {
   }
 
   function handleGoogleSignup() {
-    window.location.href = getApiUrl("/api/auth/google/start");
-    return;
+    if (isServerApiEnabled()) {
+      window.location.href = getApiUrl("/api/auth/google/start");
+      return;
+    }
 
     if (!googleEmailInput || !googleSignupError) {
       return;
