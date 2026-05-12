@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Google OAuth Diagnostics</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="login">
+  <main class="login-page">
+    <section class="auth-card glass-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-note">Google OAuth Diagnostics</p>
+          <h1>Fix Google Sign-In</h1>
+        </div>
+        <img class="brand-logo-img large" src="assets/soc-dragon-mark-dark.svg" alt="SOC Bootcamp logo">
+      </div>
+
+      <p class="helper-line">
+        This page checks what Vercel is actually receiving. It will not reveal your Google client secret.
+      </p>
+
+      <div class="stat-grid compact" id="oauthDiagnosticSummary">
+        <article class="stat-card">
+          <span>Status</span>
+          <strong>Loading...</strong>
+        </article>
+      </div>
+
+      <div class="glass-card" id="oauthDiagnosticDetails">
+        <p class="helper-line">Checking Vercel environment variables...</p>
+      </div>
+
+      <div class="home-command-row">
+        <button class="primary-button" id="refreshOauthDiagnostics" type="button">Refresh Checks</button>
+        <a class="secondary-button" href="login.html">Back to Login</a>
+      </div>
+
+      <section class="reset-panel">
+        <p class="panel-note">If the error says client secret invalid</p>
+        <ol class="setup-list">
+          <li>Open Google Auth Platform, then open the same Web client shown below.</li>
+          <li>Copy the Client secret from that exact client page.</li>
+          <li>In Vercel, replace GOOGLE_CLIENT_SECRET with only the secret value.</li>
+          <li>Redeploy the newest Vercel deployment with build cache off.</li>
+        </ol>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const details = document.getElementById("oauthDiagnosticDetails");
+    const summary = document.getElementById("oauthDiagnosticSummary");
+    const refreshButton = document.getElementById("refreshOauthDiagnostics");
+
+    function escapeHtml(value) {
+      return String(value ?? "").replace(/[&<>"']/g, (char) => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+      })[char]);
+    }
+
+    async function loadDiagnostics() {
+      summary.innerHTML = `
+        <article class="stat-card">
+          <span>Status</span>
+          <strong>Loading...</strong>
+        </article>
+      `;
+      details.innerHTML = `<p class="helper-line">Checking Vercel environment variables...</p>`;
+
+      try {
+        const response = await fetch("/api/auth/google/diagnostics", { cache: "no-store" });
+        const data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.error || "Diagnostics request failed.");
+        }
+
+        const failed = data.checks.filter((check) => !check.ok);
+        summary.innerHTML = `
+          <article class="stat-card">
+            <span>Status</span>
+            <strong>${failed.length ? "Needs Fix" : "Looks Ready"}</strong>
+          </article>
+          <article class="stat-card">
+            <span>Client Secret</span>
+            <strong>${data.clientSecretConfigured ? `${data.clientSecretLength} chars` : "Missing"}</strong>
+          </article>
+          <article class="stat-card">
+            <span>Secret Fingerprint</span>
+            <strong>${escapeHtml(data.clientSecretFingerprint || "none")}</strong>
+          </article>
+        `;
+
+        details.innerHTML = `
+          <div class="score-row">
+            <span>Deployed Client ID</span>
+            <strong>${escapeHtml(data.deployedClientIdFull || "missing")}</strong>
+          </div>
+          <div class="score-row">
+            <span>Redirect URI</span>
+            <strong>${escapeHtml(data.redirectUri)}</strong>
+          </div>
+          <div class="score-row">
+            <span>Vercel Request Host</span>
+            <strong>${escapeHtml(data.requestBaseUrl)}</strong>
+          </div>
+          <div class="divider"></div>
+          ${data.checks.map((check) => `
+            <div class="score-row">
+              <span>${check.ok ? "PASS" : "FIX"} - ${escapeHtml(check.name)}</span>
+              <strong>${check.ok ? "OK" : escapeHtml(check.fix)}</strong>
+            </div>
+          `).join("")}
+        `;
+      } catch (error) {
+        summary.innerHTML = `
+          <article class="stat-card">
+            <span>Status</span>
+            <strong>Error</strong>
+          </article>
+        `;
+        details.innerHTML = `<p class="input-error">${escapeHtml(error.message)}</p>`;
+      }
+    }
+
+    refreshButton.addEventListener("click", loadDiagnostics);
+    loadDiagnostics();
+  </script>
+</body>
+</html>
