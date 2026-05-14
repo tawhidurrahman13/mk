@@ -954,6 +954,109 @@ const pearsonNetworkingQuestionBank = [
   }
 ];
 
+const comptiaSecurityPlusQuestionBank = [
+  {
+    question: "A security team is investigating unauthorized access to an internal database. Which mitigation would best prevent this attack?",
+    answers: ["Deploying endpoint detection and response (EDR) solutions", "Enforcing multi-factor authentication (MFA)", "Installing a host-based intrusion detection system (HIDS)", "Implementing network segmentation"],
+    correct: 1
+  },
+  {
+    question: "Which security practice ensures that a developer's new code does not introduce vulnerabilities?",
+    answers: ["Continuous monitoring", "Secure coding practices", "Input sanitization", "Patch management"],
+    correct: 1
+  },
+  {
+    question: "An organization implements a full packet capture solution. Which scenario benefits most?",
+    answers: ["Identifying malware signatures in files", "Investigating the scope of a data breach", "Blocking phishing attempts in real time", "Monitoring compliance with privacy regulations"],
+    correct: 1
+  },
+  {
+    question: "During a penetration test, a tester exploits arbitrary code execution. What should happen next?",
+    answers: ["Escalate privileges", "Document the vulnerability and report it immediately", "Continue testing", "Install monitoring software"],
+    correct: 1
+  },
+  {
+    question: "What is the most effective way to ensure cloud data security?",
+    answers: ["Encrypt data both in transit and at rest", "Use a dedicated public IP", "Require VPN for all users", "Perform regular pentests"],
+    correct: 0
+  },
+  {
+    question: "Which indicates a successful DNS poisoning attack?",
+    answers: ["Users redirected to malicious websites", "Increase in ARP traffic", "DNS queries failing", "Unauthorized DNS logs"],
+    correct: 0
+  },
+  {
+    question: "What is the best countermeasure against malicious JavaScript injection?",
+    answers: ["Enforce strict input validation", "Encrypt user data", "Restrict API access", "Require MFA"],
+    correct: 0
+  },
+  {
+    question: "A ransomware message appears on a user's computer. What should be done first?",
+    answers: ["Isolate the affected device from the network", "Power off the device", "Pay the ransom", "Restore from backup"],
+    correct: 0
+  },
+  {
+    question: "Which technology best detects insider threats?",
+    answers: ["EDR", "UEBA", "DLP", "IPS"],
+    correct: 1
+  },
+  {
+    question: "What is the likely explanation for outbound traffic to a malicious IP?",
+    answers: ["DoS attack", "Compromised system communicating with C2", "Employee bypassing controls", "Firewall misconfiguration"],
+    correct: 1
+  },
+  {
+    question: "What is the best prevention method against ransomware delivered through phishing emails?",
+    answers: ["Regular vulnerability scanning", "User training on recognizing phishing emails", "Deployment of an IPS", "Blocking all email attachments"],
+    correct: 1
+  },
+  {
+    question: "Which firewall inspects packet content at the application layer?",
+    answers: ["Stateful firewall", "Packet-filtering firewall", "Next-generation firewall (NGFW)", "Circuit-level gateway"],
+    correct: 2
+  },
+  {
+    question: "What is the primary purpose of SIEM solutions?",
+    answers: ["Encrypt sensitive data", "Correlate and analyze security logs in real time", "Prevent malware infections", "Automate vulnerability management"],
+    correct: 1
+  },
+  {
+    question: "What is the best mitigation against attackers guessing weak passwords?",
+    answers: ["Password complexity policies", "Multi-factor authentication (MFA)", "Deploy a WAF", "Require password changes every 30 days"],
+    correct: 1
+  },
+  {
+    question: "What is the best action after identifying a rogue device on the network?",
+    answers: ["Block the MAC address", "Isolate the device using segmentation", "Deploy EDR", "Shut down the switch"],
+    correct: 1
+  },
+  {
+    question: "Which cryptographic method ensures authenticity of software updates?",
+    answers: ["Symmetric encryption", "Digital signatures", "MD5 hashing", "ECC"],
+    correct: 1
+  },
+  {
+    question: "What is the best immediate response to a DDoS attack?",
+    answers: ["Deploy a load balancer", "Block all incoming traffic", "Redirect traffic through a DDoS mitigation service", "Notify customers"],
+    correct: 2
+  },
+  {
+    question: "What is the purpose of a honeypot?",
+    answers: ["Divert attackers and gather intelligence", "Encrypt sensitive data", "Prevent brute-force attacks", "Analyze legitimate users"],
+    correct: 0
+  },
+  {
+    question: "Which protocol ensures confidentiality and integrity of email communications?",
+    answers: ["S/MIME", "SMTP", "IMAP", "POP3"],
+    correct: 0
+  },
+  {
+    question: "What type of attack repeatedly tries default usernames and passwords on IoT devices?",
+    answers: ["Brute force", "Credential stuffing", "Password spraying", "Dictionary attack"],
+    correct: 0
+  }
+];
+
 const certificationQuizzes = [
   {
     id: "pearson-cybersecurity",
@@ -1004,23 +1107,7 @@ const certificationQuizzes = [
     title: "CompTIA Security Plus Quiz",
     certification: "CompTIA Security Plus",
     difficulty: "Advanced",
-    questions: [
-      {
-        question: "Which authentication method uses more than one proof of identity?",
-        answers: ["MFA", "DNS", "NAT", "ARP"],
-        correct: 0
-      },
-      {
-        question: "Which principle gives users only the access they need?",
-        answers: ["Least privilege", "Maximum privilege", "Open sharing", "Guest mode"],
-        correct: 0
-      },
-      {
-        question: "Which process restores service after a security event?",
-        answers: ["Incident response", "Icon sorting", "Font scaling", "Color matching"],
-        correct: 0
-      }
-    ]
+    questions: comptiaSecurityPlusQuestionBank
   }
 ];
 
@@ -3520,6 +3607,54 @@ function initializeQuizzesPage() {
       };
     }
 
+    if (text.includes("mfa") || text.includes("multi-factor") || text.includes("password") || text.includes("authentic")) {
+      return {
+        focus: "Identity protection: stop account takeover by requiring proof beyond a password.",
+        reasoning: "MFA helps when passwords are weak, guessed, stolen, or reused because the attacker still needs another factor. Digital signatures prove software authenticity by verifying who signed the update and whether it changed.",
+        memoryHook: "MFA adds proof; signatures prove origin and integrity."
+      };
+    }
+
+    if (text.includes("ransomware") || text.includes("phishing")) {
+      return {
+        focus: "User-driven attacks: reduce the chance of the click and contain the device quickly if infection happens.",
+        reasoning: "Training helps users recognize phishing before ransomware executes. If ransomware is already visible, isolating the affected device limits spread before recovery or deeper investigation.",
+        memoryHook: "Before infection: train users. During infection: isolate first."
+      };
+    }
+
+    if (text.includes("dns poisoning") || text.includes("malicious website") || text.includes("malicious ip") || text.includes("c2")) {
+      return {
+        focus: "Malicious traffic clues: identify redirection or command-and-control behavior.",
+        reasoning: "DNS poisoning can redirect users to malicious sites. Outbound traffic to a known malicious IP often indicates a compromised host calling back to attacker command-and-control infrastructure.",
+        memoryHook: "Bad DNS redirects; bad outbound traffic may be C2."
+      };
+    }
+
+    if (text.includes("edr") || text.includes("ueba") || text.includes("dlp") || text.includes("hids") || text.includes("ips") || text.includes("packet capture")) {
+      return {
+        focus: "Security tool purpose: match the tool to what it detects or investigates.",
+        reasoning: "EDR focuses on endpoint behavior, UEBA detects unusual user/entity behavior, DLP protects sensitive data from leaving, IPS blocks suspicious network traffic, and packet capture helps reconstruct what happened during an investigation.",
+        memoryHook: "Endpoint, behavior, data, prevention, packets."
+      };
+    }
+
+    if (text.includes("encryption") || text.includes("encrypt") || text.includes("s/mime") || text.includes("digital signatures")) {
+      return {
+        focus: "Cryptography purpose: decide whether the need is confidentiality, integrity, or authenticity.",
+        reasoning: "Encryption protects data at rest and in transit. S/MIME protects email confidentiality and integrity. Digital signatures verify authenticity and integrity for software or messages.",
+        memoryHook: "Encrypt hides; sign proves; S/MIME protects email."
+      };
+    }
+
+    if (text.includes("honeypot") || text.includes("ddos") || text.includes("rogue device") || text.includes("segmentation")) {
+      return {
+        focus: "Defensive response: pick the action that limits impact or gathers useful attacker information.",
+        reasoning: "Honeypots distract attackers and collect intelligence. DDoS mitigation services absorb attack traffic. Segmentation can isolate rogue or compromised devices without shutting down the whole network.",
+        memoryHook: "Divert, absorb, isolate."
+      };
+    }
+
     if (text.includes("mitre") || text.includes("att&ck") || text.includes("diamond model")) {
       return {
         focus: "Threat intelligence frameworks: match the model to what it explains.",
@@ -3680,6 +3815,16 @@ function initializeQuizzesPage() {
     if (value.includes("risk mitigation")) return "Risk mitigation reduces likelihood or impact with controls.";
     if (value.includes("rto")) return "RTO is the maximum acceptable time to restore service.";
     if (value.includes("mttr")) return "MTTR is the average time needed to repair or recover a failed service.";
+    if (value.includes("mfa") || value.includes("multi-factor")) return "MFA adds another identity proof beyond the password, which helps stop account takeover.";
+    if (value.includes("ueba")) return "UEBA looks for unusual user and entity behavior, making it strong for insider-threat detection.";
+    if (value.includes("edr")) return "EDR monitors endpoint behavior and helps detect or respond to endpoint threats.";
+    if (value.includes("dlp")) return "DLP focuses on preventing sensitive data from leaving approved places.";
+    if (value.includes("ngfw")) return "An NGFW can inspect application-layer content and apply deeper firewall controls.";
+    if (value.includes("honeypot")) return "A honeypot diverts attackers and gathers intelligence about their behavior.";
+    if (value.includes("s/mime")) return "S/MIME protects email confidentiality and integrity.";
+    if (value.includes("digital signatures")) return "Digital signatures prove authenticity and help verify content was not altered.";
+    if (value.includes("input validation")) return "Input validation blocks dangerous input patterns before they become injection attacks.";
+    if (value.includes("segmentation")) return "Segmentation isolates systems so one rogue or compromised device cannot easily reach everything else.";
 
     return "This option is a distractor unless it exactly matches the keyword and concept in the question.";
   }

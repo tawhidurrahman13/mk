@@ -1,0 +1,106 @@
+CompTIA  Security+  Practice  Test  3  —  Questions,  Choices  &  Answers  1.  What  is  the  best  prevention  method  against  ransomware  delivered  through  
+phishing
+ 
+emails?
+ 
+ 
+A)  Regular  vulnerability  scanning  
+B)  User  training  on  recognizing  phishing  emails  
+C)  Deployment  of  an  IPS  
+D)  Blocking  all  email  attachments  
+ 
+Correct  Answer:  B)  User  training  on  recognizing  phishing  emails  
+ 
+------------------------------------------------------------  
+2.  Which  firewall  inspects  packet  content  at  the  application  layer?  
+ 
+A)  Stateful  firewall  
+B)  Packet-filtering  firewall  
+C)  Next-generation  firewall  (NGFW)  
+D)  Circuit-level  gateway  
+ 
+Correct  Answer:  C)  Next-generation  firewall  (NGFW)  
+ 
+------------------------------------------------------------  
+3.  What  is  the  primary  purpose  of  SIEM  solutions?  
+ 
+A)  Encrypt  sensitive  data  
+B)  Correlate  and  analyze  security  logs  in  real  time  
+C)  Prevent  malware  infections  
+D)  Automate  vulnerability  management  
+ 
+Correct  Answer:  B)  Correlate  and  analyze  security  logs  in  real  time  
+ 
+------------------------------------------------------------  
+4.  What  is  the  best  mitigation  against  attackers  guessing  weak  passwords?  
+ 
+A)  Password  complexity  policies  
+B)  Multi-factor  authentication  (MFA)  
+C)  Deploy  a  WAF  
+D)  Require  password  changes  every  30  days  
+ 
+Correct  Answer:  B)  Multi-factor  authentication  (MFA)  
+ 
+------------------------------------------------------------  
+5.  What  is  the  best  action  after  identifying  a  rogue  device  on  the  network?  
+ 
+A)  Block  the  MAC  address  
+B)  Isolate  the  device  using  segmentation  
+C)  Deploy  EDR  
+D)  Shut  down  the  switch  
+ 
+Correct  Answer:  B)  Isolate  the  device  using  segmentation  
+ 
+------------------------------------------------------------  
+6.  Which  cryptographic  method  ensures  authenticity  of  software  updates?  
+ 
+A)  Symmetric  encryption  
+B)  Digital  signatures  
+C)  MD5  hashing  
+D)  ECC  
+ 
+Correct  Answer:  B)  Digital  signatures  
+ 
+------------------------------------------------------------  
+7.  What  is  the  best  immediate  response  to  a  DDoS  attack?  
+ 
+A)  Deploy  a  load  balancer  
+B)  Block  all  incoming  traffic  
+C)  Redirect  traffic  through  a  DDoS  mitigation  service  
+D)  Notify  customers  
+ 
+Correct  Answer:  C)  Redirect  traffic  through  a  DDoS  mitigation  service  
+ 
+------------------------------------------------------------  
+8.  What  is  the  purpose  of  a  honeypot?  
+ 
+A)  Divert  attackers  and  gather  intelligence  
+B)  Encrypt  sensitive  data  
+C)  Prevent  brute-force  attacks  
+D)  Analyze  legitimate  users  
+ 
+Correct  Answer:  A)  Divert  attackers  and  gather  intelligence  
+ 
+------------------------------------------------------------  
+9.  Which  protocol  ensures  confidentiality  and  integrity  of  email  communications?  
+ 
+A)  S/MIME  
+B)  SMTP  
+C)  IMAP  
+D)  POP3  
+ 
+Correct  Answer:  A)  S/MIME  
+ 
+------------------------------------------------------------  
+10.  What  type  of  attack  repeatedly  tries  default  usernames  and  passwords  on  IoT  
+devices?
+ 
+ 
+A)  Brute  force  
+B)  Credential  stuffing  
+C)  Password  spraying  
+D)  Dictionary  attack  
+ 
+Correct  Answer:  A)  Brute  force  
+ 
+------------------------------------------------------------  

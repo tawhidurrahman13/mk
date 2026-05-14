@@ -1,0 +1,130 @@
+CompTIA  Security+  Practice  Test  2  —  Questions,  Choices  &  Answers  1.  A  security  team  is  investigating  unauthorized  access  to  an  internal  database.  
+Which
+ 
+mitigation
+ 
+would
+ 
+best
+ 
+prevent
+ 
+this
+ 
+attack?
+ 
+ 
+A)  Deploying  endpoint  detection  and  response  (EDR)  solutions  
+B)  Enforcing  multi-factor  authentication  (MFA)  
+C)  Installing  a  host-based  intrusion  detection  system  (HIDS)  
+D)  Implementing  network  segmentation  
+ 
+Correct  Answer:  B)  Enforcing  multi-factor  authentication  (MFA)  
+ 
+------------------------------------------------------------  
+2.  Which  security  practice  ensures  that  a  developer's  new  code  does  not  
+introduce
+ 
+vulnerabilities?
+ 
+ 
+A)  Continuous  monitoring  
+B)  Secure  coding  practices  
+C)  Input  sanitization  
+D)  Patch  management  
+ 
+Correct  Answer:  B)  Secure  coding  practices  
+ 
+------------------------------------------------------------  
+3.  An  organization  implements  a  full  packet  capture  solution.  Which  scenario  
+benefits
+ 
+most?
+ 
+ 
+A)  Identifying  malware  signatures  in  files  
+B)  Investigating  the  scope  of  a  data  breach  
+C)  Blocking  phishing  attempts  in  real  time  
+D)  Monitoring  compliance  with  privacy  regulations  
+ 
+Correct  Answer:  B)  Investigating  the  scope  of  a  data  breach  
+ 
+------------------------------------------------------------  
+4.  During  a  penetration  test,  a  tester  exploits  arbitrary  code  execution.  What  
+should
+ 
+happen
+ 
+next?
+ 
+ 
+A)  Escalate  privileges  
+B)  Document  the  vulnerability  and  report  it  immediately  
+C)  Continue  testing  
+D)  Install  monitoring  software  
+ 
+Correct  Answer:  B)  Document  the  vulnerability  and  report  it  immediately  
+ 
+------------------------------------------------------------  
+5.  What  is  the  most  effective  way  to  ensure  cloud  data  security?  
+ 
+A)  Encrypt  data  both  in  transit  and  at  rest  
+B)  Use  a  dedicated  public  IP  
+C)  Require  VPN  for  all  users  
+D)  Perform  regular  pentests  
+ 
+Correct  Answer:  A)  Encrypt  data  both  in  transit  and  at  rest  
+ 
+------------------------------------------------------------  
+6.  Which  indicates  a  successful  DNS  poisoning  attack?  
+ 
+A)  Users  redirected  to  malicious  websites  
+B)  Increase  in  ARP  traffic  
+C)  DNS  queries  failing  
+D)  Unauthorized  DNS  logs  
+ 
+Correct  Answer:  A)  Users  redirected  to  malicious  websites  
+ 
+------------------------------------------------------------  
+7.  What  is  the  best  countermeasure  against  malicious  JavaScript  injection?  
+ 
+A)  Enforce  strict  input  validation  
+B)  Encrypt  user  data  
+C)  Restrict  API  access  
+D)  Require  MFA  
+ 
+Correct  Answer:  A)  Enforce  strict  input  validation  
+ 
+------------------------------------------------------------  
+8.  A  ransomware  message  appears  on  a  user’s  computer.  What  should  be  done  
+first?
+ 
+ 
+A)  Isolate  the  affected  device  from  the  network  
+B)  Power  off  the  device  
+C)  Pay  the  ransom  
+D)  Restore  from  backup  
+ 
+Correct  Answer:  A)  Isolate  the  affected  device  from  the  network  
+ 
+------------------------------------------------------------  
+9.  Which  technology  best  detects  insider  threats?  
+ 
+A)  EDR  
+B)  UEBA  
+C)  DLP  
+D)  IPS  
+ 
+Correct  Answer:  B)  UEBA  
+ 
+------------------------------------------------------------  
+10.  What  is  the  likely  explanation  for  outbound  traffic  to  a  malicious  IP?  
+ 
+A)  DoS  attack  
+B)  Compromised  system  communicating  with  C2  
+C)  Employee  bypassing  controls  
+D)  Firewall  misconfiguration  
+ 
+Correct  Answer:  B)  Compromised  system  communicating  with  C2  
+ 
+------------------------------------------------------------  
