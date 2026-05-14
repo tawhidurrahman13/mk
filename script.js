@@ -353,6 +353,304 @@ const pearsonNetworkSecurityQuestionBank = [
   }
 ];
 
+const incidentHandlingUnit4QuestionBank = [
+  {
+    question: "Which stage of the Cyber Kill Chain involves the installation of malicious software?",
+    answers: ["Exploitation", "Delivery", "Command and Control", "Actions on Objectives"],
+    correct: 0
+  },
+  {
+    question: "What is a key benefit of using SIEM and SOAR together?",
+    answers: ["Increased complexity", "Enhanced visibility and automation", "Dependency on manual analysis", "Isolation of SIEM and SOAR"],
+    correct: 1
+  },
+  {
+    question: "Which MITRE ATT&CK component describes procedures used by adversaries?",
+    answers: ["Tactics", "Techniques", "Sub-techniques", "Procedures"],
+    correct: 3
+  },
+  {
+    question: "What compliance applies to online credit card transactions?",
+    answers: ["FISMA", "FERPA", "HIPAA", "PCI-DSS"],
+    correct: 3
+  },
+  {
+    question: "An infected computer communicates with an external server for commands. Which Kill Chain stage is this?",
+    answers: ["Installation", "Reconnaissance", "Delivery", "Command and Control"],
+    correct: 3
+  },
+  {
+    question: "Which Cyber Kill Chain stage involves executing malicious actions?",
+    answers: ["Exploitation", "Installation", "Command and Control", "Actions on Objectives"],
+    correct: 3
+  },
+  {
+    question: "Which security alert classification is the greatest threat because it represents undetected exploits?",
+    answers: ["True Positive", "False Positive", "True Negative", "False Negative"],
+    correct: 3
+  },
+  {
+    question: "What does Actions on Objectives represent in the Cyber Kill Chain?",
+    answers: ["Overall attacker strategy", "Phase after an incident", "Stage where attacker achieves goals", "Reconnaissance phase"],
+    correct: 2
+  },
+  {
+    question: "Which compliance framework protects customer personal data in the EU?",
+    answers: ["HIPAA", "GDPR", "FERPA", "PCI-DSS"],
+    correct: 1
+  },
+  {
+    question: "Which MITRE ATT&CK techniques best match a phishing and PowerShell attack scenario?",
+    answers: ["Phishing, PowerShell, Lateral Movement", "Drive-by Compromise, Exploit Public-Facing App", "Valid Accounts, Brute Force, DDoS", "Supply Chain Compromise, Signed Binary Proxy Execution"],
+    correct: 0
+  },
+  {
+    question: "Localized worm or virus outbreak refers to which incident level?",
+    answers: ["Low Level", "Middle Level", "High Level", "Interior Level"],
+    correct: 1
+  },
+  {
+    question: "What is the purpose of MITRE ATT&CK Tactics categories?",
+    answers: ["Identify adversary groups", "Focus on documentation", "Describe attacker strategies", "Automate response actions"],
+    correct: 2
+  },
+  {
+    question: "What is the process of receiving, sorting, and prioritizing information?",
+    answers: ["Triage", "Incident", "Handling", "Constituency"],
+    correct: 0
+  },
+  {
+    question: "How does a SIEM system contribute to incident detection?",
+    answers: ["Automating response actions", "Conducting vulnerability assessments", "Collecting, analyzing, and correlating event data", "Managing access controls"],
+    correct: 2
+  },
+  {
+    question: "What is the primary focus of the Persistence stage?",
+    answers: ["Maintaining long-term access", "Establishing communication", "Identifying targets", "Delivering payloads"],
+    correct: 0
+  },
+  {
+    question: "Which framework protects educational records?",
+    answers: ["FISMA", "FERPA", "GDPR", "HIPAA"],
+    correct: 1
+  },
+  {
+    question: "What is the first step in incident response?",
+    answers: ["Recovery", "Containment", "Eradication", "Identification"],
+    correct: 3
+  },
+  {
+    question: "How many stages are in the Cyber Kill Chain?",
+    answers: ["3", "5", "7", "10"],
+    correct: 2
+  },
+  {
+    question: "A ransomware attack encrypting files belongs to which Kill Chain stage?",
+    answers: ["Command and Control", "Exploitation", "Actions on Objectives", "Delivery"],
+    correct: 2
+  },
+  {
+    question: "Blocking a malicious IP and seeing traffic decrease is classified as:",
+    answers: ["True Positive", "False Positive", "True Negative", "False Negative"],
+    correct: 0
+  },
+  {
+    question: "What is the advantage of integrating SOAR?",
+    answers: ["Slower responses", "Manual log dependency", "Increased manual intervention", "Automation and efficiency"],
+    correct: 3
+  },
+  {
+    question: "What was the infrastructure in the Diamond Model for Stuxnet?",
+    answers: ["Worm", "Israel/US", "USB Device", "Iranian nuclear facility"],
+    correct: 2
+  },
+  {
+    question: "A SIEM alert caused by a misconfiguration is classified as:",
+    answers: ["True Positive", "False Positive", "True Negative", "False Negative"],
+    correct: 1
+  },
+  {
+    question: "Which framework secures federal agency systems?",
+    answers: ["FISMA", "FERPA", "NIST", "HIPAA"],
+    correct: 0
+  },
+  {
+    question: "Which Cyber Kill Chain stage identifies vulnerabilities?",
+    answers: ["Installation", "Exploitation", "Reconnaissance", "Command and Control"],
+    correct: 2
+  },
+  {
+    question: "How does MITRE ATT&CK improve defenses?",
+    answers: ["Vulnerability assessments", "Common language for adversary behavior", "Automating responses", "Automatic eradication"],
+    correct: 1
+  },
+  {
+    question: "How does the Diamond Model contribute to threat intelligence?",
+    answers: ["Focuses on documentation", "Automatically eradicates threats", "Framework to analyze adversary behavior", "Conducts vulnerability assessments"],
+    correct: 2
+  },
+  {
+    question: "In incident response, what does detection mean?",
+    answers: ["Finding vulnerabilities", "Recognizing and confirming an incident", "Eliminating the threat actor", "Restoring systems"],
+    correct: 1
+  },
+  {
+    question: "What is the primary goal of containment?",
+    answers: ["Identifying root cause", "Isolating and limiting impact", "Restoring systems", "Notifying stakeholders"],
+    correct: 1
+  },
+  {
+    question: "Which is a key component of an incident response plan?",
+    answers: ["Updating antivirus", "Real-time monitoring", "Incident documentation and reporting", "Quarterly pentesting"],
+    correct: 2
+  },
+  {
+    question: "In the Diamond Model, what does Infrastructure represent?",
+    answers: ["Victim location", "Network or systems used by attacker", "Response actions", "Financial impact"],
+    correct: 1
+  },
+  {
+    question: "What occurs during eradication?",
+    answers: ["Notify law enforcement", "Remove threats and vulnerabilities", "Recover backups", "Document the incident"],
+    correct: 1
+  },
+  {
+    question: "What compliance should be considered when sharing patient data?",
+    answers: ["HIPAA", "FERPA", "FISMA", "GDPR"],
+    correct: 0
+  },
+  {
+    question: "Reviewing employee LinkedIn profiles is which Kill Chain stage?",
+    answers: ["Weaponization", "Reconnaissance", "Delivery", "Exploitation"],
+    correct: 1
+  },
+  {
+    question: "Analyzing and confirming a phishing email belongs to which incident response stage?",
+    answers: ["Identification", "Containment", "Eradication", "Recovery"],
+    correct: 0
+  }
+];
+
+const riskManagementUnit5QuestionBank = [
+  {
+    question: "Contracting out a specialized technical component is an example of:",
+    answers: ["Risk acceptance", "Risk transference", "Risk deterrence", "Risk avoidance"],
+    correct: 1
+  },
+  {
+    question: "If a breach costs $100,000 and is expected once every 5 years, the SLE is:",
+    answers: ["$100,000", "$500,000", "$20,000", "$5,000"],
+    correct: 0
+  },
+  {
+    question: "Which role is most likely concerned about whether security costs are justified?",
+    answers: ["CISO", "CEO", "Legal", "CFO"],
+    correct: 3
+  },
+  {
+    question: "Which phrase best aligns with the CISO viewpoint on risk?",
+    answers: ["This risk is too high to ignore.", "Is this worth the cost?", "This fix could break systems.", "Are we compliant?"],
+    correct: 0
+  },
+  {
+    question: "Increasing system redundancy primarily reduces:",
+    answers: ["Impact", "Likelihood", "Asset value", "Threat capability"],
+    correct: 0
+  },
+  {
+    question: "If an asset is worth $10,000 and EF is 20%, what is the SLE?",
+    answers: ["$10,000", "$5,000", "$2,000", "$500"],
+    correct: 2
+  },
+  {
+    question: "Tolerating a known risk temporarily is an example of:",
+    answers: ["Risk mitigation", "Risk acceptance", "Risk avoidance", "Risk transference"],
+    correct: 1
+  },
+  {
+    question: "Unlicensed open-source code in a commercial product creates risk related to:",
+    answers: ["Software compliance and licensing", "Internal misuse", "Environmental factors", "External threats"],
+    correct: 0
+  },
+  {
+    question: "Which pairing best represents a complete risk scenario?",
+    answers: ["Threat + vulnerability + impact", "Vulnerability + likelihood", "Asset + impact", "Threat + exploit"],
+    correct: 0
+  },
+  {
+    question: "Malware taking advantage of an unpatched web server is best described as a:",
+    answers: ["Exploit", "Threat", "Impact", "Risk"],
+    correct: 0
+  },
+  {
+    question: "Customer data in risk management is classified as a:",
+    answers: ["Exploit", "Vulnerability", "Asset", "Threat"],
+    correct: 2
+  },
+  {
+    question: "Which control combination best supports risk mitigation?",
+    answers: ["Backups and incident response planning", "Contract termination", "Insurance and acceptance", "System shutdown and decommissioning"],
+    correct: 0
+  },
+  {
+    question: "Removing internet access from a legacy system is an example of:",
+    answers: ["Risk transference", "Risk avoidance", "Risk acceptance", "Risk mitigation"],
+    correct: 1
+  },
+  {
+    question: "A competitor using stolen proprietary algorithms is most likely:",
+    answers: ["Software compliance risk", "Legacy system exposure", "External risk", "Intellectual property theft"],
+    correct: 3
+  },
+  {
+    question: "In a phishing scenario, what is the primary vulnerability?",
+    answers: ["Employee lack of phishing awareness", "Company customer data", "Attacker sending the email", "Financial loss"],
+    correct: 0
+  },
+  {
+    question: "Faster repair automation most directly reduces:",
+    answers: ["MTBF", "MTTR", "RTO", "RPO"],
+    correct: 1
+  },
+  {
+    question: "A log monitoring system is an example of a:",
+    answers: ["Preventative control", "Detective control", "Corrective control", "Recovery control"],
+    correct: 1
+  },
+  {
+    question: "Preventive controls without incident response planning most likely reduce:",
+    answers: ["Elimination of risk", "Reduced exposure", "Reduced impact", "Reduced likelihood"],
+    correct: 3
+  },
+  {
+    question: "Warning banners are primarily used as a:",
+    answers: ["Preventative control", "Recovery control", "Deterrent control", "Detective control"],
+    correct: 2
+  },
+  {
+    question: "Which acronym refers to maximum allowable restoration time after disruption?",
+    answers: ["MTTF", "RPO", "RTO", "SLA"],
+    correct: 2
+  },
+  {
+    question: "Exploiting an old unpatchable server involves which risk types?",
+    answers: ["External and internal", "Intellectual property and licensing", "Internal and compliance", "Legacy systems and external"],
+    correct: 3
+  },
+  {
+    question: "Ranking risks as high, medium, or low is an example of:",
+    answers: ["Qualitative risk analysis", "Risk avoidance", "Quantitative risk analysis", "Risk transference"],
+    correct: 0
+  }
+];
+
+// Cybersecurity blends incident/risk material with half of Network Security for overlap review.
+const pearsonCybersecurityQuestionBank = [
+  ...pearsonNetworkSecurityQuestionBank.slice(0, Math.ceil(pearsonNetworkSecurityQuestionBank.length / 2)),
+  ...incidentHandlingUnit4QuestionBank,
+  ...riskManagementUnit5QuestionBank
+];
+
 const pearsonNetworkingQuestionBank = [
   {
     question: "A disadvantage of which topology is that if one computer goes down, it can take the entire network with it?",
@@ -662,23 +960,7 @@ const certificationQuizzes = [
     title: "Pearson Cybersecurity Quiz",
     certification: "Pearson Cybersecurity",
     difficulty: "Beginner",
-    questions: [
-      {
-        question: "What is the main goal of cybersecurity in a SOC?",
-        answers: ["Protect systems and data", "Design logos", "Increase screen brightness", "Disable all alerts"],
-        correct: 0
-      },
-      {
-        question: "Which activity happens first during alert triage?",
-        answers: ["Review the alert context", "Delete the alert", "Ignore the timestamp", "Disable logging"],
-        correct: 0
-      },
-      {
-        question: "Which term describes a weakness attackers could exploit?",
-        answers: ["Vulnerability", "Theme", "Bookmark", "Shortcut"],
-        correct: 0
-      }
-    ]
+    questions: pearsonCybersecurityQuestionBank
   },
   {
     id: "pearson-network-security",
@@ -3214,6 +3496,54 @@ function initializeQuizzesPage() {
       };
     }
 
+    if (text.includes("kill chain") || text.includes("reconnaissance") || text.includes("command and control") || text.includes("actions on objectives") || text.includes("persistence")) {
+      return {
+        focus: "Attack lifecycle: place the attacker action in the correct phase.",
+        reasoning: "Reconnaissance identifies targets, Delivery gets the payload to the victim, Exploitation runs the attack, Installation establishes malware, Command and Control communicates with attacker infrastructure, and Actions on Objectives is where the attacker reaches the goal.",
+        memoryHook: "Find, deliver, exploit, install, command, complete."
+      };
+    }
+
+    if (text.includes("incident response") || text.includes("containment") || text.includes("eradication") || text.includes("identification") || text.includes("triage")) {
+      return {
+        focus: "Incident handling order: identify the issue, limit damage, remove the cause, recover systems, and document lessons.",
+        reasoning: "Identification confirms what is happening, containment limits spread, eradication removes threats and weaknesses, and recovery restores normal operations.",
+        memoryHook: "Identify, contain, eradicate, recover."
+      };
+    }
+
+    if (text.includes("siem") || text.includes("soar")) {
+      return {
+        focus: "SOC platform roles: separate detection visibility from response automation.",
+        reasoning: "SIEM collects, analyzes, and correlates event data for detection. SOAR adds workflow automation and response efficiency, especially when paired with SIEM alerts.",
+        memoryHook: "SIEM sees and correlates; SOAR acts and automates."
+      };
+    }
+
+    if (text.includes("mitre") || text.includes("att&ck") || text.includes("diamond model")) {
+      return {
+        focus: "Threat intelligence frameworks: match the model to what it explains.",
+        reasoning: "MITRE ATT&CK gives a shared language for adversary behavior, including tactics, techniques, and procedures. The Diamond Model connects adversary, capability, infrastructure, and victim.",
+        memoryHook: "ATT&CK names behavior; Diamond connects the actors and evidence."
+      };
+    }
+
+    if (text.includes("hipaa") || text.includes("ferpa") || text.includes("gdpr") || text.includes("pci") || text.includes("fisma") || text.includes("compliance")) {
+      return {
+        focus: "Compliance matching: identify the data type or organization first.",
+        reasoning: "HIPAA protects health data, FERPA protects education records, GDPR protects EU personal data, PCI-DSS protects payment card transactions, and FISMA applies to federal agency systems.",
+        memoryHook: "Health HIPAA, education FERPA, EU GDPR, cards PCI, federal FISMA."
+      };
+    }
+
+    if (text.includes("risk") || text.includes("sle") || text.includes("ef") || text.includes("mttr") || text.includes("rto") || text.includes("rpo") || text.includes("qualitative") || text.includes("quantitative")) {
+      return {
+        focus: "Risk management: decide whether the question is about treatment, measurement, impact, or recovery timing.",
+        reasoning: "Acceptance tolerates risk, avoidance removes the risky activity, mitigation reduces likelihood or impact, and transference shifts risk to another party. SLE measures single-loss impact, while RTO/MTTR focus on restoration and repair timing.",
+        memoryHook: "Accept, avoid, mitigate, transfer; measure impact and recovery time separately."
+      };
+    }
+
     if (text.includes("access control") || text.includes("least privilege") || /\b(dac|mac|rbac|abac)\b/.test(text)) {
       return {
         focus: "Access control model selection: match permissions to owners, labels, roles, or attributes.",
@@ -3337,6 +3667,19 @@ function initializeQuizzesPage() {
     if (value.includes("anycast")) return "Anycast routes a request to the nearest or best available service endpoint.";
     if (value.includes("ssl") || value.includes("tls")) return "SSL/TLS-style transport protects web sessions used by HTTPS.";
     if (value.includes("apipa")) return "APIPA is used when a host cannot reach DHCP and self-assigns an address.";
+    if (value.includes("triage")) return "Triage means sorting and prioritizing information so the most urgent work is handled first.";
+    if (value.includes("siem")) return "SIEM tools collect and correlate logs or events to support detection.";
+    if (value.includes("soar")) return "SOAR tools automate response workflows and reduce manual effort.";
+    if (value.includes("containment")) return "Containment limits spread and reduces the impact of an active incident.";
+    if (value.includes("eradication")) return "Eradication removes the threat and the weakness it used.";
+    if (value.includes("reconnaissance")) return "Reconnaissance is the target research and information-gathering phase.";
+    if (value.includes("command and control")) return "Command and Control is attacker communication with a compromised system.";
+    if (value.includes("risk acceptance")) return "Risk acceptance means choosing to tolerate a known risk.";
+    if (value.includes("risk avoidance")) return "Risk avoidance removes the risky activity or exposure.";
+    if (value.includes("risk transference")) return "Risk transference shifts some risk impact to a third party, such as insurance or outsourcing.";
+    if (value.includes("risk mitigation")) return "Risk mitigation reduces likelihood or impact with controls.";
+    if (value.includes("rto")) return "RTO is the maximum acceptable time to restore service.";
+    if (value.includes("mttr")) return "MTTR is the average time needed to repair or recover a failed service.";
 
     return "This option is a distractor unless it exactly matches the keyword and concept in the question.";
   }

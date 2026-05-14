@@ -1,0 +1,308 @@
+Risk  Management  -  Unit  5  Final  Question  Bank  1.  Contracting  out  a  specialized  technical  component  is  an  example  of:  
+ 
+A.  Risk  acceptance  
+ 
+B.  Risk  transference  
+ 
+C.  Risk  deterrence  
+ 
+D.  Risk  avoidance  
+ 
+Correct  Answer:  B.  Risk  transference  
+ 
+------------------------------------------------------------  
+ 
+2.  If  a  breach  costs  $100,000  and  is  expected  once  every  5  years,  the  SLE  is:  
+ 
+A.  $100,000  
+ 
+B.  $500,000  
+ 
+C.  $20,000  
+ 
+D.  $5,000  
+ 
+Correct  Answer:  A.  $100,000  
+ 
+------------------------------------------------------------  
+ 
+3.  Which  role  is  MOST  likely  concerned  about  whether  security  costs  are  justified?  
+ 
+A.  CISO  
+ 
+B.  CEO  
+ 
+C.  Legal  
+ 
+D.  CFO  
+ 
+Correct  Answer:  D.  CFO  
+ 
+------------------------------------------------------------  
+ 
+4.  Which  phrase  BEST  aligns  with  the  CISO’s  viewpoint  on  risk?  
+ 
+A.  'This  risk  is  too  high  to  ignore.'  
+ 
+B.  'Is  this  worth  the  cost?'  
+ 
+C.  'This  fix  could  break  systems.'  
+ 
+D.  'Are  we  compliant?'  
+ 
+Correct  Answer:  A.  'This  risk  is  too  high  to  ignore.'  
+ 
+------------------------------------------------------------  
+ 
+5.  Increasing  system  redundancy  primarily  reduces:  
+ 
+A.  Impact  
+ 
+B.  Likelihood  
+ 
+C.  Asset  value  
+ 
+D.  Threat  capability  
+ 
+Correct  Answer:  A.  Impact  
+ 
+------------------------------------------------------------  
+ 
+6.  If  an  asset  is  worth  $10,000  and  EF  is  20%,  what  is  the  SLE?  
+ 
+A.  $10,000  
+ 
+B.  $5,000  
+ 
+C.  $2,000  
+ 
+D.  $500  
+ 
+Correct  Answer:  C.  $2,000  
+ 
+------------------------------------------------------------  
+ 
+7.  Tolerating  a  known  risk  temporarily  is  an  example  of:  
+ 
+A.  Risk  mitigation  
+ 
+B.  Risk  acceptance  
+ 
+C.  Risk  avoidance  
+ 
+D.  Risk  transference  
+ 
+Correct  Answer:  B.  Risk  acceptance  
+ 
+------------------------------------------------------------  
+ 
+8.  Unlicensed  open-source  code  in  a  commercial  product  creates  risk  related  to:  
+ 
+A.  Software  compliance  and  licensing  
+ 
+B.  Internal  misuse  
+ 
+C.  Environmental  factors  
+ 
+D.  External  threats  
+ 
+Correct  Answer:  A.  Software  compliance  and  licensing  
+ 
+------------------------------------------------------------  
+ 
+9.  Which  pairing  BEST  represents  a  complete  risk  scenario?  
+ 
+A.  Threat  +  vulnerability  +  impact  
+ 
+B.  Vulnerability  +  likelihood  
+ 
+C.  Asset  +  impact  
+ 
+D.  Threat  +  exploit  
+ 
+Correct  Answer:  A.  Threat  +  vulnerability  +  impact  
+ 
+------------------------------------------------------------  
+ 
+10.  Malware  taking  advantage  of  an  unpatched  web  server  is  best  described  as  a:  
+ 
+A.  Exploit  
+ 
+B.  Threat  
+ 
+C.  Impact  
+ 
+D.  Risk  
+ 
+Correct  Answer:  A.  Exploit  
+ 
+------------------------------------------------------------  
+ 
+11.  Customer  data  in  risk  management  is  classified  as  a:  
+ 
+A.  Exploit  
+ 
+B.  Vulnerability  
+ 
+C.  Asset  
+ 
+D.  Threat  
+ 
+Correct  Answer:  C.  Asset  
+ 
+------------------------------------------------------------  
+ 
+12.  Which  control  combination  BEST  supports  risk  mitigation?  
+ 
+A.  Backups  and  incident  response  planning  
+ 
+B.  Contract  termination  
+ 
+C.  Insurance  and  acceptance  
+ 
+D.  System  shutdown  and  decommissioning  
+ 
+Correct  Answer:  A.  Backups  and  incident  response  planning  
+ 
+------------------------------------------------------------  
+ 
+13.  Removing  internet  access  from  a  legacy  system  is  an  example  of:  
+ 
+A.  Risk  transference  
+ 
+B.  Risk  avoidance  
+ 
+C.  Risk  acceptance  
+ 
+D.  Risk  mitigation  
+ 
+Correct  Answer:  B.  Risk  avoidance  
+ 
+------------------------------------------------------------  
+ 
+14.  A  competitor  using  stolen  proprietary  algorithms  is  MOST  likely:  
+ 
+A.  Software  compliance  risk  
+ 
+B.  Legacy  system  exposure  
+ 
+C.  External  risk  
+ 
+D.  Intellectual  property  theft  
+ 
+Correct  Answer:  D.  Intellectual  property  theft  
+ 
+------------------------------------------------------------  
+ 
+15.  In  a  phishing  scenario,  what  is  the  primary  vulnerability?  
+ 
+A.  Employee  lack  of  phishing  awareness  
+ 
+B.  Company  customer  data  
+ 
+C.  Attacker  sending  the  email  
+ 
+D.  Financial  loss  
+ 
+Correct  Answer:  A.  Employee  lack  of  phishing  awareness  
+ 
+------------------------------------------------------------  
+ 
+16.  Faster  repair  automation  MOST  directly  reduces:  
+ 
+A.  MTBF  
+ 
+B.  MTTR  
+ 
+C.  RTO  
+ 
+D.  RPO  
+ 
+Correct  Answer:  B.  MTTR  
+ 
+------------------------------------------------------------  
+ 
+17.  A  log  monitoring  system  is  an  example  of  a:  
+ 
+A.  Preventative  control  
+ 
+B.  Detective  control  
+ 
+C.  Corrective  control  
+ 
+D.  Recovery  control  
+ 
+Correct  Answer:  B.  Detective  control  
+ 
+------------------------------------------------------------  
+ 
+18.  Preventive  controls  without  incident  response  planning  MOST  likely  reduce:  
+ 
+A.  Elimination  of  risk  
+ 
+B.  Reduced  exposure  
+ 
+C.  Reduced  impact  
+ 
+D.  Reduced  likelihood  
+ 
+Correct  Answer:  D.  Reduced  likelihood  
+ 
+------------------------------------------------------------  
+ 
+19.  Warning  banners  are  primarily  used  as  a:  
+ 
+A.  Preventative  control  
+ 
+B.  Recovery  control  
+ 
+C.  Deterrent  control  
+ 
+D.  Detective  control  
+ 
+Correct  Answer:  C.  Deterrent  control  
+ 
+------------------------------------------------------------  
+ 
+20.  Which  acronym  refers  to  maximum  allowable  restoration  time  after  disruption?  
+ 
+A.  MTTF  
+ 
+B.  RPO  
+ 
+C.  RTO  
+ 
+D.  SLA  
+ 
+Correct  Answer:  C.  RTO  
+ 
+------------------------------------------------------------  
+ 
+21.  Exploiting  an  old  unpatchable  server  involves  which  risk  types?  
+ 
+A.  External  and  internal  
+ 
+B.  Intellectual  property  and  licensing  
+ 
+C.  Internal  and  compliance  
+ 
+D.  Legacy  systems  and  external  
+ 
+Correct  Answer:  D.  Legacy  systems  and  external  
+ 
+------------------------------------------------------------  
+ 
+22.  Ranking  risks  as  high,  medium,  or  low  is  an  example  of:  
+ 
+A.  Qualitative  risk  analysis  
+ 
+B.  Risk  avoidance  
+ 
+C.  Quantitative  risk  analysis  
+ 
+D.  Risk  transference  
+ 
+Correct  Answer:  A.  Qualitative  risk  analysis  
+ 
+------------------------------------------------------------  
+ 

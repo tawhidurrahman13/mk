@@ -1,0 +1,512 @@
+Incident  Handling  -  Unit  4  Final  Question  Bank  1.  Which  stage  of  the  Cyber  Kill  Chain  involves  the  installation  of  malicious  
+software?
+ 
+ 
+A.  Exploitation  
+ 
+B.  Delivery  
+ 
+C.  Command  and  Control  
+ 
+D.  Actions  on  Objectives  
+ 
+Correct  Answer:  A.  Exploitation  
+ 
+------------------------------------------------------------  
+ 
+2.  What  is  a  key  benefit  of  using  SIEM  and  SOAR  together?  
+ 
+A.  Increased  complexity  
+ 
+B.  Enhanced  visibility  and  automation  
+ 
+C.  Dependency  on  manual  analysis  
+ 
+D.  Isolation  of  SIEM  and  SOAR  
+ 
+Correct  Answer:  B.  Enhanced  visibility  and  automation  
+ 
+------------------------------------------------------------  
+ 
+3.  Which  MITRE  ATT&CK  component  describes  procedures  used  by  adversaries?  
+ 
+A.  Tactics  
+ 
+B.  Techniques  
+ 
+C.  Sub-techniques  
+ 
+D.  Procedures  
+ 
+Correct  Answer:  D.  Procedures  
+ 
+------------------------------------------------------------  
+ 
+4.  What  compliance  applies  to  online  credit  card  transactions?  
+ 
+A.  FISMA  
+ 
+B.  FERPA  
+ 
+C.  HIPAA  
+ 
+D.  PCI-DSS  
+ 
+Correct  Answer:  D.  PCI-DSS  
+ 
+------------------------------------------------------------  
+ 
+5.  An  infected  computer  communicates  with  an  external  server  for  commands.  
+Which
+ 
+Kill
+ 
+Chain
+ 
+stage
+ 
+is
+ 
+this?
+ 
+ 
+A.  Installation  
+ 
+B.  Reconnaissance  
+ 
+C.  Delivery  
+ 
+D.  Command  and  Control  
+ 
+Correct  Answer:  D.  Command  and  Control  
+ 
+------------------------------------------------------------  
+ 
+6.  Which  Cyber  Kill  Chain  stage  involves  executing  malicious  actions?  
+ 
+A.  Exploitation  
+ 
+B.  Installation  
+ 
+C.  Command  and  Control  
+ 
+D.  Actions  on  Objectives  
+ 
+Correct  Answer:  D.  Actions  on  Objectives  
+ 
+------------------------------------------------------------  
+ 
+7.  Which  security  alert  classification  is  the  greatest  threat  because  it  represents  
+undetected
+ 
+exploits?
+ 
+ 
+A.  True  Positive  
+ 
+B.  False  Positive  
+ 
+C.  True  Negative  
+ 
+D.  False  Negative  
+ 
+Correct  Answer:  D.  False  Negative  
+ 
+------------------------------------------------------------  
+ 
+8.  What  does  'Actions  on  Objectives'  represent  in  the  Cyber  Kill  Chain?  
+ 
+A.  Overall  attacker  strategy  
+ 
+B.  Phase  after  an  incident  
+ 
+C.  Stage  where  attacker  achieves  goals  
+ 
+D.  Reconnaissance  phase  
+ 
+Correct  Answer:  C.  Stage  where  attacker  achieves  goals  
+ 
+------------------------------------------------------------  
+ 
+9.  Which  compliance  framework  protects  customer  personal  data  in  the  EU?  
+ 
+A.  HIPAA  
+ 
+B.  GDPR  
+ 
+C.  FERPA  
+ 
+D.  PCI-DSS  
+ 
+Correct  Answer:  B.  GDPR  
+ 
+------------------------------------------------------------  
+ 
+10.  Which  MITRE  ATT&CK  techniques  best  match  the  phishing  and  PowerShell  
+attack
+ 
+scenario?
+ 
+ 
+A.  Phishing,  PowerShell,  Lateral  Movement  
+ 
+B.  Drive-by  Compromise,  Exploit  Public-Facing  App  
+ 
+C.  Valid  Accounts,  Brute  Force,  DDoS  
+ 
+D.  Supply  Chain  Compromise,  Signed  Binary  Proxy  Execution  
+ 
+Correct  Answer:  A.  Phishing,  PowerShell,  Lateral  Movement  
+ 
+------------------------------------------------------------  
+ 
+11.  Localized  worm/virus  outbreak  refers  to  which  incident  level?  
+ 
+A.  Low  Level  
+ 
+B.  Middle  Level  
+ 
+C.  High  Level  
+ 
+D.  Interior  Level  
+ 
+Correct  Answer:  B.  Middle  Level  
+ 
+------------------------------------------------------------  
+ 
+12.  What  is  the  purpose  of  MITRE  ATT&CK  Tactics  categories?  
+ 
+A.  Identify  adversary  groups  
+ 
+B.  Focus  on  documentation  
+ 
+C.  Describe  attacker  strategies  
+ 
+D.  Automate  response  actions  
+ 
+Correct  Answer:  C.  Describe  attacker  strategies  
+ 
+------------------------------------------------------------  
+ 
+13.  ________  is  the  process  of  receiving,  sorting,  and  prioritizing  information.  
+ 
+A.  Triage  
+ 
+B.  Incident  
+ 
+C.  Handling  
+ 
+D.  Constituency  
+ 
+Correct  Answer:  A.  Triage  
+ 
+------------------------------------------------------------  
+ 
+14.  How  does  a  SIEM  system  contribute  to  incident  detection?  
+ 
+A.  Automating  response  actions  
+ 
+B.  Conducting  vulnerability  assessments  
+ 
+C.  Collecting/analyzing/correlating  event  data  
+ 
+D.  Managing  access  controls  
+ 
+Correct  Answer:  C.  Collecting/analyzing/correlating  event  data  
+ 
+------------------------------------------------------------  
+ 
+15.  What  is  the  primary  focus  of  the  Persistence  stage?  
+ 
+A.  Maintaining  long-term  access  
+ 
+B.  Establishing  communication  
+ 
+C.  Identifying  targets  
+ 
+D.  Delivering  payloads  
+ 
+Correct  Answer:  A.  Maintaining  long-term  access  
+ 
+------------------------------------------------------------  
+ 
+16.  Which  framework  protects  educational  records?  
+ 
+A.  FISMA  
+ 
+B.  FERPA  
+ 
+C.  GDPR  
+ 
+D.  HIPAA  
+ 
+Correct  Answer:  B.  FERPA  
+ 
+------------------------------------------------------------  
+ 
+17.  What  is  the  first  step  in  incident  response?  
+ 
+A.  Recovery  
+ 
+B.  Containment  
+ 
+C.  Eradication  
+ 
+D.  Identification  
+ 
+Correct  Answer:  D.  Identification  
+ 
+------------------------------------------------------------  
+ 
+18.  How  many  stages  are  in  the  Cyber  Kill  Chain?  
+ 
+A.  3  
+ 
+B.  5  
+ 
+C.  7  
+ 
+D.  10  
+ 
+Correct  Answer:  C.  7  
+ 
+------------------------------------------------------------  
+ 
+19.  A  ransomware  attack  encrypting  files  belongs  to  which  Kill  Chain  stage?  
+ 
+A.  Command  and  Control  
+ 
+B.  Exploitation  
+ 
+C.  Actions  on  Objectives  
+ 
+D.  Delivery  
+ 
+Correct  Answer:  C.  Actions  on  Objectives  
+ 
+------------------------------------------------------------  
+ 
+20.  Blocking  a  malicious  IP  and  seeing  traffic  decrease  is  classified  as:  
+ 
+A.  True  Positive  
+ 
+B.  False  Positive  
+ 
+C.  True  Negative  
+ 
+D.  False  Negative  
+ 
+Correct  Answer:  A.  True  Positive  
+ 
+------------------------------------------------------------  
+ 
+21.  What  is  the  advantage  of  integrating  SOAR?  
+ 
+A.  Slower  responses  
+ 
+B.  Manual  log  dependency  
+ 
+C.  Increased  manual  intervention  
+ 
+D.  Automation  and  efficiency  
+ 
+Correct  Answer:  D.  Automation  and  efficiency  
+ 
+------------------------------------------------------------  
+ 
+22.  What  was  the  infrastructure  in  the  Diamond  Model  for  Stuxnet?  
+ 
+A.  Worm  
+ 
+B.  Israel/US  
+ 
+C.  USB  Device  
+ 
+D.  Iranian  nuclear  facility  
+ 
+Correct  Answer:  C.  USB  Device  
+ 
+------------------------------------------------------------  
+ 
+23.  A  SIEM  alert  caused  by  a  misconfiguration  is  classified  as:  
+ 
+A.  True  Positive  
+ 
+B.  False  Positive  
+ 
+C.  True  Negative  
+ 
+D.  False  Negative  
+ 
+Correct  Answer:  B.  False  Positive  
+ 
+------------------------------------------------------------  
+ 
+24.  Which  framework  secures  federal  agency  systems?  
+ 
+A.  FISMA  
+ 
+B.  FERPA  
+ 
+C.  NIST  
+ 
+D.  HIPAA  
+ 
+Correct  Answer:  A.  FISMA  
+ 
+------------------------------------------------------------  
+ 
+25.  Which  Cyber  Kill  Chain  stage  identifies  vulnerabilities?  
+ 
+A.  Installation  
+ 
+B.  Exploitation  
+ 
+C.  Reconnaissance  
+ 
+D.  Command  and  Control  
+ 
+Correct  Answer:  C.  Reconnaissance  
+ 
+------------------------------------------------------------  
+ 
+26.  How  does  MITRE  ATT&CK  improve  defenses?  
+ 
+A.  Vulnerability  assessments  
+ 
+B.  Common  language  for  adversary  behavior  
+ 
+C.  Automating  responses  
+ 
+D.  Automatic  eradication  
+ 
+Correct  Answer:  B.  Common  language  for  adversary  behavior  
+ 
+------------------------------------------------------------  
+ 
+27.  How  does  the  Diamond  Model  contribute  to  threat  intelligence?  
+ 
+A.  Focuses  on  documentation  
+ 
+B.  Automatically  eradicates  threats  
+ 
+C.  Framework  to  analyze  adversary  behavior  
+ 
+D.  Conducts  vulnerability  assessments  
+ 
+Correct  Answer:  C.  Framework  to  analyze  adversary  behavior  
+ 
+------------------------------------------------------------  
+ 
+28.  In  incident  response,  what  does  'detection'  mean?  
+ 
+A.  Finding  vulnerabilities  
+ 
+B.  Recognizing  and  confirming  an  incident  
+ 
+C.  Eliminating  the  threat  actor  
+ 
+D.  Restoring  systems  
+ 
+Correct  Answer:  B.  Recognizing  and  confirming  an  incident  
+ 
+------------------------------------------------------------  
+ 
+29.  What  is  the  primary  goal  of  containment?  
+ 
+A.  Identifying  root  cause  
+ 
+B.  Isolating  and  limiting  impact  
+ 
+C.  Restoring  systems  
+ 
+D.  Notifying  stakeholders  
+ 
+Correct  Answer:  B.  Isolating  and  limiting  impact  
+ 
+------------------------------------------------------------  
+ 
+30.  Which  is  a  key  component  of  an  incident  response  plan?  
+ 
+A.  Updating  antivirus  
+ 
+B.  Real-time  monitoring  
+ 
+C.  Incident  documentation  and  reporting  
+ 
+D.  Quarterly  pentesting  
+ 
+Correct  Answer:  C.  Incident  documentation  and  reporting  
+ 
+------------------------------------------------------------  
+ 
+31.  In  the  Diamond  Model,  what  does  Infrastructure  represent?  
+ 
+A.  Victim  location  
+ 
+B.  Network/systems  used  by  attacker  
+ 
+C.  Response  actions  
+ 
+D.  Financial  impact  
+ 
+Correct  Answer:  B.  Network/systems  used  by  attacker  
+ 
+------------------------------------------------------------  
+ 
+32.  What  occurs  during  eradication?  
+ 
+A.  Notify  law  enforcement  
+ 
+B.  Remove  threats  and  vulnerabilities  
+ 
+C.  Recover  backups  
+ 
+D.  Document  the  incident  
+ 
+Correct  Answer:  B.  Remove  threats  and  vulnerabilities  
+ 
+------------------------------------------------------------  
+ 
+33.  What  compliance  should  be  considered  when  sharing  patient  data?  
+ 
+A.  HIPAA  
+ 
+B.  FERPA  
+ 
+C.  FISMA  
+ 
+D.  GDPR  
+ 
+Correct  Answer:  A.  HIPAA  
+ 
+------------------------------------------------------------  
+ 
+34.  Reviewing  employee  LinkedIn  profiles  is  which  Kill  Chain  stage?  
+ 
+A.  Weaponization  
+ 
+B.  Reconnaissance  
+ 
+C.  Delivery  
+ 
+D.  Exploitation  
+ 
+Correct  Answer:  B.  Reconnaissance  
+ 
+------------------------------------------------------------  
+ 
+35.  Analyzing  and  confirming  a  phishing  email  belongs  to  which  IR  stage?  
+ 
+A.  Identification  
+ 
+B.  Containment  
+ 
+C.  Eradication  
+ 
+D.  Recovery  
+ 
+Correct  Answer:  A.  Identification  
+ 
+------------------------------------------------------------  
+ 
