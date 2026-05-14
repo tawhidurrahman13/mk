@@ -10,6 +10,7 @@ const storageKeys = {
   lastPracticeExam: "socBootcampLastPracticeExam",
   certificationPrepScore: "socBootcampCertificationPrepScore",
   practiceExamScore: "socBootcampPracticeExamScore",
+  practiceExamAttempts: "socBootcampPracticeExamAttempts",
   questionBankScore: "socBootcampQuestionBankScore",
   kaliLastSection: "socBootcampKaliLastSection",
   kaliCompletedSections: "socBootcampKaliCompletedSections",
@@ -1054,6 +1055,49 @@ const comptiaSecurityPlusQuestionBank = [
     question: "What type of attack repeatedly tries default usernames and passwords on IoT devices?",
     answers: ["Brute force", "Credential stuffing", "Password spraying", "Dictionary attack"],
     correct: 0
+  }
+];
+
+const fullLengthPracticeExams = [
+  {
+    id: "pearson-cybersecurity-full",
+    certification: "Pearson Cybersecurity",
+    title: "Pearson Cybersecurity Full Length Practice Exam",
+    minutes: 50,
+    questionBank: pearsonCybersecurityQuestionBank,
+    bankStatus: "Temporary bank: Cybersecurity quiz pool. Replace with official document when provided."
+  },
+  {
+    id: "pearson-network-security-full",
+    certification: "Pearson Network Security",
+    title: "Pearson Network Security Full Length Practice Exam",
+    minutes: 50,
+    questionBank: pearsonNetworkSecurityQuestionBank,
+    bankStatus: "Temporary bank: Network Security quiz pool. Replace with official document when provided."
+  },
+  {
+    id: "pearson-networking-full",
+    certification: "Pearson Networking",
+    title: "Pearson Networking Full Length Practice Exam",
+    minutes: 50,
+    questionBank: pearsonNetworkingQuestionBank,
+    bankStatus: "Temporary bank: Networking quiz pool. Replace with official document when provided."
+  },
+  {
+    id: "comptia-network-plus-full",
+    certification: "CompTIA Network Plus",
+    title: "CompTIA Network Plus Full Length Practice Exam",
+    minutes: 50,
+    questionBank: pearsonNetworkingQuestionBank,
+    bankStatus: "Temporary bank: Networking pool until Network Plus documents are uploaded."
+  },
+  {
+    id: "comptia-security-plus-full",
+    certification: "CompTIA Security Plus",
+    title: "CompTIA Security Plus Full Length Practice Exam",
+    minutes: 90,
+    questionBank: comptiaSecurityPlusQuestionBank,
+    bankStatus: "Temporary bank: Security Plus practice set. Replace with official document when provided."
   }
 ];
 
@@ -2739,6 +2783,7 @@ function createEmptyProgress() {
     selectedPracticeExam: "",
     certifications: {},
     practiceExamScore: "",
+    practiceExamAttempts: [],
     quizAttempts: [],
     updatedAt: ""
   };
@@ -2826,6 +2871,50 @@ function saveQuizAttemptForCurrentUser(attempt) {
   }).catch(() => {});
 }
 
+function savePracticeExamAttemptForCurrentUser(attempt) {
+  const username = getCurrentUsername();
+  if (!username) {
+    return;
+  }
+
+  const progress = getUserProgress(username);
+  const savedAttempt = {
+    ...attempt,
+    userId: username,
+    timestamp: new Date().toISOString(),
+    completedAt: new Date().toISOString()
+  };
+
+  progress.practiceExamAttempts = [savedAttempt, ...(progress.practiceExamAttempts || [])].slice(0, 20);
+  progress.practiceExamScore = String(attempt.percent);
+  progress.selectedPracticeExam = attempt.title;
+  saveUserProgress(username, progress);
+
+  localStorage.setItem(storageKeys.practiceExamScore, String(attempt.percent));
+  localStorage.setItem(storageKeys.selectedPracticeExam, attempt.title);
+  localStorage.setItem(storageKeys.lastPracticeExam, JSON.stringify({
+    name: attempt.title,
+    savedAt: savedAttempt.completedAt,
+    score: attempt.percent
+  }));
+
+  if (attempt.certification && certificationCatalog.includes(attempt.certification)) {
+    upsertCertificationProgress(username, attempt.certification, {
+      practiceExamScore: String(attempt.percent),
+      status: attempt.percent >= 80 ? "Practice Exam Passed" : "Studying"
+    });
+  }
+
+  apiFetch("/api/progress/selection", {
+    method: "POST",
+    body: JSON.stringify({
+      certification: attempt.certification,
+      practiceExam: attempt.title,
+      practiceExamScore: attempt.percent
+    })
+  }).catch(() => {});
+}
+
 function updateAdminScoreOverview() {
   const overview = document.getElementById("adminScoreOverview");
   if (!overview) {
@@ -2882,6 +2971,25 @@ function initializeCertificationsPage() {
   const saveScoreCheckpointButton = document.getElementById("saveScoreCheckpointButton");
   const practiceExamScoreInput = document.getElementById("practiceExamScoreInput");
   const savePracticeExamScoreButton = document.getElementById("savePracticeExamScoreButton");
+  const practiceExamRunner = document.getElementById("practiceExamRunner");
+  const examRunnerTitle = document.getElementById("examRunnerTitle");
+  const examRunnerMeta = document.getElementById("examRunnerMeta");
+  const examRunnerTimer = document.getElementById("examRunnerTimer");
+  const examRunnerLockStatus = document.getElementById("examRunnerLockStatus");
+  const examRunnerBody = document.getElementById("examRunnerBody");
+  const examRunnerNextButton = document.getElementById("examRunnerNextButton");
+  const examRunnerSubmitButton = document.getElementById("examRunnerSubmitButton");
+  const examRunnerExitButton = document.getElementById("examRunnerExitButton");
+  let activePracticeExam = null;
+  let activePracticeExamQuestions = [];
+  let activePracticeExamSelections = [];
+  let activePracticeExamIndex = 0;
+  let practiceExamStartedAt = null;
+  let practiceExamRemainingSeconds = 0;
+  let practiceExamTimerId = null;
+  let practiceExamViolations = [];
+  let practiceExamFinished = false;
+  let lastPracticeExamViolation = "";
 
   updateCertificationStatus();
   updatePracticeExamStatus();
@@ -2946,9 +3054,7 @@ function initializeCertificationsPage() {
   examButtons.forEach((button) => {
     button.addEventListener("click", () => {
       const card = button.closest(".exam-card");
-      savePracticeExam(card.dataset.exam);
-      updatePracticeExamStatus();
-      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      launchFullPracticeExam(card.dataset.examId);
     });
   });
 
@@ -2962,8 +3068,35 @@ function initializeCertificationsPage() {
 
       const savedCard = Array.from(examCards).find((card) => card.dataset.exam === savedExam);
       if (savedCard) {
-        savedCard.scrollIntoView({ behavior: "smooth", block: "center" });
+        launchFullPracticeExam(savedCard.dataset.examId);
+      } else {
         showToast(`Resuming ${savedExam}`);
+      }
+    });
+  }
+
+  if (examRunnerNextButton) {
+    examRunnerNextButton.addEventListener("click", () => movePracticeExamForward());
+  }
+
+  if (examRunnerSubmitButton) {
+    examRunnerSubmitButton.addEventListener("click", () => {
+      if (activePracticeExam && window.confirm("Submit this practice exam now?")) {
+        finishPracticeExam("Submitted by student");
+      }
+    });
+  }
+
+  if (examRunnerExitButton) {
+    examRunnerExitButton.addEventListener("click", () => {
+      if (practiceExamFinished) {
+        closePracticeExamRunner();
+        return;
+      }
+
+      if (activePracticeExam && window.confirm("Exit and submit your current progress?")) {
+        addPracticeExamViolation("Student exited before finishing");
+        finishPracticeExam("Exited early");
       }
     });
   }
@@ -3078,6 +3211,454 @@ function initializeCertificationsPage() {
     if (practiceExamScoreInput) {
       practiceExamScoreInput.value = getCurrentUserScoreByStorageKey(storageKeys.practiceExamScore) || localStorage.getItem(storageKeys.practiceExamScore) || "";
     }
+  }
+
+  function launchFullPracticeExam(examId) {
+    const username = getCurrentUsername();
+    if (!username) {
+      showToast("Create an account or log in before starting a locked practice exam.");
+      return;
+    }
+
+    const exam = fullLengthPracticeExams.find((candidate) => candidate.id === examId);
+    if (!exam) {
+      showToast("Practice exam not found.");
+      return;
+    }
+
+    const questionPool = Array.isArray(exam.questionBank) ? exam.questionBank : [];
+    if (!questionPool.length) {
+      showToast("This exam is ready, but its question document has not been added yet.");
+      return;
+    }
+
+    activePracticeExam = exam;
+    activePracticeExamQuestions = createPracticeExamQuestionSet(questionPool);
+    activePracticeExamSelections = new Array(activePracticeExamQuestions.length).fill(null);
+    activePracticeExamIndex = 0;
+    practiceExamStartedAt = new Date();
+    practiceExamRemainingSeconds = exam.minutes * 60;
+    practiceExamViolations = [];
+    practiceExamFinished = false;
+    lastPracticeExamViolation = "";
+
+    savePracticeExam(exam.title);
+    updatePracticeExamStatus();
+    renderPracticeExamQuestion();
+    startPracticeExamTimer();
+    installPracticeExamLockdown();
+    requestPracticeExamFullscreen();
+
+    if (practiceExamRunner) {
+      practiceExamRunner.classList.remove("hidden");
+      practiceExamRunner.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    showToast(`${exam.title} started. Lockdown mode is active.`);
+  }
+
+  function createPracticeExamQuestionSet(questionPool) {
+    const order = shufflePracticeExamValues(questionPool.map((_, index) => index));
+    return order.map((originalIndex) => randomizePracticeExamAnswers(questionPool[originalIndex], originalIndex));
+  }
+
+  function randomizePracticeExamAnswers(question, originalIndex) {
+    let answerOrder = shufflePracticeExamValues(question.answers.map((_, index) => index));
+    const originalOrder = question.answers.map((_, index) => index);
+
+    if (answerOrder.length > 1 && practiceExamArraysMatch(answerOrder, originalOrder)) {
+      answerOrder = [...answerOrder.slice(1), answerOrder[0]];
+    }
+
+    return {
+      ...question,
+      originalIndex,
+      originalAnswers: [...question.answers],
+      originalCorrect: question.correct,
+      answers: answerOrder.map((answerIndex) => question.answers[answerIndex]),
+      correct: answerOrder.indexOf(question.correct)
+    };
+  }
+
+  function shufflePracticeExamValues(values) {
+    const shuffled = [...values];
+    for (let index = shuffled.length - 1; index > 0; index -= 1) {
+      const swapIndex = Math.floor(Math.random() * (index + 1));
+      [shuffled[index], shuffled[swapIndex]] = [shuffled[swapIndex], shuffled[index]];
+    }
+    return shuffled;
+  }
+
+  function practiceExamArraysMatch(first, second) {
+    return Array.isArray(first)
+      && Array.isArray(second)
+      && first.length === second.length
+      && first.every((value, index) => value === second[index]);
+  }
+
+  function renderPracticeExamQuestion() {
+    if (!activePracticeExam || !examRunnerBody) {
+      return;
+    }
+
+    const question = activePracticeExamQuestions[activePracticeExamIndex];
+    const selectedAnswer = activePracticeExamSelections[activePracticeExamIndex];
+    const answeredCount = activePracticeExamSelections.filter((answer) => answer !== null).length;
+
+    if (examRunnerTitle) {
+      examRunnerTitle.textContent = activePracticeExam.title;
+    }
+
+    if (examRunnerMeta) {
+      examRunnerMeta.textContent = `${activePracticeExam.certification} | ${activePracticeExam.minutes} minute limit | ${activePracticeExamQuestions.length} questions | ${activePracticeExam.bankStatus}`;
+    }
+
+    updatePracticeExamTimerDisplay();
+    updatePracticeExamLockStatus();
+
+    examRunnerBody.innerHTML = `
+      <div class="exam-progress-strip">
+        <span>Question ${activePracticeExamIndex + 1} of ${activePracticeExamQuestions.length}</span>
+        <span>${answeredCount}/${activePracticeExamQuestions.length} answered</span>
+      </div>
+      <p class="question-title">${escapePracticeExamHtml(question.question)}</p>
+      <div class="answer-grid">
+        ${question.answers.map((answer, index) => `
+          <button class="answer-button ${selectedAnswer === index ? "selected" : ""}" type="button" data-answer="${index}">
+            ${escapePracticeExamHtml(answer)}
+          </button>
+        `).join("")}
+      </div>
+      <div class="lockdown-warning">
+        <strong>Lockdown active.</strong>
+        <p>Do not switch tabs, leave fullscreen, copy/paste, print, right-click, or use browser shortcuts. Violations are saved with the attempt.</p>
+      </div>
+    `;
+
+    examRunnerBody.querySelectorAll(".answer-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        activePracticeExamSelections[activePracticeExamIndex] = Number(button.dataset.answer);
+        renderPracticeExamQuestion();
+      });
+    });
+
+    if (examRunnerNextButton) {
+      examRunnerNextButton.classList.toggle("hidden", activePracticeExamIndex === activePracticeExamQuestions.length - 1);
+    }
+
+    if (examRunnerSubmitButton) {
+      examRunnerSubmitButton.classList.toggle("hidden", activePracticeExamIndex !== activePracticeExamQuestions.length - 1);
+    }
+
+    if (examRunnerExitButton) {
+      examRunnerExitButton.classList.remove("hidden");
+      examRunnerExitButton.textContent = "Exit Exam";
+    }
+  }
+
+  function movePracticeExamForward() {
+    if (!activePracticeExam) {
+      return;
+    }
+
+    if (activePracticeExamSelections[activePracticeExamIndex] === null) {
+      showToast("Choose an answer before moving on.");
+      return;
+    }
+
+    if (activePracticeExamIndex < activePracticeExamQuestions.length - 1) {
+      activePracticeExamIndex += 1;
+      renderPracticeExamQuestion();
+      return;
+    }
+
+    finishPracticeExam("Completed all questions");
+  }
+
+  function startPracticeExamTimer() {
+    window.clearInterval(practiceExamTimerId);
+    practiceExamTimerId = window.setInterval(() => {
+      practiceExamRemainingSeconds -= 1;
+      updatePracticeExamTimerDisplay();
+
+      if (practiceExamRemainingSeconds <= 0) {
+        finishPracticeExam("Time expired");
+      }
+    }, 1000);
+  }
+
+  function updatePracticeExamTimerDisplay() {
+    if (!examRunnerTimer) {
+      return;
+    }
+
+    const safeSeconds = Math.max(0, practiceExamRemainingSeconds);
+    const minutes = Math.floor(safeSeconds / 60);
+    const seconds = safeSeconds % 60;
+    examRunnerTimer.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+    examRunnerTimer.classList.toggle("danger", safeSeconds <= 300);
+  }
+
+  function requestPracticeExamFullscreen() {
+    if (!practiceExamRunner || !practiceExamRunner.requestFullscreen) {
+      addPracticeExamViolation("Fullscreen API unavailable");
+      return;
+    }
+
+    practiceExamRunner.requestFullscreen().catch(() => {
+      addPracticeExamViolation("Fullscreen request was blocked or dismissed");
+      showToast("Fullscreen was not allowed. The attempt will be flagged.");
+    });
+  }
+
+  function installPracticeExamLockdown() {
+    document.addEventListener("visibilitychange", handlePracticeExamVisibilityChange);
+    document.addEventListener("fullscreenchange", handlePracticeExamFullscreenChange);
+    document.addEventListener("contextmenu", blockPracticeExamBrowserAction);
+    document.addEventListener("copy", blockPracticeExamBrowserAction);
+    document.addEventListener("cut", blockPracticeExamBrowserAction);
+    document.addEventListener("paste", blockPracticeExamBrowserAction);
+    document.addEventListener("keydown", handlePracticeExamKeydown, true);
+    window.addEventListener("blur", handlePracticeExamWindowBlur);
+    window.addEventListener("beforeunload", handlePracticeExamBeforeUnload);
+    window.addEventListener("beforeprint", handlePracticeExamBeforePrint);
+  }
+
+  function removePracticeExamLockdown() {
+    document.removeEventListener("visibilitychange", handlePracticeExamVisibilityChange);
+    document.removeEventListener("fullscreenchange", handlePracticeExamFullscreenChange);
+    document.removeEventListener("contextmenu", blockPracticeExamBrowserAction);
+    document.removeEventListener("copy", blockPracticeExamBrowserAction);
+    document.removeEventListener("cut", blockPracticeExamBrowserAction);
+    document.removeEventListener("paste", blockPracticeExamBrowserAction);
+    document.removeEventListener("keydown", handlePracticeExamKeydown, true);
+    window.removeEventListener("blur", handlePracticeExamWindowBlur);
+    window.removeEventListener("beforeunload", handlePracticeExamBeforeUnload);
+    window.removeEventListener("beforeprint", handlePracticeExamBeforePrint);
+  }
+
+  function handlePracticeExamVisibilityChange() {
+    if (document.hidden) {
+      addPracticeExamViolation("Browser tab or window was hidden");
+    }
+  }
+
+  function handlePracticeExamFullscreenChange() {
+    if (activePracticeExam && !practiceExamFinished && !document.fullscreenElement) {
+      addPracticeExamViolation("Exited fullscreen mode");
+      showToast("Fullscreen exit logged as a lockdown violation.");
+    }
+  }
+
+  function handlePracticeExamWindowBlur() {
+    addPracticeExamViolation("Browser focus was lost");
+  }
+
+  function handlePracticeExamBeforeUnload(event) {
+    if (!activePracticeExam || practiceExamFinished) {
+      return;
+    }
+
+    event.preventDefault();
+    event.returnValue = "";
+  }
+
+  function handlePracticeExamBeforePrint(event) {
+    blockPracticeExamBrowserAction(event, "Print attempt blocked");
+  }
+
+  function blockPracticeExamBrowserAction(event, reason = "Blocked browser action attempted") {
+    if (!activePracticeExam || practiceExamFinished) {
+      return;
+    }
+
+    event.preventDefault();
+    addPracticeExamViolation(reason);
+  }
+
+  function handlePracticeExamKeydown(event) {
+    if (!activePracticeExam || practiceExamFinished) {
+      return;
+    }
+
+    const key = String(event.key || "").toLowerCase();
+    const blockedCtrlKey = event.ctrlKey && ["c", "f", "l", "n", "p", "r", "s", "t", "u", "v", "w", "x"].includes(key);
+    const blockedDevTools = event.key === "F12" || (event.ctrlKey && event.shiftKey && ["c", "i", "j"].includes(key));
+    const blockedMetaKey = event.metaKey && ["c", "f", "l", "n", "p", "r", "s", "t", "v", "w", "x"].includes(key);
+
+    if (blockedCtrlKey || blockedDevTools || blockedMetaKey) {
+      event.preventDefault();
+      addPracticeExamViolation(`Blocked shortcut: ${formatPracticeExamShortcut(event)}`);
+    }
+  }
+
+  function formatPracticeExamShortcut(event) {
+    const parts = [];
+    if (event.ctrlKey) parts.push("Ctrl");
+    if (event.metaKey) parts.push("Meta");
+    if (event.shiftKey) parts.push("Shift");
+    if (event.altKey) parts.push("Alt");
+    parts.push(event.key);
+    return parts.join("+");
+  }
+
+  function addPracticeExamViolation(reason) {
+    if (!activePracticeExam || practiceExamFinished) {
+      return;
+    }
+
+    const now = Date.now();
+    const violationSignature = `${reason}:${Math.floor(now / 3000)}`;
+    if (lastPracticeExamViolation === violationSignature) {
+      return;
+    }
+
+    lastPracticeExamViolation = violationSignature;
+    practiceExamViolations.push({
+      reason,
+      at: new Date().toISOString(),
+      question: activePracticeExamIndex + 1
+    });
+    updatePracticeExamLockStatus();
+  }
+
+  function updatePracticeExamLockStatus() {
+    if (!examRunnerLockStatus) {
+      return;
+    }
+
+    const fullscreenActive = Boolean(document.fullscreenElement);
+    const violationCount = practiceExamViolations.length;
+    examRunnerLockStatus.textContent = `${fullscreenActive ? "Fullscreen" : "Windowed"} | ${violationCount} violation${violationCount === 1 ? "" : "s"}`;
+    examRunnerLockStatus.classList.toggle("hot", violationCount > 0);
+  }
+
+  function finishPracticeExam(reason) {
+    if (!activePracticeExam || practiceExamFinished) {
+      return;
+    }
+
+    practiceExamFinished = true;
+    window.clearInterval(practiceExamTimerId);
+    removePracticeExamLockdown();
+
+    const total = activePracticeExamQuestions.length;
+    const answered = activePracticeExamSelections.filter((answer) => answer !== null).length;
+    const correct = activePracticeExamQuestions.reduce((count, question, index) => {
+      return activePracticeExamSelections[index] === question.correct ? count + 1 : count;
+    }, 0);
+    const percent = total ? Math.round((correct / total) * 100) : 0;
+    const timeSpentSeconds = practiceExamStartedAt
+      ? Math.round((Date.now() - practiceExamStartedAt.getTime()) / 1000)
+      : 0;
+
+    const attempt = {
+      examId: activePracticeExam.id,
+      title: activePracticeExam.title,
+      certification: activePracticeExam.certification,
+      score: correct,
+      total,
+      answered,
+      percent,
+      timeLimitMinutes: activePracticeExam.minutes,
+      timeSpentSeconds,
+      reason,
+      violations: [...practiceExamViolations]
+    };
+
+    savePracticeExamAttemptForCurrentUser(attempt);
+    renderPracticeExamResult(attempt);
+    updatePracticeExamStatus();
+    hydrateScoreInputs();
+
+    if (document.fullscreenElement && document.exitFullscreen) {
+      document.exitFullscreen().catch(() => {});
+    }
+
+    showToast(`${activePracticeExam.title} submitted: ${percent}%`);
+    activePracticeExam = null;
+  }
+
+  function renderPracticeExamResult(attempt) {
+    if (!examRunnerBody) {
+      return;
+    }
+
+    const passed = attempt.percent >= 80;
+    const violationSummary = attempt.violations.length
+      ? attempt.violations.slice(0, 5).map((violation) => `
+          <li>${escapePracticeExamHtml(violation.reason)} on question ${violation.question}</li>
+        `).join("")
+      : "<li>No lockdown violations recorded.</li>";
+
+    if (examRunnerTitle) {
+      examRunnerTitle.textContent = `${attempt.title} Results`;
+    }
+
+    if (examRunnerMeta) {
+      examRunnerMeta.textContent = `${attempt.certification} | ${attempt.reason} | ${formatPracticeExamDuration(attempt.timeSpentSeconds)} used`;
+    }
+
+    if (examRunnerTimer) {
+      examRunnerTimer.textContent = `${attempt.percent}%`;
+      examRunnerTimer.classList.toggle("danger", !passed);
+    }
+
+    if (examRunnerLockStatus) {
+      examRunnerLockStatus.textContent = attempt.violations.length ? `${attempt.violations.length} violation${attempt.violations.length === 1 ? "" : "s"}` : "Clean attempt";
+      examRunnerLockStatus.classList.toggle("hot", attempt.violations.length > 0);
+    }
+
+    examRunnerBody.innerHTML = `
+      <div class="practice-exam-result ${passed ? "passed" : "review"}">
+        <span class="category-chip">${passed ? "Passed practice target" : "Review recommended"}</span>
+        <h3>${attempt.score}/${attempt.total} correct (${attempt.percent}%)</h3>
+        <p>${attempt.answered}/${attempt.total} questions answered. Time used: ${formatPracticeExamDuration(attempt.timeSpentSeconds)}.</p>
+      </div>
+      <div class="lockdown-warning">
+        <strong>Lockdown log</strong>
+        <ul>${violationSummary}</ul>
+      </div>
+    `;
+
+    if (examRunnerNextButton) {
+      examRunnerNextButton.classList.add("hidden");
+    }
+
+    if (examRunnerSubmitButton) {
+      examRunnerSubmitButton.classList.add("hidden");
+    }
+
+    if (examRunnerExitButton) {
+      examRunnerExitButton.classList.remove("hidden");
+      examRunnerExitButton.textContent = "Close Result";
+    }
+  }
+
+  function closePracticeExamRunner() {
+    if (practiceExamRunner) {
+      practiceExamRunner.classList.add("hidden");
+    }
+
+    if (examRunnerExitButton) {
+      examRunnerExitButton.classList.add("hidden");
+    }
+  }
+
+  function formatPracticeExamDuration(totalSeconds) {
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}m ${String(seconds).padStart(2, "0")}s`;
+  }
+
+  function escapePracticeExamHtml(value) {
+    return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#39;"
+    }[character]));
   }
 }
 

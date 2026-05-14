@@ -1124,6 +1124,148 @@ button {
   margin: 0;
 }
 
+.lockdown-summary {
+  display: grid;
+  gap: 6px;
+  margin-top: 18px;
+  padding: 14px;
+  border: 1px solid rgba(34, 211, 238, 0.24);
+  border-radius: 14px;
+  background: rgba(34, 211, 238, 0.08);
+}
+
+.lockdown-summary span {
+  color: var(--blue);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lockdown-summary strong,
+.lockdown-summary p {
+  margin: 0;
+}
+
+.practice-exam-runner {
+  margin-top: 18px;
+}
+
+.exam-runner-shell {
+  display: grid;
+  gap: 18px;
+  padding: 22px;
+}
+
+.exam-runner-top,
+.exam-runner-status,
+.exam-progress-strip,
+.exam-runner-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.exam-runner-top {
+  justify-content: space-between;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.18);
+}
+
+.exam-runner-top h2,
+.exam-runner-top p {
+  margin: 0;
+}
+
+.exam-runner-status {
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.exam-timer {
+  min-width: 116px;
+  padding: 10px 14px;
+  color: #f8f5ff;
+  font-size: 1.35rem;
+  font-weight: 950;
+  text-align: center;
+  border: 1px solid rgba(34, 211, 238, 0.38);
+  border-radius: 999px;
+  background: rgba(10, 10, 10, 0.58);
+  box-shadow: 0 0 24px rgba(34, 211, 238, 0.16);
+}
+
+.exam-timer.danger {
+  border-color: rgba(239, 68, 68, 0.64);
+  box-shadow: 0 0 24px rgba(239, 68, 68, 0.2);
+}
+
+.exam-runner-body {
+  display: grid;
+  gap: 14px;
+}
+
+.exam-progress-strip {
+  justify-content: space-between;
+  padding: 10px 12px;
+  color: var(--muted);
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.32);
+}
+
+.answer-button.selected {
+  border-color: rgba(34, 211, 238, 0.78);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.2);
+}
+
+.lockdown-warning {
+  padding: 14px;
+  border: 1px solid rgba(250, 204, 21, 0.28);
+  border-radius: 14px;
+  background: rgba(250, 204, 21, 0.08);
+}
+
+.lockdown-warning strong,
+.lockdown-warning p {
+  margin: 0;
+}
+
+.lockdown-warning p,
+.lockdown-warning li {
+  color: #d7dceb;
+  line-height: 1.5;
+}
+
+.lockdown-warning ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+}
+
+.practice-exam-result {
+  display: grid;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(168, 85, 247, 0.24);
+  border-radius: 14px;
+  background: rgba(10, 10, 10, 0.38);
+}
+
+.practice-exam-result.passed {
+  border-color: rgba(34, 197, 94, 0.44);
+  box-shadow: 0 0 26px rgba(34, 197, 94, 0.14);
+}
+
+.practice-exam-result.review {
+  border-color: rgba(34, 211, 238, 0.42);
+  box-shadow: 0 0 26px rgba(34, 211, 238, 0.14);
+}
+
+.practice-exam-result h3,
+.practice-exam-result p {
+  margin: 0;
+}
+
 .score-entry-panel {
   display: grid;
   gap: 12px;
@@ -2317,6 +2459,14 @@ button {
   }
 
   .panel-heading {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .exam-runner-top,
+  .exam-runner-status,
+  .exam-progress-strip,
+  .exam-runner-actions {
     align-items: stretch;
     flex-direction: column;
   }

@@ -222,49 +222,68 @@
             <h2>Exam Mode:</h2>
             <div class="pill-cluster">
               <span class="filter-pill active">Timed</span>
-              <span class="filter-pill">Untimed</span>
-              <span class="filter-pill">Review Mode</span>
-              <span class="filter-pill">Weak Areas</span>
+              <span class="filter-pill active">Lockdown</span>
+              <span class="filter-pill">Fullscreen</span>
+              <span class="filter-pill">Violation Log</span>
             </div>
           </div>
 
           <div class="session-row">
             <h2>Exam Bank:</h2>
-            <p class="helper-line">Choose a practice exam to simulate certification pacing and save your latest exam target.</p>
+            <p class="helper-line">Choose a full-length practice exam. The runner starts a timer, requests fullscreen, blocks common shortcuts, and logs tab-switch or focus violations.</p>
           </div>
 
           <div class="exam-grid">
-            <article class="exam-card" data-exam="Pearson Networking Readiness Exam">
-              <span class="category-chip">Pearson Networking</span>
-              <h3>Pearson Networking Readiness Exam</h3>
-              <p>Checkpoint for ports, protocols, routing, wireless, and troubleshooting basics.</p>
-              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            <article class="exam-card" data-exam-id="pearson-cybersecurity-full" data-exam="Pearson Cybersecurity Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>Pearson Cybersecurity Full Length Practice Exam</h3>
+              <p>Locked exam setup for SOC concepts, incident response, risk, and defensive controls.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
             </article>
 
-            <article class="exam-card" data-exam="Pearson Network Security Drill">
-              <span class="category-chip">Pearson Network Security</span>
-              <h3>Pearson Network Security Drill</h3>
-              <p>Scenario-heavy practice covering firewalls, segmentation, packet review, and controls.</p>
-              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            <article class="exam-card" data-exam-id="pearson-network-security-full" data-exam="Pearson Network Security Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>Pearson Network Security Full Length Practice Exam</h3>
+              <p>Locked exam setup for attack surfaces, controls, access models, and network defense.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
             </article>
 
-            <article class="exam-card" data-exam="CompTIA Security Plus SOC Simulation">
-              <span class="category-chip">CompTIA Security Plus</span>
-              <h3>CompTIA Security Plus SOC Simulation</h3>
-              <p>Incident triage and security controls practice for certification readiness.</p>
-              <button class="secondary-button start-exam-button" type="button">Start Exam</button>
+            <article class="exam-card" data-exam-id="pearson-networking-full" data-exam="Pearson Networking Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>Pearson Networking Full Length Practice Exam</h3>
+              <p>Locked exam setup for OSI, topology, cabling, WAN, and troubleshooting basics.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="comptia-network-plus-full" data-exam="CompTIA Network Plus Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>CompTIA Network Plus Full Length Practice Exam</h3>
+              <p>Locked exam setup for Network+ pacing. Current bank is temporary until docs are added.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="comptia-security-plus-full" data-exam="CompTIA Security Plus Full Length Practice Exam">
+              <span class="category-chip">90 minutes</span>
+              <h3>CompTIA Security Plus Full Length Practice Exam</h3>
+              <p>Locked exam setup for Security+ controls, monitoring, attacks, and response concepts.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
             </article>
           </div>
         </article>
 
         <aside class="summary-panel glass-card">
-          <p class="panel-note">Exam questions</p>
-          <strong class="mega-number">180</strong>
+          <p class="panel-note">Full exams</p>
+          <strong class="mega-number">5</strong>
           <div class="study-summary">
             <h3 id="currentExamText">No practice exam selected yet.</h3>
             <p id="lastExamText">Last Practice Exam: none</p>
           </div>
-          <button class="primary-button full-width" id="resumeExamButton" type="button">Resume Exam</button>
+          <button class="primary-button full-width" id="resumeExamButton" type="button">Resume Last Exam</button>
+          <div class="lockdown-summary">
+            <span>Browser lockdown</span>
+            <strong>Fullscreen + violation log</strong>
+            <p>Tab switches, focus loss, copy/paste, right-click, print, and common shortcuts are logged during the exam.</p>
+          </div>
           <div class="score-entry-panel compact-score-panel">
             <label>
               Practice Exam Score
@@ -273,6 +292,32 @@
             <button class="secondary-button full-width" id="savePracticeExamScoreButton" type="button">Save Exam Score</button>
           </div>
         </aside>
+      </section>
+
+      <section class="practice-exam-runner hidden" id="practiceExamRunner" aria-live="polite">
+        <div class="exam-runner-shell glass-card">
+          <div class="exam-runner-top">
+            <div>
+              <p class="panel-note">Locked Practice Exam</p>
+              <h2 id="examRunnerTitle">Select an exam to begin</h2>
+              <p id="examRunnerMeta" class="helper-line">Timer and lockdown details appear here.</p>
+            </div>
+            <div class="exam-runner-status">
+              <span class="exam-timer" id="examRunnerTimer">--:--</span>
+              <span class="badge electric" id="examRunnerLockStatus">Lockdown idle</span>
+            </div>
+          </div>
+
+          <div class="exam-runner-body" id="examRunnerBody">
+            <p>Launch a practice exam above to start the locked testing interface.</p>
+          </div>
+
+          <div class="exam-runner-actions">
+            <button class="primary-button hidden" id="examRunnerNextButton" type="button">Next Question</button>
+            <button class="primary-button hidden" id="examRunnerSubmitButton" type="button">Submit Exam</button>
+            <button class="secondary-button hidden" id="examRunnerExitButton" type="button">Exit Exam</button>
+          </div>
+        </div>
       </section>
     </main>
 
