@@ -3099,6 +3099,7 @@ function initializeQuizzesPage() {
       <div class="dragon-chat-row">
         <div class="dragon-mini-face happy" aria-hidden="true"></div>
         <div class="dragon-chat-bubble coach-speech success">
+          <span class="pep-talk-rule">Reading is fundamental.</span>
           <strong>${escapeCertificationQuizHtml(pickCertCoachLine(["Keep moving.", "Build the pattern.", "You are training recall."]))}</strong>
           <p>${escapeCertificationQuizHtml(pickCertCoachLine([
             "Do not rush the answer choices. Most quiz misses come from missing one word in the question.",
@@ -3966,8 +3967,9 @@ function initializeKaliPage() {
 
       dragonCoachContent.innerHTML = `
         <div class="dragon-chat-row">
-          <div class="dragon-mini-face happy" aria-hidden="true"></div>
-          <div class="dragon-chat-bubble coach-speech success">
+        <div class="dragon-mini-face happy" aria-hidden="true"></div>
+        <div class="dragon-chat-bubble coach-speech success">
+            <span class="pep-talk-rule">Reading is fundamental.</span>
             <strong>${escapeQuizHtml(pickCoachLine(["Stay sharp.", "You are building analyst instincts.", "One question at a time."]))}</strong>
             <p>${escapeQuizHtml(pickCoachLine([
               "Even wrong answers are useful if you understand why they were wrong.",

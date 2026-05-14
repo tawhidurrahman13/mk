@@ -1759,6 +1759,16 @@ button {
   color: #f8f5ff;
 }
 
+.pep-talk-rule {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--blue);
+  font-size: 0.76rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
 .dragon-chat-bubble p,
 .dragon-prompt-card p,
 .dragon-option p {
