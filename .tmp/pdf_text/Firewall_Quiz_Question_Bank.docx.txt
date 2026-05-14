@@ -1,0 +1,232 @@
+Firewall  Quiz  Question  Bank  1.  _________________  is  the  kind  of  firewall  connected  between  the  device  and  the  
+network
+ 
+connecting
+ 
+to
+ 
+the
+ 
+internet.
+ 
+ 
+A.  Hardware  Firewall  
+ 
+B.  Software  Firewall  
+ 
+C.  Stateful  Inspection  Firewall  
+ 
+D.  Microsoft  Firewall  
+ 
+Correct  Answer:  A.  Hardware  Firewall  
+ 
+------------------------------------------------------------  
+ 
+2.  What  is  a  stateless  firewall?  
+ 
+A.  A  firewall  that  filters  traffic  based  on  connection  state  
+ 
+B.  A  firewall  that  operates  at  Layer  3  
+ 
+C.  A  firewall  that  examines  each  packet  in  isolation  
+ 
+D.  A  firewall  using  advanced  adaptive  algorithms  
+ 
+Correct  Answer:  C.  A  firewall  that  examines  each  packet  in  isolation  
+ 
+------------------------------------------------------------  
+ 
+3.  What  port  does  secure  HTTP  use?  
+ 
+A.  TCP  port  550  
+ 
+B.  TCP  port  443  
+ 
+C.  TCP  port  399  
+ 
+D.  TCP  port  250  
+ 
+Correct  Answer:  B.  TCP  port  443  
+ 
+------------------------------------------------------------  
+ 
+4.  In  which  scenario  would  a  stateful  firewall  be  more  effective  than  a  stateless  
+firewall?
+ 
+ 
+A.  Filtering  HTTP  requests  by  source  IP  
+ 
+B.  Allowing  traffic  based  on  ports  
+ 
+C.  Blocking  malicious  patterns  
+ 
+D.  Preventing  unauthorized  access  by  maintaining  TCP  connection  state  
+ 
+Correct  Answer:  D.  Preventing  unauthorized  access  by  maintaining  TCP  
+connection
+ 
+state
+ 
+ 
+------------------------------------------------------------  
+ 
+5.  What  is  a  primary  advantage  of  a  stateful  firewall  over  a  stateless  firewall?  
+ 
+A.  Simplicity  of  configuration  
+ 
+B.  Higher  performance  
+ 
+C.  Ability  to  inspect  packet  contents  
+ 
+D.  Improved  security  through  connection  tracking  
+ 
+Correct  Answer:  D.  Improved  security  through  connection  tracking  
+ 
+------------------------------------------------------------  
+ 
+6.  Which  of  the  following  is  NOT  a  type  of  firewall?  
+ 
+A.  Packet-filtering  firewall  
+ 
+B.  Demilitarized  Zone  (DMZ)  
+ 
+C.  Proxy  firewall  
+ 
+D.  Intrusion  Prevention  System  (IPS)  
+ 
+Correct  Answer:  D.  Intrusion  Prevention  System  (IPS)  
+ 
+------------------------------------------------------------  
+ 
+7.  Which  layer  of  the  OSI  model  do  firewalls  primarily  operate  at?  
+ 
+A.  Physical  layer  
+ 
+B.  Data  link  layer  
+ 
+C.  Network  layer  
+ 
+D.  Transport  layer  
+ 
+Correct  Answer:  C.  Network  layer  
+ 
+------------------------------------------------------------  
+ 
+8.  Which  type  of  firewall  examines  packet  contents  and  application  data?  
+ 
+A.  Packet-filtering  firewall  
+ 
+B.  Stateful  firewall  
+ 
+C.  Proxy  firewall  
+ 
+D.  Hybrid  firewall  
+ 
+Correct  Answer:  C.  Proxy  firewall  
+ 
+------------------------------------------------------------  
+ 
+9.  What  distinguishes  a  network-based  firewall  from  a  host-based  firewall?  
+ 
+A.  Network-based  firewalls  filter  at  application  layer  
+ 
+B.  Network-based  firewalls  are  installed  on  computers  
+ 
+C.  Network-based  firewalls  protect  individual  computers  
+ 
+D.  Network-based  firewalls  monitor/filter  traffic  at  network  boundaries  
+ 
+Correct  Answer:  D.  Network-based  firewalls  monitor/filter  traffic  at  network  
+boundaries
+ 
+ 
+------------------------------------------------------------  
+ 
+10.  What  is  an  advantage  of  using  both  network-based  and  host-based  firewalls  
+together?
+ 
+ 
+A.  Increased  complexity  
+ 
+B.  Slower  performance  
+ 
+C.  Redundancy  if  one  firewall  fails  
+ 
+D.  Reduced  security  
+ 
+Correct  Answer:  C.  Redundancy  if  one  firewall  fails  
+ 
+------------------------------------------------------------  
+ 
+11.  In  which  scenario  would  a  host-based  firewall  be  most  effective?  
+ 
+A.  Protecting  a  corporate  network  
+ 
+B.  Filtering  traffic  between  departments  
+ 
+C.  Securing  a  single  computer  connected  to  the  internet  
+ 
+D.  Controlling  LAN  shared  resources  
+ 
+Correct  Answer:  C.  Securing  a  single  computer  connected  to  the  internet  
+ 
+------------------------------------------------------------  
+ 
+12.  Which  best  describes  a  network-based  firewall?  
+ 
+A.  Installed  on  individual  computers  
+ 
+B.  Filters  traffic  at  the  boundary  between  private  and  external  networks  
+ 
+C.  Operates  at  the  application  layer  
+ 
+D.  Encrypts  all  transmitted  data  
+ 
+Correct  Answer:  B.  Filters  traffic  at  the  boundary  between  private  and  external  
+networks
+ 
+ 
+------------------------------------------------------------  
+ 
+13.  What  is  an  advantage  of  stateful  firewalls  over  stateless  firewalls?  
+ 
+A.  Easier  configuration  
+ 
+B.  Filters  based  on  connection  context  
+ 
+C.  Uses  less  bandwidth  
+ 
+D.  Better  legacy  compatibility  
+ 
+Correct  Answer:  B.  Filters  based  on  connection  context  
+ 
+------------------------------------------------------------  
+ 
+14.  What  does  a  stateful  firewall  use  to  keep  track  of  connections?  
+ 
+A.  Packet  headers  
+ 
+B.  Source  IP  addresses  
+ 
+C.  Session  tables  
+ 
+D.  MAC  addresses  
+ 
+Correct  Answer:  C.  Session  tables  
+ 
+------------------------------------------------------------  
+ 
+15.  The  following  diagram  BEST  depicts  which  firewall?  
+ 
+A.  Stateful  Firewall  
+ 
+B.  Stateless  Firewall  
+ 
+C.  Static  Firewall  
+ 
+D.  Dynamic  Firewall  
+ 
+Correct  Answer:  B.  Stateless  Firewall  
+ 
+------------------------------------------------------------  
+ 

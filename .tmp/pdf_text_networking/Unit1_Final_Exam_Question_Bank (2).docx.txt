@@ -1,0 +1,541 @@
+Unit  1  Final  Exam  -  Question  Bank  1.  A  disadvantage  of  the  __________  topology  is  that  if  one  computer  goes  down,  
+it
+ 
+can
+ 
+take
+ 
+the
+ 
+entire
+ 
+network
+ 
+with
+ 
+it.
+ 
+ 
+A.  Star  
+ 
+B.  Mesh  
+ 
+C.  Ring  
+ 
+D.  Hybrid  
+ 
+Correct  Answer:  C.  Ring  
+ 
+------------------------------------------------------------  
+2.  A  user  interface  can  be  provided  on  the  __________  OSI  layer.  
+ 
+A.  Presentation  
+ 
+B.  Physical  
+ 
+C.  Data  Link  
+ 
+D.  Application  
+ 
+Correct  Answer:  D.  Application  
+ 
+------------------------------------------------------------  
+3.  Which  layer  of  the  OSI  model  does  the  NIC  operate  in?  
+ 
+A.  Data-link  layer  
+ 
+B.  Transmission  layer  
+ 
+C.  Physical  Layer  
+ 
+D.  Application  Layer  
+ 
+Correct  Answer:  A.  Data-link  layer  
+ 
+------------------------------------------------------------  
+4.  Which  of  the  following  are  a  collection  of  computers  and  networks  joined  
+together
+ 
+across
+ 
+the
+ 
+world?
+ 
+ 
+A.  Intranet  
+ 
+B.  Internet  
+ 
+C.  Extranet  
+ 
+D.  Ethernet  
+ 
+Correct  Answer:  B.  Internet  
+ 
+------------------------------------------------------------  
+5.  Which  type  of  application  architecture  was  used  when  an  employee  connected  
+spreadsheet
+ 
+software
+ 
+to
+ 
+a
+ 
+remote
+ 
+database?
+ 
+ 
+A.  Stand  alone  application  
+ 
+B.  Client-server  application  
+ 
+C.  Web  application  
+ 
+D.  Cloud  application  
+ 
+Correct  Answer:  B.  Client-server  application  
+ 
+------------------------------------------------------------  
+6.  What  type  of  zone  allows  vendors  limited  access  to  company  resources?  
+ 
+A.  CAN  
+ 
+B.  Intranet  
+ 
+C.  Extranet  
+ 
+D.  Telecom  
+ 
+Correct  Answer:  C.  Extranet  
+ 
+------------------------------------------------------------  
+7.  Which  OSI  layer  translates  the  data  format  between  operating  systems?  
+ 
+A.  Session  layer  
+ 
+B.  Network  layer  
+ 
+C.  Presentation  layer  
+ 
+D.  Application  layer  
+ 
+Correct  Answer:  C.  Presentation  layer  
+ 
+------------------------------------------------------------  
+8.  What  are  two  advantages  of  DSL  for  WAN  connections?  
+ 
+A.  Uses  standard  telephone  lines  
+ 
+B.  Cost-effective  for  SOHO  internet  
+ 
+C.  Higher  bandwidth  than  cable  modems  
+ 
+D.  Bypasses  ISP  requirement  
+ 
+E.  Preferred  for  enterprise  point-to-point  links  
+ 
+Correct  Answers:  A  and  B  
+ 
+------------------------------------------------------------  
+9.  Which  OSI  layer  is  equivalent  to  the  Internet  layer  in  TCP/IP?  
+ 
+A.  Transport  
+ 
+B.  Session  
+ 
+C.  Application  
+ 
+D.  Datalink  
+ 
+E.  Presentation  
+ 
+F.  Network  
+ 
+G.  Physical  
+ 
+Correct  Answer:  F.  Network  
+ 
+------------------------------------------------------------  
+10.  A  cable  meeting  1000BaseT  standards  has  a  maximum  length  of:  
+ 
+A.  100m  
+ 
+B.  250m  
+ 
+C.  500m  
+ 
+D.  1000m  
+ 
+Correct  Answer:  A.  100m  
+ 
+------------------------------------------------------------  
+11.  Which  TCP/IP  layer  determines  how  to  get  data  to  its  destination?  
+ 
+A.  Application  layer  
+ 
+B.  Transport  layer  
+ 
+C.  Network  layer  
+ 
+D.  Link  layer  
+ 
+Correct  Answer:  C.  Network  layer  
+ 
+------------------------------------------------------------  
+12.  Which  is  an  advantage  of  a  peer-to-peer  network?  
+ 
+A.  Files  cannot  be  centrally  backed  up  
+ 
+B.  Does  not  need  an  expensive  server  
+ 
+C.  The  server  is  expensive  to  purchase  
+ 
+D.  Security  can  be  carried  out  centrally  
+ 
+Correct  Answer:  B.  Does  not  need  an  expensive  server  
+ 
+------------------------------------------------------------  
+13.  Which  Layer  4  protocol  is  connection-oriented?  
+ 
+A.  Transmission  Control  Protocol  
+ 
+B.  User  Datagram  Protocol  
+ 
+C.  Remote  Desktop  Protocol  
+ 
+D.  Secure  Socket  Layer  
+ 
+Correct  Answer:  A.  Transmission  Control  Protocol  
+ 
+------------------------------------------------------------  
+14.  What  cable  should  be  used  to  directly  connect  two  laptops?  
+ 
+A.  Crossover  cable  
+ 
+B.  Rolled  cable  
+ 
+C.  Patch  cable  
+ 
+D.  Straight  through  cable  
+ 
+Correct  Answer:  A.  Crossover  cable  
+ 
+------------------------------------------------------------  
+15.  Which  implementation  provides  a  private  portal  for  authorized  company  
+users?
+ 
+ 
+A.  Extranet  
+ 
+B.  DMZ  
+ 
+C.  Intranet  
+ 
+D.  NAT  
+ 
+Correct  Answer:  C.  Intranet  
+ 
+------------------------------------------------------------  
+16.  Which  tool  isolates  the  correct  cable  in  a  patch  panel?  
+ 
+A.  Cable  Tester  
+ 
+B.  Multimeter  
+ 
+C.  Toner  Probe  
+ 
+D.  Crimper  
+ 
+Correct  Answer:  C.  Toner  Probe  
+ 
+------------------------------------------------------------  
+17.  Why  use  STP  instead  of  UTP  cable?  
+ 
+A.  Reduce  attenuation  
+ 
+B.  More  light  and  flexible  
+ 
+C.  High  external  interference  
+ 
+D.  Lower  installation  cost  
+ 
+Correct  Answer:  C.  High  external  interference  
+ 
+------------------------------------------------------------  
+18.  What  topology  is  shown?  
+ 
+A.  Mesh  
+ 
+B.  Bus  
+ 
+C.  Adhoc  
+ 
+D.  Ring  
+ 
+E.  Star  
+ 
+Correct  Answer:  C.  Adhoc  
+ 
+------------------------------------------------------------  
+19.  Identify  the  network  infrastructure  shown.  
+ 
+A.  PAN  
+ 
+B.  WAN  
+ 
+C.  CAN  
+ 
+D.  MAN  
+ 
+Correct  Answer:  D.  MAN  
+ 
+------------------------------------------------------------  
+20.  What  are  two  characteristics  of  wired  Ethernet  topology?  
+ 
+A.  NICs  encoded  with  IP  addresses  
+ 
+B.  Uses  tokens  to  avoid  collisions  
+ 
+C.  Uses  twisted  pair  media  
+ 
+D.  Can  negotiate  transmission  speeds  
+ 
+Correct  Answers:  C  and  D  
+ 
+------------------------------------------------------------  
+21.  Which  OSI  layers  equal  the  Interface  layer  in  TCP/IP?  
+ 
+A.  Session  
+ 
+B.  Application  
+ 
+C.  Datalink  
+ 
+D.  Transport  
+ 
+E.  Presentation  
+ 
+F.  Physical  
+ 
+G.  Network  
+ 
+Correct  Answers:  C  and  F  
+ 
+------------------------------------------------------------  
+22.  Routed  private  Wi ‑ Fi  networks  at  one  location  are  an  example  of:  
+ 
+A.  Internet  
+ 
+B.  Extranet  
+ 
+C.  Intranet  
+ 
+D.  Perimeter  
+ 
+Correct  Answer:  C.  Intranet  
+ 
+------------------------------------------------------------  
+23.  Identify  the  networking  topology  shown.  
+ 
+A.  Ring  
+ 
+B.  Mesh  
+ 
+C.  Bus  
+ 
+D.  Star  
+ 
+Correct  Answer:  D.  Star  
+ 
+------------------------------------------------------------  
+24.  Match  networking  topologies  with  characteristics.  
+ 
+1.  Central  hub  with  individual  cables  
+ 
+2.  Public  internet  based  topology  
+ 
+3.  Token-passing  repeater  nodes  
+ 
+4.  Multiple  connections  between  nodes  
+ 
+Correct  Answers:  1-Star,  2-Mesh,  3-Ring,  4-Mesh  
+ 
+------------------------------------------------------------  
+25.  Which  topology  uses  terminators  to  absorb  signals?  
+ 
+A.  Ring  
+ 
+B.  Bus  
+ 
+C.  Mesh  
+ 
+D.  Star  
+ 
+Correct  Answer:  B.  Bus  
+ 
+------------------------------------------------------------  
+26.  Which  cable  should  connect  locations  6  miles  apart?  
+ 
+A.  Single-mode  fiber  
+ 
+B.  Multi-mode  fiber  
+ 
+C.  Cat5e  
+ 
+D.  Cat6  
+ 
+Correct  Answer:  A.  Single-mode  fiber  
+ 
+------------------------------------------------------------  
+27.  What  devices  are  connected  in  a  PAN?  
+ 
+A.  Laptops,  smartphones,  tablets  
+ 
+B.  Printers  and  headsets  
+ 
+C.  Wearable  technology  
+ 
+D.  All  of  the  above  
+ 
+Correct  Answer:  D.  All  of  the  above  
+ 
+------------------------------------------------------------  
+28.  Match  the  networking  terms.  
+ 
+1.  Vast  worldwide  network  
+ 
+2.  Secure  collaboration  between  companies  
+ 
+3.  Private  employee-only  network  
+ 
+Correct  Answers:  1-Internet,  2-Extranet,  3-Intranet  
+ 
+------------------------------------------------------------  
+29.  Client-server  network  statements.  
+ 
+A.  Centralized  administration  -  True  
+ 
+B.  Requires  each  computer  to  share  resources  -  False  
+ 
+C.  Requires  accounts  on  every  computer  -  False  
+ 
+Correct  Answers:  A=True,  B=False,  C=False  
+ 
+------------------------------------------------------------  
+30.  Which  OSI  layers  can  be  physically  troubleshooted?  
+ 
+A.  Application  
+ 
+B.  Datalink  
+ 
+C.  Presentation  
+ 
+D.  Networking  
+ 
+E.  Transport  
+ 
+F.  Session  
+ 
+G.  Physical  
+ 
+Correct  Answers:  B  and  G  
+ 
+------------------------------------------------------------  
+31.  What  is  the  primary  disadvantage  of  bus  topology?  
+ 
+A.  Single  point  of  failure  
+ 
+B.  Independent  routers  
+ 
+C.  Central  switch  
+ 
+D.  Multiple  radio  cards  
+ 
+Correct  Answer:  A.  Single  point  of  failure  
+ 
+------------------------------------------------------------  
+32.  The  image  best  depicts:  
+ 
+A.  PoE  
+ 
+B.  NFC  
+ 
+C.  DNS  
+ 
+D.  WLAN  
+ 
+Correct  Answer:  B.  NFC  
+ 
+------------------------------------------------------------  
+33.  Which  OSI  layer  encapsulates  data  with  a  header  and  trailer?  
+ 
+A.  Physical  
+ 
+B.  Application  
+ 
+C.  Data  Link  
+ 
+D.  Presentation  
+ 
+Correct  Answer:  C.  Data  Link  
+ 
+------------------------------------------------------------  
+34.  Main  advantages  of  a  star  network?  
+ 
+A.  Cheap  to  set  up  
+ 
+B.  Requires  additional  hardware  
+ 
+C.  Processes  data  very  fast  
+ 
+D.  Easy  to  implement  
+ 
+E.  Stores  more  data  
+ 
+Correct  Answers:  C  and  D  
+ 
+------------------------------------------------------------  
+35.  Which  server  primarily  stores  queryable  data?  
+ 
+A.  Web  Server  
+ 
+B.  Application  Server  
+ 
+C.  Computer  Server  
+ 
+D.  Database  Server  
+ 
+Correct  Answer:  D.  Database  Server  
+ 
+------------------------------------------------------------  
+36.  Match  OSI  layers  to  PDUs.  
+ 
+Network  Layer  
+ 
+Physical  Layer  
+ 
+Datalink  Layer  
+ 
+Application  
+ 
+Transport  Layer  
+ 
+Correct  Answers:  Packets,  Bits,  Frames,  Data,  Segments  
+ 
+------------------------------------------------------------  
+37.  Which  topology  provides  fault  tolerance  with  redundant  paths?  
+ 
+A.  Ring  
+ 
+B.  Bus  
+ 
+C.  Star  
+ 
+D.  Mesh  
+ 
+Correct  Answer:  D.  Mesh  
+ 
+------------------------------------------------------------  

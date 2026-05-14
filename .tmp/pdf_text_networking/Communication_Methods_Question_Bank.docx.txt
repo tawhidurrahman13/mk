@@ -1,0 +1,190 @@
+Communication  Methods  Question  Bank  1.  Which  communication  method  is  most  bandwidth-efficient  for  delivering  data  to  
+multiple
+ 
+specific
+ 
+recipients?
+ 
+ 
+A.  Unicast  
+ 
+B.  Multicast  
+ 
+C.  Broadcast  
+ 
+D.  Any  of  the  above  
+ 
+Correct  Answer:  B.  Multicast  
+ 
+--------------------------------------------------  
+ 
+2.  Which  communication  method  is  least  suitable  for  delivering  data  to  a  specific  
+group
+ 
+of
+ 
+recipients?
+ 
+ 
+A.  Multicast  
+ 
+B.  Unicast  
+ 
+C.  Broadcast  
+ 
+D.  Anycast  
+ 
+Correct  Answer:  C.  Broadcast  
+ 
+--------------------------------------------------  
+ 
+3.  Which  communication  method  is  typically  used  for  communication  between  a  
+client
+ 
+and
+ 
+a
+ 
+server
+ 
+in
+ 
+a
+ 
+network?
+ 
+ 
+A.  Unicast  
+ 
+B.  Multicast  
+ 
+C.  Broadcast  
+ 
+D.  All  of  the  Above  
+ 
+Correct  Answer:  A.  Unicast  
+ 
+--------------------------------------------------  
+ 
+4.  A  streaming  service  is  delivering  a  live  concert  to  subscribers  worldwide.  Which  
+method
+ 
+would
+ 
+be
+ 
+best?
+ 
+ 
+A.  Multicast  
+ 
+B.  Broadcasting  
+ 
+C.  Anycast  
+ 
+D.  Unicast  
+ 
+Correct  Answer:  D.  Unicast  
+ 
+--------------------------------------------------  
+ 
+5.  A  company  is  conducting  a  live  training  session  for  employees  in  different  
+branches
+ 
+worldwide.
+ 
+Which
+ 
+method
+ 
+is
+ 
+best?
+ 
+ 
+A.  Unicast  
+ 
+B.  Anycast  
+ 
+C.  Broadcast  
+ 
+D.  Multicast  
+ 
+Correct  Answer:  D.  Multicast  
+ 
+--------------------------------------------------  
+ 
+6.  A  hospital  needs  to  send  critical  patient  data  from  a  monitoring  device  to  
+multiple
+ 
+medical
+ 
+staff
+ 
+members
+ 
+in
+ 
+real-time.
+ 
+ 
+A.  Unicast  
+ 
+B.  Multicast  
+ 
+C.  Anycast  
+ 
+D.  Broadcast  
+ 
+Correct  Answer:  B.  Multicast  
+ 
+--------------------------------------------------  
+ 
+7.  A  multinational  corporation  is  deploying  VoIP  for  employees.  Which  method  is  
+best
+ 
+for
+ 
+routing
+ 
+calls
+ 
+to
+ 
+the
+ 
+nearest
+ 
+gateway?
+ 
+ 
+A.  Unicast  
+ 
+B.  Multicast  
+ 
+C.  Anycast  
+ 
+D.  Broadcast  
+ 
+Correct  Answer:  C.  Anycast  
+ 
+--------------------------------------------------  
+ 
+8.  A  LAN  in  an  office  needs  to  distribute  real-time  video  announcements  to  all  
+employees
+ 
+simultaneously.
+ 
+ 
+A.  Multicast  
+ 
+B.  Anycast  
+ 
+C.  Unicast  
+ 
+D.  Broadcast  
+ 
+Correct  Answer:  D.  Broadcast  
+ 
+--------------------------------------------------  
+ 
