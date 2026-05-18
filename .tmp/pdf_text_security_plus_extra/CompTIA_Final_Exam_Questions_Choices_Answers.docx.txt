@@ -1,0 +1,160 @@
+CompTIA  Security+  Final  Exam  —  Questions,  Choices  &  Answers  1.  A  company  implements  a  Zero  Trust  model  to  secure  its  infrastructure.  What  is  
+the
+ 
+core
+ 
+principle
+ 
+of
+ 
+this
+ 
+model?
+ 
+ 
+A)  Implicit  trust  within  the  internal  network  
+B)  Continuous  authentication  and  least  privilege  
+C)  Network  segmentation  with  firewalls  
+D)  Encrypting  all  data  stored  on-premises  
+ 
+Correct  Answer:  B)  Continuous  authentication  and  least  privilege  
+ 
+------------------------------------------------------------  
+2.  An  attacker  exploits  a  weak  API  endpoint  to  access  sensitive  customer  data.  
+What
+ 
+is
+ 
+the
+ 
+best
+ 
+defense
+ 
+against
+ 
+such
+ 
+attacks?
+ 
+ 
+A)  Encrypt  all  API  communications  
+B)  Require  multi-factor  authentication  for  API  users  
+C)  Use  input  validation  and  rate  limiting  
+D)  Deploy  endpoint  protection  on  developer  systems  
+ 
+Correct  Answer:  C)  Use  input  validation  and  rate  limiting  
+ 
+------------------------------------------------------------  
+3.  What  is  the  primary  purpose  of  a  Business  Impact  Analysis  (BIA)?  
+ 
+A)  Ensure  compliance  with  regulatory  frameworks  
+B)  Identify  critical  business  functions  and  assess  the  impact  of  disruptions  
+C)  Detect  insider  threats  through  behavior  monitoring  
+D)  Analyze  vulnerabilities  in  legacy  systems  
+ 
+Correct  Answer:  B)  Identify  critical  business  functions  and  assess  the  impact  of  
+disruptions
+ 
+ 
+------------------------------------------------------------  
+4.  A  company  experiences  a  ransomware  attack.  What  should  the  incident  
+response
+ 
+team
+ 
+prioritize?
+ 
+ 
+A)  Notify  law  enforcement  and  preserve  evidence  
+B)  Pay  the  ransom  to  restore  operations  quickly  
+C)  Isolate  affected  systems  and  restore  from  backups  
+D)  Disable  all  network  traffic  to  contain  the  attack  
+ 
+Correct  Answer:  C)  Isolate  affected  systems  and  restore  from  backups  
+ 
+------------------------------------------------------------  
+5.  Which  cryptographic  technique  ensures  the  integrity  of  a  transmitted  file?  
+ 
+A)  Encryption  
+B)  Hashing  
+C)  Tokenization  
+D)  Salting  
+ 
+Correct  Answer:  B)  Hashing  
+ 
+------------------------------------------------------------  
+6.  An  attacker  sends  phishing  emails  targeting  executives  of  an  organization.  
+What
+ 
+is
+ 
+this
+ 
+attack
+ 
+called?
+ 
+ 
+A)  Spear  phishing  
+B)  Whaling  
+C)  Vishing  
+D)  Smishing  
+ 
+Correct  Answer:  B)  Whaling  
+ 
+------------------------------------------------------------  
+7.  Which  of  the  following  is  a  primary  function  of  a  SIEM  system?  
+ 
+A)  Encrypt  sensitive  files  in  real-time  
+B)  Analyze  and  correlate  security  events  across  the  network  
+C)  Automatically  patch  vulnerable  systems  
+D)  Deploy  firewalls  and  intrusion  prevention  systems  
+ 
+Correct  Answer:  B)  Analyze  and  correlate  security  events  across  the  network  
+ 
+------------------------------------------------------------  
+8.  What  is  the  best  method  to  secure  data  stored  in  a  misconfigured  cloud  storage  
+bucket?
+ 
+ 
+A)  Restrict  public  access  and  implement  identity-based  permissions  
+B)  Encrypt  all  files  with  RSA  
+C)  Configure  logging  to  monitor  access  attempts  
+D)  Deploy  an  intrusion  detection  system  (IDS)  
+ 
+Correct  Answer:  A)  Restrict  public  access  and  implement  identity-based  
+permissions
+ 
+ 
+------------------------------------------------------------  
+9.  An  attacker  intercepts  and  modifies  communication  between  two  devices.  What  
+is
+ 
+this
+ 
+attack
+ 
+called?
+ 
+ 
+A)  Replay  attack  
+B)  Man-in-the-middle  (MITM)  
+C)  ARP  poisoning  
+D)  Session  hijacking  
+ 
+Correct  Answer:  B)  Man-in-the-middle  (MITM)  
+ 
+------------------------------------------------------------  
+10.  Which  of  the  following  tools  is  used  to  analyze  network  traffic  for  suspicious  
+activity?
+ 
+ 
+A)  Wireshark  
+B)  Nessus  
+C)  Splunk  
+D)  Metasploit  
+ 
+Correct  Answer:  A)  Wireshark  
+ 
+------------------------------------------------------------  

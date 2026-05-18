@@ -1158,123 +1158,6 @@ const comptiaSecurityPlusQuestionBank = [
   }
 ];
 
-const networkingPracticeExamSubunits = [
-  "Networking Fundamentals",
-  "Network Infrastructures",
-  "Network Hardware",
-  "Protocols and Services",
-  "Troubleshooting"
-];
-
-function networkingPracticeQuestion(subunit, question, answers, correct = 0) {
-  return {
-    subunit,
-    question,
-    answers,
-    correct
-  };
-}
-
-const itsNetworkingExam1QuestionBank = [
-  networkingPracticeQuestion("Protocols and Services", "What are the main criteria used by firewalls to filter traffic? Choose 2.", ["Protocols and ports", "User accounts and applications", "Ports and applications", "Protocols and user accounts"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which wireless standards are compatible with 802.11ac? Choose 2.", ["802.11n and 802.11a", "802.11b and 802.11g", "802.11a and 802.11b", "802.11g and 802.11b"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which are WAN connectivity options? Choose 2.", ["Leased Line and Dial-Up", "Ethernet and Token Ring", "Ethernet and Dial-Up", "Leased Line and Token Ring"]),
-  networkingPracticeQuestion("Protocols and Services", "Which protocol maps an IP address to a MAC address?", ["ARP", "DHCP", "RIP", "No change is needed"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Private WiFi networks at one location describe which network?", ["Intranet", "Internet", "Extranet", "Perimeter Network"]),
-  networkingPracticeQuestion("Networking Fundamentals", "What is the subnet mask for 172.168.1.0 as a Class B network?", ["255.255.0.0", "255.0.0.0", "255.255.255.0", "255.255.255.255"]),
-  networkingPracticeQuestion("Networking Fundamentals", "What is the network for IP address 220.100.100.100?", ["220.100.100.0/24", "220.100.100.1/24", "255.255.255.0/24", "255.255.255.1/24"]),
-  networkingPracticeQuestion("Network Hardware", "Which cable and connector pairing is correct for the pictured Ethernet connection?", ["RJ45 and Ethernet", "RJ11 and Ethernet", "BNC and coax", "LC and fiber"]),
-  networkingPracticeQuestion("Network Hardware", "Which are characteristics of switches? Choose 2.", ["Identify destination and send/receive simultaneously", "Cause more collisions and send frames to all computers", "Identify destination and cause more collisions", "Send frames to all computers and only transmit half-duplex"]),
-  networkingPracticeQuestion("Network Hardware", "Which switch behavior truth sequence is correct: unicast to one port, flood unknown packets, broadcast only to uplink?", ["Yes, Yes, No", "Yes, No, Yes", "No, Yes, Yes", "No, No, Yes"]),
-  networkingPracticeQuestion("Networking Fundamentals", "CIDR 192.168.1.1/25 corresponds to which subnet mask?", ["255.255.255.128", "255.255.255.64", "255.255.255.32", "255.255.255.256"]),
-  networkingPracticeQuestion("Network Hardware", "What is the best cable to reduce interference?", ["STP Cat5e", "UTP Cat5e", "Cat3", "UTP Cat6"]),
-  networkingPracticeQuestion("Protocols and Services", "Which TCP/IP/UDP truth sequence is correct: TCP is reliable, IP is reliable, UDP is unreliable?", ["Yes, No, Yes", "Yes, Yes, No", "No, Yes, Yes", "No, No, Yes"]),
-  networkingPracticeQuestion("Troubleshooting", "Which Linux tool can list active incoming connections?", ["netstat", "ip addr", "host", "dig"]),
-  networkingPracticeQuestion("Protocols and Services", "Which encryption protocols secure browser/server communication?", ["SSL and TLS", "HTTP and HTTPS", "TCP and UDP", "SSL and HTTP"]),
-  networkingPracticeQuestion("Networking Fundamentals", "The Internet is best described as which topology?", ["Mesh", "Star", "Hybrid", "Ring"]),
-  networkingPracticeQuestion("Protocols and Services", "Which QoS truth sequence is correct: define priority, control bandwidth, assign protocols dynamically?", ["Yes, No, No", "Yes, Yes, No", "No, Yes, No", "No, No, Yes"]),
-  networkingPracticeQuestion("Network Hardware", "A MAC address identifies a:", ["NIC", "Local broadcast domain", "LAN", "UPnP device"]),
-  networkingPracticeQuestion("Protocols and Services", "Which IPv6 address type delivers packets to all interfaces in a group?", ["Multicast", "Broadcast", "Unicast", "Anycast"]),
-  networkingPracticeQuestion("Network Hardware", "What is a similarity between Layer 2 and Layer 3 switches?", ["Forward packets", "High security", "Logical addressing", "Allow VLANs only"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which pair contains invalid IP addresses?", ["156.296.61.14 and 6901:0gd8", "109.215.72.3 and 192.168.1.10", "172.16.0.1 and 10.0.0.5", "8.8.8.8 and 1.1.1.1"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which wireless encryption option is the weakest?", ["WEP", "WPA", "WPA2", "AES"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which ordering correctly lists OSI layers from Layer 1 to Layer 7?", ["Physical, Data Link, Network, Transport, Session, Presentation, Application", "Application, Presentation, Session, Transport, Network, Data Link, Physical", "Physical, Network, Data Link, Transport, Session, Presentation, Application", "Data Link, Physical, Network, Session, Transport, Presentation, Application"]),
-  networkingPracticeQuestion("Network Infrastructures", "What does Teredo tunneling provide?", ["IPv6 connectivity through IPv4 devices", "IPv4 to IPv6 translation only", "VPN security", "Dynamic IPv6 allocation"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which data transmission method uses a private tunnel?", ["VPN", "PPTP only", "L2TP only", "IPsec only"]),
-  networkingPracticeQuestion("Protocols and Services", "Which DNS record maps an IP address to a fully qualified domain name?", ["PTR", "CNAME", "AAAA", "A"]),
-  networkingPracticeQuestion("Troubleshooting", "Which command shows listening ports?", ["netstat", "ping", "nbtstat", "nslookup"]),
-  networkingPracticeQuestion("Networking Fundamentals", "What determines the media access method?", ["Topology and protocols", "Number of hosts", "Number of domain servers", "Maximum speed only"]),
-  networkingPracticeQuestion("Network Infrastructures", "What is the purpose of a perimeter network?", ["Make resources available to the Internet", "Make resources available only to the intranet", "Link CANs", "Link LANs"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which VPN type is used to connect a home computer to an intranet?", ["VPN, Site-to-Host", "VPN, Site-to-Site", "VLAN, Site-to-Host", "IPsec, Intranet-only"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which OSI encapsulation order is correct from Transport down to Physical?", ["Segments, Packets, Frames, Bits", "Packets, Segments, Bits, Frames", "Frames, Packets, Segments, Bits", "Bits, Frames, Packets, Segments"]),
-  networkingPracticeQuestion("Troubleshooting", "Which command generated the shown results for active connections?", ["netstat -a", "ping", "ipconfig", "route print"]),
-  networkingPracticeQuestion("Troubleshooting", "Which command verifies server connectivity?", ["PING", "IPCONFIG", "ROUTE", "CHECK"]),
-  networkingPracticeQuestion("Protocols and Services", "Which are DHCP features? Choose 2.", ["Address reservation and IP address exclusion", "Address resolution to canonical names and secure shell connections", "Network file transfer and secure shell connections", "Address resolution and network file transfer"]),
-  networkingPracticeQuestion("Network Hardware", "Which cable is best for interference near heavy equipment?", ["STP Cat5e", "UTP Cat5e", "UTP Cat6", "Cat3"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which is a private IP address?", ["192.168.1.10", "169.168.21.24", "11.145.12.57", "224.142.15.21"]),
-  networkingPracticeQuestion("Network Hardware", "Which Layer 2 device connects multiple computers?", ["Switch", "Repeater", "Router", "Packet"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which network type is usually most vulnerable?", ["Wireless", "Dial-up", "Broadband", "Leased line"]),
-  networkingPracticeQuestion("Protocols and Services", "Which DNS zone replication term is correct?", ["Zone transfer", "Zone synchronization", "Start of authority", "No change needed"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which IP class matching is correct?", ["Class A: 1-126, Class B: 128-191, Class C: 192-223, Class D: 224-239", "Class A: 192-223, Class B: 1-126, Class C: 128-191, Class D: 240-255", "Class A: 128-191, Class B: 192-223, Class C: 1-126, Class D: 224-239", "Class A: 224-239, Class B: 192-223, Class C: 128-191, Class D: 1-126"]),
-  networkingPracticeQuestion("Network Hardware", "Which are fiber optic characteristics? Choose 2.", ["Supports splicing and requires polish for end connectors", "Conducts electricity and requires metal conduit", "Requires metal conduit and supports tokens", "Conducts electricity and requires RJ45 connectors"]),
-  networkingPracticeQuestion("Networking Fundamentals", "At which OSI layer does encryption occur?", ["Presentation", "Data Link", "Transport", "Network"]),
-  networkingPracticeQuestion("Protocols and Services", "Which DNS record specifies an alias?", ["CNAME", "MX", "NS", "SOA"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which technology extends an internal network across public networks?", ["VPN", "Microsoft .NET Framework", "Microsoft ASP.NET", "VLAN"]),
-  networkingPracticeQuestion("Protocols and Services", "Which protocol-to-port matching is correct?", ["HTTPS 443, SMTP 25, IMAP 143, DNS 53, FTP 21", "HTTPS 80, SMTP 443, IMAP 53, DNS 25, FTP 143", "HTTPS 21, SMTP 53, IMAP 25, DNS 143, FTP 443", "HTTPS 53, SMTP 143, IMAP 443, DNS 21, FTP 25"]),
-  networkingPracticeQuestion("Networking Fundamentals", "What is the IPv6 loopback address?", ["::1", "::0", "127.0.0.1", "192.168.0.1"]),
-  networkingPracticeQuestion("Network Hardware", "Which cable type transmits data the greatest distance?", ["Single-mode fiber", "Multi-mode fiber", "Cat5e", "Cat6"])
-];
-
-const itsNetworkingExam2QuestionBank = [
-  networkingPracticeQuestion("Networking Fundamentals", "Which address space is public?", ["197.16.0.0/12", "192.168.0.0/16", "10.0.0.0/8", "172.16.0.0/12"]),
-  networkingPracticeQuestion("Network Hardware", "Which tool tests cable capability for 1000Mbps full-duplex?", ["Cable Tester", "Multimeter", "Toner", "Time Domain Reflectometer (TDR)"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which service masks internal IP addresses?", ["NAT", "WINS", "DHCP", "DNS"]),
-  networkingPracticeQuestion("Network Infrastructures", "IEEE 802.11a/b/g/n are known as:", ["WiFi", "WiMAX", "Bluetooth", "No change is needed"]),
-  networkingPracticeQuestion("Troubleshooting", "What should DHCP and DNS client settings be set to for automatic configuration?", ["Obtain an IP address automatically and obtain DNS server address automatically", "Use static IP and static DNS", "Disable DHCP and use manual DNS", "Use APIPA and manual gateway"]),
-  networkingPracticeQuestion("Network Hardware", "Which connector is used on 100BaseT Ethernet?", ["RJ-45", "RJ-11", "TNC", "BNC"]),
-  networkingPracticeQuestion("Troubleshooting", "What is the ping utility used for? Choose 2.", ["Self-test network interface and determine reachability", "Resolve hostname to IP and configure routers", "Scan for duplicate addresses and configure DHCP", "Determine reachability and configure firewalls"]),
-  networkingPracticeQuestion("Troubleshooting", "Which commands are used for hop results?", ["tracert and pathping", "ping and ipconfig", "nslookup and nbtstat", "netstat and arp"]),
-  networkingPracticeQuestion("Network Infrastructures", "If a router cannot determine the next hop, what should it do?", ["Forward to default route", "Send back to source", "Broadcast packet", "Store in buffer"]),
-  networkingPracticeQuestion("Protocols and Services", "Which ports should be allowed for web access through a firewall?", ["Port 80 and Port 443", "Port 21 and Port 23", "Port 25 and Port 21", "Port 23 and Port 25"]),
-  networkingPracticeQuestion("Troubleshooting", "What will the ipconfig command do?", ["Display client address", "Configure routers", "Display broadcast mode", "Configure DHCP clients"]),
-  networkingPracticeQuestion("Network Infrastructures", "What do VPNs provide?", ["Secure connection through public networks", "Additional IPSec encryption only", "Secure connection only with private networks", "Additional security for selected computers only"]),
-  networkingPracticeQuestion("Protocols and Services", "Which are application layer protocols? Choose 2.", ["FTP and SMTP", "TCP and UDP", "IP and TCP", "UDP and IP"]),
-  networkingPracticeQuestion("Protocols and Services", "Which protocol-to-port matching is correct?", ["DNS 53, FTP 21, LDAP 389, HTTP 80, SSL 443, RDP 3389, IMAP 143, POP3 110", "DNS 80, FTP 53, LDAP 21, HTTP 389, SSL 3389, RDP 443, IMAP 110, POP3 143", "DNS 443, FTP 389, LDAP 53, HTTP 21, SSL 80, RDP 110, IMAP 3389, POP3 143", "DNS 21, FTP 80, LDAP 443, HTTP 53, SSL 389, RDP 143, IMAP 110, POP3 3389"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which virtual machine reboot statement set is correct?", ["Rebooting one VM reboots all VMs: No; rebooting host does not affect VMs: Yes; must reboot physical server to reboot VM: No", "Yes, Yes, No", "No, No, Yes", "Yes, No, Yes"]),
-  networkingPracticeQuestion("Troubleshooting", "Which actions help troubleshoot an ISP customer issue? Choose 3.", ["Restart modem, perform line test, check modem status lights", "Delete host files, remote login, update OS", "Restart modem, delete host files, update OS", "Remote login, update OS, perform line test"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which routing type is fault-tolerant?", ["Dynamic routing", "Static routing", "Default route", "Least cost routing"]),
-  networkingPracticeQuestion("Troubleshooting", "Which IP indicates DHCP failure?", ["169.254.1.13", "172.16.1.15", "192.168.1.15", "10.19.1.15"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which technology provides a private tunnel over a network?", ["VPN", "IPSec only", "L2TP only", "PPTP only"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which is a private internal network?", ["Intranet", "Ethernet", "Internet", "Extranet"]),
-  networkingPracticeQuestion("Network Hardware", "Which feature is specific to a multilayer switch?", ["Provides Layer 3 routing", "Manage client addresses", "Bridge topologies only", "Translate protocols"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which responsibilities are reduced after cloud migration? Choose 2.", ["Physical server security and replacing failed hardware", "Updating OS and backing up data", "Managing permissions and updating OS", "Backing up data and managing permissions"]),
-  networkingPracticeQuestion("Network Hardware", "Which switch behavior truth sequence is correct: unicast to one port, flood unknown, broadcast only to uplink?", ["Yes, Yes, No", "Yes, No, Yes", "No, Yes, Yes", "No, No, Yes"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which are advantages of star topology? Choose 2.", ["A cable issue affects two nodes and the central point allows flexibility", "Redundant paths and no central device dependency", "Central device failure does not affect network and redundant paths", "Cable issue affects all nodes and removes flexibility"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which wireless encryption option is the weakest?", ["WEP", "WPA2", "WPA-AES", "WPA-PSK"]),
-  networkingPracticeQuestion("Network Hardware", "Which device is best for workgroup throughput?", ["Managed switch", "Hub", "Unmanaged switch", "Router"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which VPN type matching is correct?", ["Remote access connects a user; site-to-site connects two private networks; PPTP can be an unencrypted or weaker legacy link", "Remote access connects two private networks; site-to-site connects one user; PPTP is always encrypted", "Remote access is only for servers; site-to-site is only for wireless; PPTP is a cable type", "All VPN types are identical"]),
-  networkingPracticeQuestion("Networking Fundamentals", "What is the IPv6 address length?", ["128", "32", "64", "256"]),
-  networkingPracticeQuestion("Network Infrastructures", "A static route is set by:", ["Network administrator", "Routing protocol", "Adjacent network", "Next upstream router"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which port supports VLAN traffic?", ["Trunk port", "WAN port", "Virtual port", "LAN port"]),
-  networkingPracticeQuestion("Networking Fundamentals", "What is the host portion of 10.245.94.21 /16?", ["94.21", "10.245.94.21", "245.94.21", "21"]),
-  networkingPracticeQuestion("Protocols and Services", "Which TCP/IP statement evaluation was marked correct?", ["No change is needed", "FTP only", "HTTP only", "SNMP only"]),
-  networkingPracticeQuestion("Network Infrastructures", "What is the max throughput of 802.11g?", ["54Mbps", "2.4Mbps", "2.4GHz", "54GHz"]),
-  networkingPracticeQuestion("Network Infrastructures", "What should be configured on a router so private IPv4 addresses can reach the Internet?", ["NAT", "DHCP", "VPN", "WAP"]),
-  networkingPracticeQuestion("Network Hardware", "Which feature reduces interference in Cat5e STP?", ["Shielding", "Crosstalk", "Twisting", "Length"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which star topology truth sequence is correct: bad cable affects two interfaces, central device failure does not affect network, central point allows flexibility?", ["Yes, No, Yes", "Yes, Yes, No", "No, Yes, Yes", "No, No, Yes"]),
-  networkingPracticeQuestion("Protocols and Services", "Ping uses which protocol?", ["ICMP", "HTTP", "BOOTP", "SNMP"]),
-  networkingPracticeQuestion("Protocols and Services", "Which server uses pointer and A records?", ["DNS Server", "NAT Server", "IDS", "IPS"]),
-  networkingPracticeQuestion("Network Hardware", "What is the central device in a star topology?", ["Hub", "Bridge", "Server", "Segmenter"]),
-  networkingPracticeQuestion("Protocols and Services", "Which protocol encrypts packets on the Internet?", ["HTTPS", "SNMP", "HTTP", "TFTP"]),
-  networkingPracticeQuestion("Troubleshooting", "Which tool lists active incoming connections?", ["NETSTAT", "NSLOOKUP", "PING", "IPCONFIG"]),
-  networkingPracticeQuestion("Troubleshooting", "Which wireless issue is caused by electromagnetic waves?", ["Interference", "Fading", "Attenuation", "Diffraction"]),
-  networkingPracticeQuestion("Troubleshooting", "Which tracert statement sequence is correct: displays router addresses, determines packet loss, displays routers for all active connections?", ["Yes, No, No", "Yes, Yes, No", "No, Yes, Yes", "No, No, Yes"]),
-  networkingPracticeQuestion("Troubleshooting", "Which trace route evaluation is correct?", ["Each hop is a router and the trace completed successfully", "Each hop is a switch and the trace failed", "Each hop is a host and packet loss is required", "Each hop is a firewall and DNS failed"]),
-  networkingPracticeQuestion("Troubleshooting", "Which tool locates a cable in a patch panel?", ["Toner", "Cable Tester", "Multimeter", "TDR"]),
-  networkingPracticeQuestion("Troubleshooting", "Which actions help troubleshoot no external website access? Choose 2.", ["Check router connectivity and contact ISP", "Check valid IP addresses and bad adapters", "Contact ISP and check bad adapters only", "Disable DNS and replace the NIC"]),
-  networkingPracticeQuestion("Network Hardware", "Which are wired Ethernet characteristics? Choose 2.", ["Twisted pair or fiber media and negotiates different speeds", "Adapters encoded with IP addresses and uses tokens", "Uses tokens and does not negotiate speed", "Wireless media and broadcast-only operation"])
-];
-
 const fullLengthPracticeExams = [
   {
     id: "pearson-cybersecurity-full",
@@ -1293,20 +1176,12 @@ const fullLengthPracticeExams = [
     bankStatus: "Temporary bank: Network Security quiz pool. Replace with official document when provided."
   },
   {
-    id: "its-networking-exam-1-full",
+    id: "pearson-networking-full",
     certification: "Pearson Networking",
-    title: "ITS Networking Practice Exam 1",
+    title: "Pearson Networking Full Length Practice Exam",
     minutes: 50,
-    questionBank: itsNetworkingExam1QuestionBank,
-    bankStatus: "Official uploaded bank: ITS Networking Exam 1."
-  },
-  {
-    id: "its-networking-exam-2-full",
-    certification: "Pearson Networking",
-    title: "ITS Networking Practice Exam 2",
-    minutes: 50,
-    questionBank: itsNetworkingExam2QuestionBank,
-    bankStatus: "Official uploaded bank: ITS Networking Exam 2."
+    questionBank: pearsonNetworkingQuestionBank,
+    bankStatus: "Temporary bank: Networking quiz pool. Replace with official document when provided."
   },
   {
     id: "comptia-network-plus-full",
@@ -3776,18 +3651,6 @@ function initializeCertificationsPage() {
     const timeSpentSeconds = practiceExamStartedAt
       ? Math.round((Date.now() - practiceExamStartedAt.getTime()) / 1000)
       : 0;
-    const questionReview = activePracticeExamQuestions.map((question, index) => {
-      const selectedIndex = activePracticeExamSelections[index];
-      return {
-        number: index + 1,
-        subunit: question.subunit || "General Review",
-        question: question.question,
-        selectedAnswer: selectedIndex === null ? "Not answered" : question.answers[selectedIndex],
-        correctAnswer: question.answers[question.correct],
-        isCorrect: selectedIndex === question.correct
-      };
-    });
-    const subunitResults = calculatePracticeExamSubunitResults(questionReview);
 
     const attempt = {
       examId: activePracticeExam.id,
@@ -3800,8 +3663,6 @@ function initializeCertificationsPage() {
       timeLimitMinutes: activePracticeExam.minutes,
       timeSpentSeconds,
       reason,
-      subunitResults,
-      questionReview,
       violations: [...practiceExamViolations]
     };
 
@@ -3818,52 +3679,12 @@ function initializeCertificationsPage() {
     activePracticeExam = null;
   }
 
-  function calculatePracticeExamSubunitResults(questionReview) {
-    const resultMap = new Map();
-
-    questionReview.forEach((item) => {
-      const subunit = item.subunit || "General Review";
-      const current = resultMap.get(subunit) || { subunit, correct: 0, total: 0, percent: 0 };
-      current.total += 1;
-      if (item.isCorrect) {
-        current.correct += 1;
-      }
-      current.percent = Math.round((current.correct / current.total) * 100);
-      resultMap.set(subunit, current);
-    });
-
-    const ordered = networkingPracticeExamSubunits
-      .filter((subunit) => resultMap.has(subunit))
-      .map((subunit) => resultMap.get(subunit));
-    const remaining = [...resultMap.values()].filter((item) => !networkingPracticeExamSubunits.includes(item.subunit));
-    return [...ordered, ...remaining];
-  }
-
   function renderPracticeExamResult(attempt) {
     if (!examRunnerBody) {
       return;
     }
 
     const passed = attempt.percent >= 80;
-    const subunitRows = attempt.subunitResults && attempt.subunitResults.length
-      ? attempt.subunitResults.map((result) => `
-          <tr>
-            <td>${escapePracticeExamHtml(result.subunit)}</td>
-            <td>${result.percent}%</td>
-            <td>${result.correct}/${result.total}</td>
-          </tr>
-        `).join("")
-      : "";
-    const answerReview = attempt.questionReview && attempt.questionReview.length
-      ? attempt.questionReview.map((item) => `
-          <article class="exam-feedback-item ${item.isCorrect ? "correct" : "review"}">
-            <span>${escapePracticeExamHtml(item.subunit)}</span>
-            <h4>Question ${item.number}: ${escapePracticeExamHtml(item.question)}</h4>
-            <p><strong>Your answer:</strong> ${escapePracticeExamHtml(item.selectedAnswer)}</p>
-            <p><strong>Correct answer:</strong> ${escapePracticeExamHtml(item.correctAnswer)}</p>
-          </article>
-        `).join("")
-      : "";
     const violationSummary = attempt.violations.length
       ? attempt.violations.slice(0, 5).map((violation) => `
           <li>${escapePracticeExamHtml(violation.reason)} on question ${violation.question}</li>
@@ -3894,37 +3715,10 @@ function initializeCertificationsPage() {
         <h3>${attempt.score}/${attempt.total} correct (${attempt.percent}%)</h3>
         <p>${attempt.answered}/${attempt.total} questions answered. Time used: ${formatPracticeExamDuration(attempt.timeSpentSeconds)}.</p>
       </div>
-      ${subunitRows ? `
-        <div class="subunit-breakdown-card">
-          <div class="panel-heading">
-            <div>
-              <p class="panel-note">Certification Subunit Breakdown</p>
-              <h3>Percent Correct by Skillset</h3>
-            </div>
-          </div>
-          <table class="subunit-breakdown-table">
-            <thead>
-              <tr>
-                <th>Skillset Description</th>
-                <th>Percent Correct</th>
-                <th>Score</th>
-              </tr>
-            </thead>
-            <tbody>${subunitRows}</tbody>
-          </table>
-        </div>
-      ` : ""}
       <div class="lockdown-warning">
         <strong>Lockdown log</strong>
         <ul>${violationSummary}</ul>
       </div>
-      ${answerReview ? `
-        <div class="exam-answer-review-card">
-          <p class="panel-note">Final Answer Feedback</p>
-          <h3>Review appears only after exam submission</h3>
-          <div class="exam-feedback-list">${answerReview}</div>
-        </div>
-      ` : ""}
     `;
 
     if (examRunnerNextButton) {

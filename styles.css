@@ -1266,6 +1266,84 @@ button {
   margin: 0;
 }
 
+.subunit-breakdown-card,
+.exam-answer-review-card {
+  display: grid;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  border-radius: 14px;
+  background: rgba(10, 10, 10, 0.34);
+}
+
+.subunit-breakdown-card h3,
+.exam-answer-review-card h3 {
+  margin: 0;
+}
+
+.subunit-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.subunit-breakdown-table th,
+.subunit-breakdown-table td {
+  padding: 11px 12px;
+  text-align: left;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.16);
+}
+
+.subunit-breakdown-table th {
+  color: #f8f5ff;
+  background: rgba(168, 85, 247, 0.16);
+}
+
+.subunit-breakdown-table td:nth-child(2),
+.subunit-breakdown-table td:nth-child(3) {
+  color: var(--blue);
+  font-weight: 900;
+}
+
+.exam-feedback-list {
+  display: grid;
+  gap: 10px;
+  max-height: 560px;
+  overflow: auto;
+  padding-right: 4px;
+}
+
+.exam-feedback-item {
+  display: grid;
+  gap: 6px;
+  padding: 13px;
+  border: 1px solid rgba(34, 211, 238, 0.22);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.32);
+}
+
+.exam-feedback-item.correct {
+  border-color: rgba(34, 197, 94, 0.34);
+}
+
+.exam-feedback-item.review {
+  border-color: rgba(239, 68, 68, 0.34);
+}
+
+.exam-feedback-item span {
+  color: var(--blue);
+  font-size: 0.75rem;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.exam-feedback-item h4,
+.exam-feedback-item p {
+  margin: 0;
+}
+
 .score-entry-panel {
   display: grid;
   gap: 12px;

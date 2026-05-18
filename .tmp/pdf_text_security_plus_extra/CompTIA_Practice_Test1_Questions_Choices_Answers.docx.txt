@@ -1,0 +1,120 @@
+CompTIA  Security+  Practice  Test  1  —  Questions,  Choices  &  Answers  1.  Which  of  the  following  scenarios  best  demonstrates  the  principle  of  
+confidentiality?
+ 
+ 
+A)  Encrypting  sensitive  files  before  transmission  
+B)  Detecting  unauthorized  changes  in  a  document  
+C)  Ensuring  servers  are  available  during  peak  hours  
+D)  Creating  redundant  backups  of  critical  data  
+ 
+Correct  Answer:  A)  Encrypting  sensitive  files  before  transmission  
+ 
+------------------------------------------------------------  
+2.  Which  framework  provides  a  structured  approach  for  managing  security  and  
+risk
+ 
+in
+ 
+an
+ 
+organization?
+ 
+ 
+A)  GDPR  
+B)  ISO  27001  
+C)  COBIT  
+D)  PCI  DSS  
+ 
+Correct  Answer:  B)  ISO  27001  
+ 
+------------------------------------------------------------  
+3.  In  the  CIA  triad,  availability  ensures  which  of  the  following?  
+ 
+A)  Only  authorized  users  can  access  data  
+B)  Data  remains  accurate  and  trustworthy  
+C)  Resources  are  accessible  when  needed  
+D)  Unauthorized  users  are  denied  access  
+ 
+Correct  Answer:  C)  Resources  are  accessible  when  needed  
+ 
+------------------------------------------------------------  
+4.  Which  access  control  model  restricts  access  based  on  policies  defined  by  the  
+system
+ 
+administrator?
+ 
+ 
+A)  Discretionary  Access  Control  (DAC)  
+B)  Role-Based  Access  Control  (RBAC)  
+C)  Attribute-Based  Access  Control  (ABAC)  
+D)  Mandatory  Access  Control  (MAC)  
+ 
+Correct  Answer:  D)  Mandatory  Access  Control  (MAC)  
+ 
+------------------------------------------------------------  
+5.  What  does  the  principle  of  least  privilege  ensure?  
+ 
+A)  Users  have  minimal  access  necessary  to  perform  their  tasks  
+B)  All  users  must  authenticate  with  MFA  
+C)  Data  access  is  monitored  continuously  
+D)  Privileged  accounts  are  disabled  by  default  
+ 
+Correct  Answer:  A)  Users  have  minimal  access  necessary  to  perform  their  tasks  
+ 
+------------------------------------------------------------  
+6.  What  type  of  malware  disguises  itself  as  legitimate  software  to  gain  
+unauthorized
+ 
+access?
+ 
+ 
+A)  Worm  
+B)  Rootkit  
+C)  Trojan  
+D)  Keylogger  
+ 
+Correct  Answer:  C)  Trojan  
+ 
+------------------------------------------------------------  
+7.  Which  attack  method  uses  DNS  spoofing  to  redirect  users  to  malicious  
+websites?
+ 
+ 
+A)  Pharming  
+B)  Phishing  
+C)  Shoulder  surfing  
+D)  Cross-site  scripting  
+ 
+Correct  Answer:  A)  Pharming  
+ 
+------------------------------------------------------------  
+8.  Which  of  the  following  is  an  example  of  a  social  engineering  attack?  
+ 
+A)  SQL  Injection  
+B)  Ransomware  attack  
+C)  An  attacker  posing  as  IT  support  to  obtain  user  credentials  
+D)  A  brute  force  password  attack  
+ 
+Correct  Answer:  C)  An  attacker  posing  as  IT  support  to  obtain  user  credentials  
+ 
+------------------------------------------------------------  
+9.  Which  vulnerability  allows  attackers  to  execute  code  remotely  on  a  system?  
+ 
+A)  Command  injection  
+B)  Privilege  escalation  
+C)  Buffer  overflow  
+D)  Zero-day  exploit  
+ 
+Correct  Answer:  D)  Zero-day  exploit  
+ 
+------------------------------------------------------------  
+10.  What  is  the  primary  goal  of  implementing  a  honeypot  in  a  network?  
+ 
+A)  Detect  and  log  unauthorized  access  attempts  
+B)  Prevent  malware  infections  
+C)  Encrypt  sensitive  data  
+D)  Improve  network  performance  
+ 
+Correct  Answer:  A)  Detect  and  log  unauthorized  access  attempts  
+ 
+------------------------------------------------------------  
