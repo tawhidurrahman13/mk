@@ -1219,6 +1219,122 @@ button {
   box-shadow: 0 0 22px rgba(34, 211, 238, 0.2);
 }
 
+.dropdown-question-set,
+.matching-question-board {
+  display: grid;
+  gap: 12px;
+}
+
+.dropdown-question-row {
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(180px, 280px);
+  gap: 12px;
+  align-items: center;
+  padding: 12px;
+  border: 1px solid rgba(168, 85, 247, 0.22);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.34);
+}
+
+.dropdown-question-row span {
+  color: #f8f5ff;
+  font-weight: 800;
+}
+
+.dropdown-question-row select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 12px;
+  color: var(--text);
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 12px;
+  outline: none;
+  background: #12121a;
+}
+
+.dropdown-question-row select:focus {
+  border-color: var(--blue);
+  box-shadow: 0 0 0 3px rgba(34, 211, 238, 0.14);
+}
+
+.matching-question-board {
+  grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+  align-items: start;
+}
+
+.matching-option-bank,
+.matching-drop-list {
+  display: grid;
+  gap: 10px;
+}
+
+.matching-option-bank {
+  min-height: 88px;
+  padding: 12px;
+  border: 1px dashed rgba(34, 211, 238, 0.3);
+  border-radius: 14px;
+  background: rgba(34, 211, 238, 0.06);
+}
+
+.match-chip,
+.matching-drop-zone {
+  min-height: 42px;
+  padding: 10px 12px;
+  color: var(--text);
+  border-radius: 12px;
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.match-chip {
+  cursor: grab;
+  text-align: left;
+  border: 1px solid rgba(168, 85, 247, 0.34);
+  background: rgba(168, 85, 247, 0.14);
+}
+
+.match-chip:active {
+  cursor: grabbing;
+  transform: scale(0.98);
+}
+
+.match-chip.pending {
+  border-color: var(--blue);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.24);
+}
+
+.matching-drop-row {
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px;
+  border: 1px solid rgba(168, 85, 247, 0.18);
+  border-radius: 12px;
+  background: rgba(10, 10, 10, 0.3);
+}
+
+.matching-drop-row > span {
+  color: #f8f5ff;
+  font-weight: 900;
+}
+
+.matching-drop-zone {
+  border: 1px dashed rgba(34, 211, 238, 0.36);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+.matching-drop-zone.filled {
+  border-style: solid;
+  border-color: rgba(34, 211, 238, 0.68);
+  box-shadow: 0 0 18px rgba(34, 211, 238, 0.16);
+}
+
+.matching-drop-zone.drag-over {
+  border-color: var(--purple);
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.24);
+  transform: translateY(-2px);
+}
+
 .lockdown-warning {
   padding: 14px;
   border: 1px solid rgba(250, 204, 21, 0.28);
@@ -2544,9 +2660,19 @@ button {
   .exam-runner-top,
   .exam-runner-status,
   .exam-progress-strip,
-  .exam-runner-actions {
+  .exam-runner-actions,
+  .dropdown-question-row,
+  .matching-question-board,
+  .matching-drop-row {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .dropdown-question-row,
+  .matching-question-board,
+  .matching-drop-row {
+    display: grid;
+    grid-template-columns: 1fr;
   }
 
   .primary-button,

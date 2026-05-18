@@ -1168,10 +1168,30 @@ const networkingPracticeExamSubunits = [
 
 function networkingPracticeQuestion(subunit, question, answers, correct = 0) {
   return {
+    type: "choice",
     subunit,
     question,
     answers,
     correct
+  };
+}
+
+function networkingDropdownQuestion(subunit, question, prompts) {
+  return {
+    type: "dropdown",
+    subunit,
+    question,
+    prompts
+  };
+}
+
+function networkingMatchingQuestion(subunit, question, pairs, options = null) {
+  return {
+    type: "matching",
+    subunit,
+    question,
+    pairs,
+    options: options || [...new Set(pairs.map((pair) => pair.correct))]
   };
 }
 
@@ -1183,22 +1203,45 @@ const itsNetworkingExam1QuestionBank = [
   networkingPracticeQuestion("Networking Fundamentals", "Private WiFi networks at one location describe which network?", ["Intranet", "Internet", "Extranet", "Perimeter Network"]),
   networkingPracticeQuestion("Networking Fundamentals", "What is the subnet mask for 172.168.1.0 as a Class B network?", ["255.255.0.0", "255.0.0.0", "255.255.255.0", "255.255.255.255"]),
   networkingPracticeQuestion("Networking Fundamentals", "What is the network for IP address 220.100.100.100?", ["220.100.100.0/24", "220.100.100.1/24", "255.255.255.0/24", "255.255.255.1/24"]),
-  networkingPracticeQuestion("Network Hardware", "Which cable and connector pairing is correct for the pictured Ethernet connection?", ["RJ45 and Ethernet", "RJ11 and Ethernet", "BNC and coax", "LC and fiber"]),
+  networkingDropdownQuestion("Network Hardware", "Identify the cable and connector shown.", [
+    { label: "Connector Type", options: ["RJ45", "RJ11", "BNC", "LC"], correct: "RJ45" },
+    { label: "Cable Type", options: ["Ethernet", "Coaxial", "Single-mode fiber", "Console rollover"], correct: "Ethernet" }
+  ]),
   networkingPracticeQuestion("Network Hardware", "Which are characteristics of switches? Choose 2.", ["Identify destination and send/receive simultaneously", "Cause more collisions and send frames to all computers", "Identify destination and cause more collisions", "Send frames to all computers and only transmit half-duplex"]),
-  networkingPracticeQuestion("Network Hardware", "Which switch behavior truth sequence is correct: unicast to one port, flood unknown packets, broadcast only to uplink?", ["Yes, Yes, No", "Yes, No, Yes", "No, Yes, Yes", "No, No, Yes"]),
+  networkingDropdownQuestion("Network Hardware", "Choose the correct switch behavior for each statement.", [
+    { label: "Unicast traffic is sent to one known port", options: ["Yes", "No"], correct: "Yes" },
+    { label: "Unknown destination frames are flooded", options: ["Yes", "No"], correct: "Yes" },
+    { label: "Broadcast traffic is sent only to the uplink", options: ["Yes", "No"], correct: "No" }
+  ]),
   networkingPracticeQuestion("Networking Fundamentals", "CIDR 192.168.1.1/25 corresponds to which subnet mask?", ["255.255.255.128", "255.255.255.64", "255.255.255.32", "255.255.255.256"]),
   networkingPracticeQuestion("Network Hardware", "What is the best cable to reduce interference?", ["STP Cat5e", "UTP Cat5e", "Cat3", "UTP Cat6"]),
-  networkingPracticeQuestion("Protocols and Services", "Which TCP/IP/UDP truth sequence is correct: TCP is reliable, IP is reliable, UDP is unreliable?", ["Yes, No, Yes", "Yes, Yes, No", "No, Yes, Yes", "No, No, Yes"]),
+  networkingDropdownQuestion("Protocols and Services", "Choose the correct truth value for each TCP/IP/UDP statement.", [
+    { label: "TCP is reliable", options: ["Yes", "No"], correct: "Yes" },
+    { label: "IP is reliable", options: ["Yes", "No"], correct: "No" },
+    { label: "UDP is unreliable", options: ["Yes", "No"], correct: "Yes" }
+  ]),
   networkingPracticeQuestion("Troubleshooting", "Which Linux tool can list active incoming connections?", ["netstat", "ip addr", "host", "dig"]),
   networkingPracticeQuestion("Protocols and Services", "Which encryption protocols secure browser/server communication?", ["SSL and TLS", "HTTP and HTTPS", "TCP and UDP", "SSL and HTTP"]),
   networkingPracticeQuestion("Networking Fundamentals", "The Internet is best described as which topology?", ["Mesh", "Star", "Hybrid", "Ring"]),
-  networkingPracticeQuestion("Protocols and Services", "Which QoS truth sequence is correct: define priority, control bandwidth, assign protocols dynamically?", ["Yes, No, No", "Yes, Yes, No", "No, Yes, No", "No, No, Yes"]),
+  networkingDropdownQuestion("Protocols and Services", "Choose the correct truth value for each QoS statement.", [
+    { label: "QoS can define traffic priority", options: ["Yes", "No"], correct: "Yes" },
+    { label: "QoS directly controls total bandwidth", options: ["Yes", "No"], correct: "No" },
+    { label: "QoS assigns protocols dynamically", options: ["Yes", "No"], correct: "No" }
+  ]),
   networkingPracticeQuestion("Network Hardware", "A MAC address identifies a:", ["NIC", "Local broadcast domain", "LAN", "UPnP device"]),
   networkingPracticeQuestion("Protocols and Services", "Which IPv6 address type delivers packets to all interfaces in a group?", ["Multicast", "Broadcast", "Unicast", "Anycast"]),
   networkingPracticeQuestion("Network Hardware", "What is a similarity between Layer 2 and Layer 3 switches?", ["Forward packets", "High security", "Logical addressing", "Allow VLANs only"]),
   networkingPracticeQuestion("Networking Fundamentals", "Which pair contains invalid IP addresses?", ["156.296.61.14 and 6901:0gd8", "109.215.72.3 and 192.168.1.10", "172.16.0.1 and 10.0.0.5", "8.8.8.8 and 1.1.1.1"]),
   networkingPracticeQuestion("Network Infrastructures", "Which wireless encryption option is the weakest?", ["WEP", "WPA", "WPA2", "AES"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which ordering correctly lists OSI layers from Layer 1 to Layer 7?", ["Physical, Data Link, Network, Transport, Session, Presentation, Application", "Application, Presentation, Session, Transport, Network, Data Link, Physical", "Physical, Network, Data Link, Transport, Session, Presentation, Application", "Data Link, Physical, Network, Session, Transport, Presentation, Application"]),
+  networkingMatchingQuestion("Networking Fundamentals", "Drag each OSI layer name to the correct layer number.", [
+    { prompt: "Layer 1", correct: "Physical" },
+    { prompt: "Layer 2", correct: "Data Link" },
+    { prompt: "Layer 3", correct: "Network" },
+    { prompt: "Layer 4", correct: "Transport" },
+    { prompt: "Layer 5", correct: "Session" },
+    { prompt: "Layer 6", correct: "Presentation" },
+    { prompt: "Layer 7", correct: "Application" }
+  ]),
   networkingPracticeQuestion("Network Infrastructures", "What does Teredo tunneling provide?", ["IPv6 connectivity through IPv4 devices", "IPv4 to IPv6 translation only", "VPN security", "Dynamic IPv6 allocation"]),
   networkingPracticeQuestion("Network Infrastructures", "Which data transmission method uses a private tunnel?", ["VPN", "PPTP only", "L2TP only", "IPsec only"]),
   networkingPracticeQuestion("Protocols and Services", "Which DNS record maps an IP address to a fully qualified domain name?", ["PTR", "CNAME", "AAAA", "A"]),
@@ -1206,7 +1249,12 @@ const itsNetworkingExam1QuestionBank = [
   networkingPracticeQuestion("Networking Fundamentals", "What determines the media access method?", ["Topology and protocols", "Number of hosts", "Number of domain servers", "Maximum speed only"]),
   networkingPracticeQuestion("Network Infrastructures", "What is the purpose of a perimeter network?", ["Make resources available to the Internet", "Make resources available only to the intranet", "Link CANs", "Link LANs"]),
   networkingPracticeQuestion("Network Infrastructures", "Which VPN type is used to connect a home computer to an intranet?", ["VPN, Site-to-Host", "VPN, Site-to-Site", "VLAN, Site-to-Host", "IPsec, Intranet-only"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which OSI encapsulation order is correct from Transport down to Physical?", ["Segments, Packets, Frames, Bits", "Packets, Segments, Bits, Frames", "Frames, Packets, Segments, Bits", "Bits, Frames, Packets, Segments"]),
+  networkingMatchingQuestion("Networking Fundamentals", "Drag each PDU to the correct OSI layer.", [
+    { prompt: "Transport Layer", correct: "Segments" },
+    { prompt: "Network Layer", correct: "Packets" },
+    { prompt: "Data Link Layer", correct: "Frames" },
+    { prompt: "Physical Layer", correct: "Bits" }
+  ]),
   networkingPracticeQuestion("Troubleshooting", "Which command generated the shown results for active connections?", ["netstat -a", "ping", "ipconfig", "route print"]),
   networkingPracticeQuestion("Troubleshooting", "Which command verifies server connectivity?", ["PING", "IPCONFIG", "ROUTE", "CHECK"]),
   networkingPracticeQuestion("Protocols and Services", "Which are DHCP features? Choose 2.", ["Address reservation and IP address exclusion", "Address resolution to canonical names and secure shell connections", "Network file transfer and secure shell connections", "Address resolution and network file transfer"]),
@@ -1215,12 +1263,23 @@ const itsNetworkingExam1QuestionBank = [
   networkingPracticeQuestion("Network Hardware", "Which Layer 2 device connects multiple computers?", ["Switch", "Repeater", "Router", "Packet"]),
   networkingPracticeQuestion("Network Infrastructures", "Which network type is usually most vulnerable?", ["Wireless", "Dial-up", "Broadband", "Leased line"]),
   networkingPracticeQuestion("Protocols and Services", "Which DNS zone replication term is correct?", ["Zone transfer", "Zone synchronization", "Start of authority", "No change needed"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which IP class matching is correct?", ["Class A: 1-126, Class B: 128-191, Class C: 192-223, Class D: 224-239", "Class A: 192-223, Class B: 1-126, Class C: 128-191, Class D: 240-255", "Class A: 128-191, Class B: 192-223, Class C: 1-126, Class D: 224-239", "Class A: 224-239, Class B: 192-223, Class C: 128-191, Class D: 1-126"]),
+  networkingMatchingQuestion("Networking Fundamentals", "Drag each IP class to the correct address range.", [
+    { prompt: "Class A", correct: "1-126" },
+    { prompt: "Class B", correct: "128-191" },
+    { prompt: "Class C", correct: "192-223" },
+    { prompt: "Class D", correct: "224-239" }
+  ]),
   networkingPracticeQuestion("Network Hardware", "Which are fiber optic characteristics? Choose 2.", ["Supports splicing and requires polish for end connectors", "Conducts electricity and requires metal conduit", "Requires metal conduit and supports tokens", "Conducts electricity and requires RJ45 connectors"]),
   networkingPracticeQuestion("Networking Fundamentals", "At which OSI layer does encryption occur?", ["Presentation", "Data Link", "Transport", "Network"]),
   networkingPracticeQuestion("Protocols and Services", "Which DNS record specifies an alias?", ["CNAME", "MX", "NS", "SOA"]),
   networkingPracticeQuestion("Network Infrastructures", "Which technology extends an internal network across public networks?", ["VPN", "Microsoft .NET Framework", "Microsoft ASP.NET", "VLAN"]),
-  networkingPracticeQuestion("Protocols and Services", "Which protocol-to-port matching is correct?", ["HTTPS 443, SMTP 25, IMAP 143, DNS 53, FTP 21", "HTTPS 80, SMTP 443, IMAP 53, DNS 25, FTP 143", "HTTPS 21, SMTP 53, IMAP 25, DNS 143, FTP 443", "HTTPS 53, SMTP 143, IMAP 443, DNS 21, FTP 25"]),
+  networkingMatchingQuestion("Protocols and Services", "Drag each protocol to its default port.", [
+    { prompt: "HTTPS", correct: "443" },
+    { prompt: "SMTP", correct: "25" },
+    { prompt: "IMAP", correct: "143" },
+    { prompt: "DNS", correct: "53" },
+    { prompt: "FTP", correct: "21" }
+  ]),
   networkingPracticeQuestion("Networking Fundamentals", "What is the IPv6 loopback address?", ["::1", "::0", "127.0.0.1", "192.168.0.1"]),
   networkingPracticeQuestion("Network Hardware", "Which cable type transmits data the greatest distance?", ["Single-mode fiber", "Multi-mode fiber", "Cat5e", "Cat6"])
 ];
@@ -1230,7 +1289,10 @@ const itsNetworkingExam2QuestionBank = [
   networkingPracticeQuestion("Network Hardware", "Which tool tests cable capability for 1000Mbps full-duplex?", ["Cable Tester", "Multimeter", "Toner", "Time Domain Reflectometer (TDR)"]),
   networkingPracticeQuestion("Network Infrastructures", "Which service masks internal IP addresses?", ["NAT", "WINS", "DHCP", "DNS"]),
   networkingPracticeQuestion("Network Infrastructures", "IEEE 802.11a/b/g/n are known as:", ["WiFi", "WiMAX", "Bluetooth", "No change is needed"]),
-  networkingPracticeQuestion("Troubleshooting", "What should DHCP and DNS client settings be set to for automatic configuration?", ["Obtain an IP address automatically and obtain DNS server address automatically", "Use static IP and static DNS", "Disable DHCP and use manual DNS", "Use APIPA and manual gateway"]),
+  networkingDropdownQuestion("Troubleshooting", "Choose the correct settings to fix DHCP and DNS automatic configuration.", [
+    { label: "IP address setting", options: ["Obtain an IP address automatically", "Use the following IP address", "Disable DHCP", "Use APIPA only"], correct: "Obtain an IP address automatically" },
+    { label: "DNS server setting", options: ["Obtain DNS server address automatically", "Use static DNS only", "Disable DNS", "Use loopback as DNS"], correct: "Obtain DNS server address automatically" }
+  ]),
   networkingPracticeQuestion("Network Hardware", "Which connector is used on 100BaseT Ethernet?", ["RJ-45", "RJ-11", "TNC", "BNC"]),
   networkingPracticeQuestion("Troubleshooting", "What is the ping utility used for? Choose 2.", ["Self-test network interface and determine reachability", "Resolve hostname to IP and configure routers", "Scan for duplicate addresses and configure DHCP", "Determine reachability and configure firewalls"]),
   networkingPracticeQuestion("Troubleshooting", "Which commands are used for hop results?", ["tracert and pathping", "ping and ipconfig", "nslookup and nbtstat", "netstat and arp"]),
@@ -1239,8 +1301,21 @@ const itsNetworkingExam2QuestionBank = [
   networkingPracticeQuestion("Troubleshooting", "What will the ipconfig command do?", ["Display client address", "Configure routers", "Display broadcast mode", "Configure DHCP clients"]),
   networkingPracticeQuestion("Network Infrastructures", "What do VPNs provide?", ["Secure connection through public networks", "Additional IPSec encryption only", "Secure connection only with private networks", "Additional security for selected computers only"]),
   networkingPracticeQuestion("Protocols and Services", "Which are application layer protocols? Choose 2.", ["FTP and SMTP", "TCP and UDP", "IP and TCP", "UDP and IP"]),
-  networkingPracticeQuestion("Protocols and Services", "Which protocol-to-port matching is correct?", ["DNS 53, FTP 21, LDAP 389, HTTP 80, SSL 443, RDP 3389, IMAP 143, POP3 110", "DNS 80, FTP 53, LDAP 21, HTTP 389, SSL 3389, RDP 443, IMAP 110, POP3 143", "DNS 443, FTP 389, LDAP 53, HTTP 21, SSL 80, RDP 110, IMAP 3389, POP3 143", "DNS 21, FTP 80, LDAP 443, HTTP 53, SSL 389, RDP 143, IMAP 110, POP3 3389"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which virtual machine reboot statement set is correct?", ["Rebooting one VM reboots all VMs: No; rebooting host does not affect VMs: Yes; must reboot physical server to reboot VM: No", "Yes, Yes, No", "No, No, Yes", "Yes, No, Yes"]),
+  networkingMatchingQuestion("Protocols and Services", "Drag each protocol to its default port.", [
+    { prompt: "DNS", correct: "53" },
+    { prompt: "FTP", correct: "21" },
+    { prompt: "LDAP", correct: "389" },
+    { prompt: "HTTP", correct: "80" },
+    { prompt: "SSL/HTTPS", correct: "443" },
+    { prompt: "RDP", correct: "3389" },
+    { prompt: "IMAP", correct: "143" },
+    { prompt: "POP3", correct: "110" }
+  ]),
+  networkingDropdownQuestion("Network Infrastructures", "Choose the correct truth value for each virtual machine reboot statement.", [
+    { label: "Rebooting one VM reboots all VMs", options: ["Yes", "No"], correct: "No" },
+    { label: "Rebooting the host does not affect VMs", options: ["Yes", "No"], correct: "Yes" },
+    { label: "You must reboot the physical server to reboot a VM", options: ["Yes", "No"], correct: "No" }
+  ]),
   networkingPracticeQuestion("Troubleshooting", "Which actions help troubleshoot an ISP customer issue? Choose 3.", ["Restart modem, perform line test, check modem status lights", "Delete host files, remote login, update OS", "Restart modem, delete host files, update OS", "Remote login, update OS, perform line test"]),
   networkingPracticeQuestion("Network Infrastructures", "Which routing type is fault-tolerant?", ["Dynamic routing", "Static routing", "Default route", "Least cost routing"]),
   networkingPracticeQuestion("Troubleshooting", "Which IP indicates DHCP failure?", ["169.254.1.13", "172.16.1.15", "192.168.1.15", "10.19.1.15"]),
@@ -1248,11 +1323,19 @@ const itsNetworkingExam2QuestionBank = [
   networkingPracticeQuestion("Networking Fundamentals", "Which is a private internal network?", ["Intranet", "Ethernet", "Internet", "Extranet"]),
   networkingPracticeQuestion("Network Hardware", "Which feature is specific to a multilayer switch?", ["Provides Layer 3 routing", "Manage client addresses", "Bridge topologies only", "Translate protocols"]),
   networkingPracticeQuestion("Network Infrastructures", "Which responsibilities are reduced after cloud migration? Choose 2.", ["Physical server security and replacing failed hardware", "Updating OS and backing up data", "Managing permissions and updating OS", "Backing up data and managing permissions"]),
-  networkingPracticeQuestion("Network Hardware", "Which switch behavior truth sequence is correct: unicast to one port, flood unknown, broadcast only to uplink?", ["Yes, Yes, No", "Yes, No, Yes", "No, Yes, Yes", "No, No, Yes"]),
+  networkingDropdownQuestion("Network Hardware", "Choose the correct switch behavior for each statement.", [
+    { label: "Unicast traffic is sent to one known port", options: ["Yes", "No"], correct: "Yes" },
+    { label: "Unknown destination frames are flooded", options: ["Yes", "No"], correct: "Yes" },
+    { label: "Broadcast traffic is sent only to the uplink", options: ["Yes", "No"], correct: "No" }
+  ]),
   networkingPracticeQuestion("Networking Fundamentals", "Which are advantages of star topology? Choose 2.", ["A cable issue affects two nodes and the central point allows flexibility", "Redundant paths and no central device dependency", "Central device failure does not affect network and redundant paths", "Cable issue affects all nodes and removes flexibility"]),
   networkingPracticeQuestion("Network Infrastructures", "Which wireless encryption option is the weakest?", ["WEP", "WPA2", "WPA-AES", "WPA-PSK"]),
   networkingPracticeQuestion("Network Hardware", "Which device is best for workgroup throughput?", ["Managed switch", "Hub", "Unmanaged switch", "Router"]),
-  networkingPracticeQuestion("Network Infrastructures", "Which VPN type matching is correct?", ["Remote access connects a user; site-to-site connects two private networks; PPTP can be an unencrypted or weaker legacy link", "Remote access connects two private networks; site-to-site connects one user; PPTP is always encrypted", "Remote access is only for servers; site-to-site is only for wireless; PPTP is a cable type", "All VPN types are identical"]),
+  networkingMatchingQuestion("Network Infrastructures", "Drag each VPN description to the correct VPN type.", [
+    { prompt: "Remote user access", correct: "Remote Access VPN" },
+    { prompt: "Connects two private networks", correct: "Site-to-Site VPN" },
+    { prompt: "Legacy tunnel protocol often considered weaker", correct: "PPTP" }
+  ]),
   networkingPracticeQuestion("Networking Fundamentals", "What is the IPv6 address length?", ["128", "32", "64", "256"]),
   networkingPracticeQuestion("Network Infrastructures", "A static route is set by:", ["Network administrator", "Routing protocol", "Adjacent network", "Next upstream router"]),
   networkingPracticeQuestion("Network Infrastructures", "Which port supports VLAN traffic?", ["Trunk port", "WAN port", "Virtual port", "LAN port"]),
@@ -1261,15 +1344,26 @@ const itsNetworkingExam2QuestionBank = [
   networkingPracticeQuestion("Network Infrastructures", "What is the max throughput of 802.11g?", ["54Mbps", "2.4Mbps", "2.4GHz", "54GHz"]),
   networkingPracticeQuestion("Network Infrastructures", "What should be configured on a router so private IPv4 addresses can reach the Internet?", ["NAT", "DHCP", "VPN", "WAP"]),
   networkingPracticeQuestion("Network Hardware", "Which feature reduces interference in Cat5e STP?", ["Shielding", "Crosstalk", "Twisting", "Length"]),
-  networkingPracticeQuestion("Networking Fundamentals", "Which star topology truth sequence is correct: bad cable affects two interfaces, central device failure does not affect network, central point allows flexibility?", ["Yes, No, Yes", "Yes, Yes, No", "No, Yes, Yes", "No, No, Yes"]),
+  networkingDropdownQuestion("Networking Fundamentals", "Choose the correct truth value for each star topology statement.", [
+    { label: "A bad cable affects two interfaces", options: ["Yes", "No"], correct: "Yes" },
+    { label: "Central device failure does not affect the network", options: ["Yes", "No"], correct: "No" },
+    { label: "The central point allows flexibility", options: ["Yes", "No"], correct: "Yes" }
+  ]),
   networkingPracticeQuestion("Protocols and Services", "Ping uses which protocol?", ["ICMP", "HTTP", "BOOTP", "SNMP"]),
   networkingPracticeQuestion("Protocols and Services", "Which server uses pointer and A records?", ["DNS Server", "NAT Server", "IDS", "IPS"]),
   networkingPracticeQuestion("Network Hardware", "What is the central device in a star topology?", ["Hub", "Bridge", "Server", "Segmenter"]),
   networkingPracticeQuestion("Protocols and Services", "Which protocol encrypts packets on the Internet?", ["HTTPS", "SNMP", "HTTP", "TFTP"]),
   networkingPracticeQuestion("Troubleshooting", "Which tool lists active incoming connections?", ["NETSTAT", "NSLOOKUP", "PING", "IPCONFIG"]),
   networkingPracticeQuestion("Troubleshooting", "Which wireless issue is caused by electromagnetic waves?", ["Interference", "Fading", "Attenuation", "Diffraction"]),
-  networkingPracticeQuestion("Troubleshooting", "Which tracert statement sequence is correct: displays router addresses, determines packet loss, displays routers for all active connections?", ["Yes, No, No", "Yes, Yes, No", "No, Yes, Yes", "No, No, Yes"]),
-  networkingPracticeQuestion("Troubleshooting", "Which trace route evaluation is correct?", ["Each hop is a router and the trace completed successfully", "Each hop is a switch and the trace failed", "Each hop is a host and packet loss is required", "Each hop is a firewall and DNS failed"]),
+  networkingDropdownQuestion("Troubleshooting", "Choose the correct truth value for each tracert statement.", [
+    { label: "Displays router addresses", options: ["Yes", "No"], correct: "Yes" },
+    { label: "Determines packet loss", options: ["Yes", "No"], correct: "No" },
+    { label: "Displays routers for all active connections", options: ["Yes", "No"], correct: "No" }
+  ]),
+  networkingDropdownQuestion("Troubleshooting", "Evaluate the trace route output.", [
+    { label: "Each hop is a", options: ["Router", "Switch", "Firewall", "Client host"], correct: "Router" },
+    { label: "Trace status", options: ["Successfully completed", "Failed because DNS is down", "Failed because DHCP is down", "Packet loss required"], correct: "Successfully completed" }
+  ]),
   networkingPracticeQuestion("Troubleshooting", "Which tool locates a cable in a patch panel?", ["Toner", "Cable Tester", "Multimeter", "TDR"]),
   networkingPracticeQuestion("Troubleshooting", "Which actions help troubleshoot no external website access? Choose 2.", ["Check router connectivity and contact ISP", "Check valid IP addresses and bad adapters", "Contact ISP and check bad adapters only", "Disable DNS and replace the NIC"]),
   networkingPracticeQuestion("Network Hardware", "Which are wired Ethernet characteristics? Choose 2.", ["Twisted pair or fiber media and negotiates different speeds", "Adapters encoded with IP addresses and uses tokens", "Uses tokens and does not negotiate speed", "Wireless media and broadcast-only operation"])
@@ -3215,6 +3309,7 @@ function initializeCertificationsPage() {
   let practiceExamViolations = [];
   let practiceExamFinished = false;
   let lastPracticeExamViolation = "";
+  let pendingPracticeMatchOption = "";
 
   updateCertificationStatus();
   updatePracticeExamStatus();
@@ -3466,6 +3561,7 @@ function initializeCertificationsPage() {
     practiceExamViolations = [];
     practiceExamFinished = false;
     lastPracticeExamViolation = "";
+    pendingPracticeMatchOption = "";
 
     savePracticeExam(exam.title);
     updatePracticeExamStatus();
@@ -3488,6 +3584,26 @@ function initializeCertificationsPage() {
   }
 
   function randomizePracticeExamAnswers(question, originalIndex) {
+    if (question.type === "dropdown") {
+      return {
+        ...question,
+        originalIndex,
+        prompts: question.prompts.map((prompt) => ({
+          ...prompt,
+          options: shufflePracticeExamValues(prompt.options)
+        }))
+      };
+    }
+
+    if (question.type === "matching") {
+      return {
+        ...question,
+        originalIndex,
+        pairs: [...question.pairs],
+        options: shufflePracticeExamValues(question.options)
+      };
+    }
+
     let answerOrder = shufflePracticeExamValues(question.answers.map((_, index) => index));
     const originalOrder = question.answers.map((_, index) => index);
 
@@ -3528,7 +3644,9 @@ function initializeCertificationsPage() {
 
     const question = activePracticeExamQuestions[activePracticeExamIndex];
     const selectedAnswer = activePracticeExamSelections[activePracticeExamIndex];
-    const answeredCount = activePracticeExamSelections.filter((answer) => answer !== null).length;
+    const answeredCount = activePracticeExamSelections.filter((answer, index) => {
+      return isPracticeExamQuestionAnswered(activePracticeExamQuestions[index], answer);
+    }).length;
 
     if (examRunnerTitle) {
       examRunnerTitle.textContent = activePracticeExam.title;
@@ -3547,25 +3665,14 @@ function initializeCertificationsPage() {
         <span>${answeredCount}/${activePracticeExamQuestions.length} answered</span>
       </div>
       <p class="question-title">${escapePracticeExamHtml(question.question)}</p>
-      <div class="answer-grid">
-        ${question.answers.map((answer, index) => `
-          <button class="answer-button ${selectedAnswer === index ? "selected" : ""}" type="button" data-answer="${index}">
-            ${escapePracticeExamHtml(answer)}
-          </button>
-        `).join("")}
-      </div>
+      ${renderPracticeExamAnswerControl(question, selectedAnswer)}
       <div class="lockdown-warning">
         <strong>Lockdown active.</strong>
         <p>Do not switch tabs, leave fullscreen, copy/paste, print, right-click, or use browser shortcuts. Violations are saved with the attempt.</p>
       </div>
     `;
 
-    examRunnerBody.querySelectorAll(".answer-button").forEach((button) => {
-      button.addEventListener("click", () => {
-        activePracticeExamSelections[activePracticeExamIndex] = Number(button.dataset.answer);
-        renderPracticeExamQuestion();
-      });
-    });
+    bindPracticeExamQuestionControls(question);
 
     if (examRunnerNextButton) {
       examRunnerNextButton.classList.toggle("hidden", activePracticeExamIndex === activePracticeExamQuestions.length - 1);
@@ -3581,13 +3688,164 @@ function initializeCertificationsPage() {
     }
   }
 
+  function renderPracticeExamAnswerControl(question, selectedAnswer) {
+    if (question.type === "dropdown") {
+      const selectedValues = selectedAnswer && Array.isArray(selectedAnswer.values) ? selectedAnswer.values : [];
+      return `
+        <div class="dropdown-question-set">
+          ${question.prompts.map((prompt, index) => `
+            <label class="dropdown-question-row">
+              <span>${escapePracticeExamHtml(prompt.label)}</span>
+              <select data-dropdown-index="${index}">
+                <option value="">Select answer</option>
+                ${prompt.options.map((option) => `
+                  <option value="${escapePracticeExamHtml(option)}" ${selectedValues[index] === option ? "selected" : ""}>${escapePracticeExamHtml(option)}</option>
+                `).join("")}
+              </select>
+            </label>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    if (question.type === "matching") {
+      const matches = selectedAnswer && selectedAnswer.matches ? selectedAnswer.matches : {};
+      const usedOptions = new Set(Object.values(matches).filter(Boolean));
+      const availableOptions = question.options.filter((option) => !usedOptions.has(option));
+      return `
+        <div class="matching-question-board">
+          <div>
+            <p class="panel-note">Answer choices</p>
+            <div class="matching-option-bank">
+              ${availableOptions.map((option) => `
+                <button class="match-chip" type="button" draggable="true" data-match-option="${escapePracticeExamHtml(option)}">${escapePracticeExamHtml(option)}</button>
+              `).join("") || `<span class="helper-line">All choices placed. Tap a placed choice to move it.</span>`}
+            </div>
+          </div>
+          <div class="matching-drop-list">
+            ${question.pairs.map((pair, index) => `
+              <div class="matching-drop-row">
+                <span>${escapePracticeExamHtml(pair.prompt)}</span>
+                <button class="matching-drop-zone ${matches[index] ? "filled" : ""}" type="button" data-match-index="${index}">
+                  ${matches[index] ? escapePracticeExamHtml(matches[index]) : "Drop answer here"}
+                </button>
+              </div>
+            `).join("")}
+          </div>
+        </div>
+        <p class="helper-line">Drag each answer box to the correct target. Tap a placed answer to remove it.</p>
+      `;
+    }
+
+    return `
+      <div class="answer-grid">
+        ${question.answers.map((answer, index) => `
+          <button class="answer-button ${selectedAnswer === index ? "selected" : ""}" type="button" data-answer="${index}">
+            ${escapePracticeExamHtml(answer)}
+          </button>
+        `).join("")}
+      </div>
+    `;
+  }
+
+  function bindPracticeExamQuestionControls(question) {
+    if (question.type === "dropdown") {
+      examRunnerBody.querySelectorAll("[data-dropdown-index]").forEach((select) => {
+        select.addEventListener("change", () => {
+          const selection = activePracticeExamSelections[activePracticeExamIndex] || { type: "dropdown", values: [] };
+          selection.values[Number(select.dataset.dropdownIndex)] = select.value;
+          activePracticeExamSelections[activePracticeExamIndex] = selection;
+          renderPracticeExamQuestion();
+        });
+      });
+      return;
+    }
+
+    if (question.type === "matching") {
+      examRunnerBody.querySelectorAll(".match-chip").forEach((chip) => {
+        chip.addEventListener("dragstart", (event) => {
+          event.dataTransfer.setData("text/plain", chip.dataset.matchOption);
+        });
+        chip.addEventListener("click", () => {
+          pendingPracticeMatchOption = chip.dataset.matchOption;
+          examRunnerBody.querySelectorAll(".match-chip").forEach((button) => button.classList.remove("pending"));
+          chip.classList.add("pending");
+          showToast("Now tap the target row for that answer.");
+        });
+      });
+
+      examRunnerBody.querySelectorAll(".matching-drop-zone").forEach((zone) => {
+        zone.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          zone.classList.add("drag-over");
+        });
+        zone.addEventListener("dragleave", () => zone.classList.remove("drag-over"));
+        zone.addEventListener("drop", (event) => {
+          event.preventDefault();
+          zone.classList.remove("drag-over");
+          assignPracticeExamMatch(Number(zone.dataset.matchIndex), event.dataTransfer.getData("text/plain"));
+        });
+        zone.addEventListener("click", () => {
+          const matchIndex = Number(zone.dataset.matchIndex);
+          const selection = activePracticeExamSelections[activePracticeExamIndex];
+          if (selection && selection.matches && selection.matches[matchIndex]) {
+            removePracticeExamMatch(matchIndex);
+            return;
+          }
+
+          if (pendingPracticeMatchOption) {
+            assignPracticeExamMatch(matchIndex, pendingPracticeMatchOption);
+            pendingPracticeMatchOption = "";
+          }
+        });
+      });
+      return;
+    }
+
+    examRunnerBody.querySelectorAll(".answer-button").forEach((button) => {
+      button.addEventListener("click", () => {
+        activePracticeExamSelections[activePracticeExamIndex] = Number(button.dataset.answer);
+        renderPracticeExamQuestion();
+      });
+    });
+  }
+
+  function assignPracticeExamMatch(matchIndex, option) {
+    if (!option) {
+      return;
+    }
+
+    const selection = activePracticeExamSelections[activePracticeExamIndex] || { type: "matching", matches: {} };
+    Object.keys(selection.matches).forEach((key) => {
+      if (selection.matches[key] === option) {
+        delete selection.matches[key];
+      }
+    });
+    selection.matches[matchIndex] = option;
+    activePracticeExamSelections[activePracticeExamIndex] = selection;
+    renderPracticeExamQuestion();
+  }
+
+  function removePracticeExamMatch(matchIndex) {
+    const selection = activePracticeExamSelections[activePracticeExamIndex];
+    if (!selection || !selection.matches || !selection.matches[matchIndex]) {
+      return;
+    }
+
+    delete selection.matches[matchIndex];
+    activePracticeExamSelections[activePracticeExamIndex] = selection;
+    renderPracticeExamQuestion();
+  }
+
   function movePracticeExamForward() {
     if (!activePracticeExam) {
       return;
     }
 
-    if (activePracticeExamSelections[activePracticeExamIndex] === null) {
-      showToast("Choose an answer before moving on.");
+    const question = activePracticeExamQuestions[activePracticeExamIndex];
+    const selection = activePracticeExamSelections[activePracticeExamIndex];
+    if (!isPracticeExamQuestionAnswered(question, selection)) {
+      showToast("Complete this question before moving on.");
       return;
     }
 
@@ -3598,6 +3856,24 @@ function initializeCertificationsPage() {
     }
 
     finishPracticeExam("Completed all questions");
+  }
+
+  function isPracticeExamQuestionAnswered(question, selection) {
+    if (!question || selection === null || selection === undefined) {
+      return false;
+    }
+
+    if (question.type === "dropdown") {
+      return Boolean(selection.values)
+        && question.prompts.every((_, index) => Boolean(selection.values[index]));
+    }
+
+    if (question.type === "matching") {
+      return Boolean(selection.matches)
+        && question.pairs.every((_, index) => Boolean(selection.matches[index]));
+    }
+
+    return Number.isInteger(selection);
   }
 
   function startPracticeExamTimer() {
@@ -3768,9 +4044,11 @@ function initializeCertificationsPage() {
     removePracticeExamLockdown();
 
     const total = activePracticeExamQuestions.length;
-    const answered = activePracticeExamSelections.filter((answer) => answer !== null).length;
+    const answered = activePracticeExamSelections.filter((answer, index) => {
+      return isPracticeExamQuestionAnswered(activePracticeExamQuestions[index], answer);
+    }).length;
     const correct = activePracticeExamQuestions.reduce((count, question, index) => {
-      return activePracticeExamSelections[index] === question.correct ? count + 1 : count;
+      return isPracticeExamSelectionCorrect(question, activePracticeExamSelections[index]) ? count + 1 : count;
     }, 0);
     const percent = total ? Math.round((correct / total) * 100) : 0;
     const timeSpentSeconds = practiceExamStartedAt
@@ -3782,9 +4060,9 @@ function initializeCertificationsPage() {
         number: index + 1,
         subunit: question.subunit || "General Review",
         question: question.question,
-        selectedAnswer: selectedIndex === null ? "Not answered" : question.answers[selectedIndex],
-        correctAnswer: question.answers[question.correct],
-        isCorrect: selectedIndex === question.correct
+        selectedAnswer: formatPracticeExamSelectedAnswer(question, selectedIndex),
+        correctAnswer: formatPracticeExamCorrectAnswer(question),
+        isCorrect: isPracticeExamSelectionCorrect(question, selectedIndex)
       };
     });
     const subunitResults = calculatePracticeExamSubunitResults(questionReview);
@@ -3816,6 +4094,50 @@ function initializeCertificationsPage() {
 
     showToast(`${activePracticeExam.title} submitted: ${percent}%`);
     activePracticeExam = null;
+  }
+
+  function isPracticeExamSelectionCorrect(question, selection) {
+    if (!isPracticeExamQuestionAnswered(question, selection)) {
+      return false;
+    }
+
+    if (question.type === "dropdown") {
+      return question.prompts.every((prompt, index) => selection.values[index] === prompt.correct);
+    }
+
+    if (question.type === "matching") {
+      return question.pairs.every((pair, index) => selection.matches[index] === pair.correct);
+    }
+
+    return selection === question.correct;
+  }
+
+  function formatPracticeExamSelectedAnswer(question, selection) {
+    if (!isPracticeExamQuestionAnswered(question, selection)) {
+      return "Not answered";
+    }
+
+    if (question.type === "dropdown") {
+      return question.prompts.map((prompt, index) => `${prompt.label}: ${selection.values[index]}`).join("; ");
+    }
+
+    if (question.type === "matching") {
+      return question.pairs.map((pair, index) => `${pair.prompt}: ${selection.matches[index]}`).join("; ");
+    }
+
+    return question.answers[selection];
+  }
+
+  function formatPracticeExamCorrectAnswer(question) {
+    if (question.type === "dropdown") {
+      return question.prompts.map((prompt) => `${prompt.label}: ${prompt.correct}`).join("; ");
+    }
+
+    if (question.type === "matching") {
+      return question.pairs.map((pair) => `${pair.prompt}: ${pair.correct}`).join("; ");
+    }
+
+    return question.answers[question.correct];
   }
 
   function calculatePracticeExamSubunitResults(questionReview) {
