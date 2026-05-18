@@ -1166,6 +1166,14 @@ const networkingPracticeExamSubunits = [
   "Troubleshooting"
 ];
 
+const cyberSecurityPracticeExamSubunits = [
+  "Security Principles",
+  "Securing the Network",
+  "Securing Endpoint Devices",
+  "Vulnerability Assessment and Risk Management",
+  "Incident Management"
+];
+
 function networkingPracticeQuestion(subunit, question, answers, correct = 0) {
   return {
     type: "choice",
@@ -1174,6 +1182,29 @@ function networkingPracticeQuestion(subunit, question, answers, correct = 0) {
     answers,
     correct
   };
+}
+
+function cybersecurityPracticeQuestion(subunit, question, answers, correct = 0) {
+  return networkingPracticeQuestion(subunit, question, answers, correct);
+}
+
+function cybersecurityMultiSelectQuestion(subunit, question, answers, correct = []) {
+  return {
+    type: "multi-select",
+    subunit,
+    question,
+    answers,
+    correct,
+    requiredSelections: correct.length
+  };
+}
+
+function cybersecurityDropdownQuestion(subunit, question, prompts) {
+  return networkingDropdownQuestion(subunit, question, prompts);
+}
+
+function cybersecurityMatchingQuestion(subunit, question, pairs, options = null) {
+  return networkingMatchingQuestion(subunit, question, pairs, options);
 }
 
 function networkingDropdownQuestion(subunit, question, prompts) {
@@ -1194,6 +1225,188 @@ function networkingMatchingQuestion(subunit, question, pairs, options = null) {
     options: options || [...new Set(pairs.map((pair) => pair.correct))]
   };
 }
+
+const cyberSecurityFullPracticeExamQuestionBank = [
+  cybersecurityMultiSelectQuestion("Vulnerability Assessment and Risk Management", "What are three strategies to limit the chances for attackers to exploit potential vulnerabilities?", [
+    "Employ content filtering for web",
+    "Elevate all accounts to admin accounts",
+    "Apply PoLP",
+    "Employ layered defense",
+    "Restrict access to system services"
+  ], [2, 3, 4]),
+  cybersecurityPracticeQuestion("Securing the Network", "Which command displays both the configured DNS server info and the IP address resolution for the URL?", ["nmap", "ping", "nslookup", "traceroute"], 2),
+  cybersecurityMatchingQuestion("Security Principles", "Match the following security terminology with the appropriate definition.", [
+    { prompt: "Asset", correct: "People, property, or data" },
+    { prompt: "Risk", correct: "The potential for loss, damage, or destruction" },
+    { prompt: "Threat", correct: "An action that causes a negative impact" },
+    { prompt: "Vulnerability", correct: "A weakness that potentially exposes organizations to cyber attacks" }
+  ]),
+  cybersecurityMatchingQuestion("Security Principles", "Match each regulation or standard to what it protects.", [
+    { prompt: "GDPR", correct: "Protects the personal information of members of the European Union" },
+    { prompt: "HIPAA", correct: "Protects the healthcare information of individuals" },
+    { prompt: "PCI-DSS", correct: "Protects the credit card information of individuals" },
+    { prompt: "FISMA", correct: "Protects information about individuals that is stored by federal agencies" },
+    { prompt: "FERPA", correct: "Protects the educational records of individuals" }
+  ]),
+  cybersecurityPracticeQuestion("Securing the Network", "When numerous employees report difficulties accessing the company intranet due to login issues, and you observe misspellings on the site when using the URL, but the site functions normally when accessed via the IP address, what steps should you take?", [
+    "Verify the accuracy of the entry for the site in the local DNS server",
+    "Update the web server software to the latest version",
+    "Restore a backup copy of the authentication database",
+    "Take the company web portal offline immediately"
+  ]),
+  cybersecurityPracticeQuestion("Securing Endpoint Devices", "A security analyst uncovers that a hacker successfully obtained root access to an enterprise Linux server. The intruder entered the server as a guest, employed a program to bypass the root password, and subsequently terminated critical server processes in the capacity of the root user. Which type of endpoint attack is this?", ["DDOS", "Privilege escalation", "Brute force", "Buffer overflow"], 1),
+  cybersecurityMultiSelectQuestion("Security Principles", "Which three authentication factors are valid for use in a multifactor authentication scenario?", [
+    "Something you know",
+    "Something you earn",
+    "Something you are",
+    "Something you have",
+    "Something you see",
+    "Something you do"
+  ], [0, 2, 3]),
+  cybersecurityPracticeQuestion("Securing the Network", "To prevent the specific unknown host from attaching to your home network again after experiencing a significant slowdown, what actions should you take?", [
+    "Change the network SSID",
+    "Create an IP access control list.",
+    "Block the host IP address",
+    "Implement MAC address filtering"
+  ], 3),
+  cybersecurityPracticeQuestion("Securing the Network", "Which wireless encryption tech requires AES to security home wireless networks?", ["WEP", "WPA", "WPA2", "TKIP"], 2),
+  cybersecurityPracticeQuestion("Securing the Network", "You need to filter the websites that are unavailable to employees on the company network. Which type of device should you deploy?", ["IPS", "IDS", "Proxy Server", "Honeypot"], 2),
+  cybersecurityPracticeQuestion("Security Principles", "A company engages a team of seasoned cybercriminals with the objective of establishing a persistent and thorough presence on a competitor's network. This presence aims to facilitate the theft or sabotage of sensitive data from the competitor. Which type of attack does this scenario describe?", ["DDoS", "Man-in-the-middle", "APT", "Ransomware"], 2),
+  cybersecurityMatchingQuestion("Incident Management", "Your computer gets a worm. Match each mitigation step to the correct description.", [
+    { prompt: "Inoculation", correct: "Patching uninfected systems to limit the worm's access to additional targets" },
+    { prompt: "Quarantine", correct: "Removing or blocking infected systems from the network" },
+    { prompt: "Treatment", correct: "Cleansing and patching infected systems" },
+    { prompt: "Containment", correct: "Compartmentalizing and segmenting the network to restrict the worm's spread to already infected areas" }
+  ]),
+  cybersecurityMultiSelectQuestion("Securing the Network", "Which two private IP addresses would be blocked to prevent security and performance issues?", [
+    "203.115.48.1",
+    "10.157.115.42",
+    "172.18.100.56",
+    "224.55.4.153"
+  ], [1, 2]),
+  cybersecurityMultiSelectQuestion("Security Principles", "You are employed by a community healthcare organization utilizing an electronic health record (EHR) system. Having implemented the necessary physical and technical safeguards mandated by HIPAA, you now need to demonstrate the EHR system's compliance with these measures. What are the two methods you should employ to verify the system's compliance?", [
+    "Security awareness training",
+    "IT auditing",
+    "Automatic log-off implementation",
+    "Penetration testing"
+  ], [1, 2]),
+  cybersecurityPracticeQuestion("Security Principles", "Which data type is protected through hard disk encryption?", ["Data in transit", "Data in use", "Data at rest", "Data in process"], 2),
+  cybersecurityPracticeQuestion("Vulnerability Assessment and Risk Management", "Which activity is an example of active reconnaissance performed during a penetration test?", [
+    "Gathering employee information from available web directories and social media",
+    "Searching the WHOIS database for the owner and technical contact information for a domain",
+    "Performing an Nmap port scan on the LAN to determine types of connected devices and open ports",
+    "Using a browser to view the HTTP source code of company webpages"
+  ], 2),
+  cybersecurityPracticeQuestion("Securing Endpoint Devices", "After an administrator installs an operating system update on a laptop, the laptop user can no longer print to their wireless printer. What should solve the issue?", [
+    "Update the firmware on the laptop",
+    "Reinstall the same service pack",
+    "Install a new device driver for the wireless printer",
+    "Check for patches for wireless printers"
+  ], 2),
+  cybersecurityPracticeQuestion("Securing the Network", "You need to allow employees to access your company's secure network from their homes. Which type of security should you implement?", ["BYOD", "VPN", "IDS", "SNMP"], 1),
+  cybersecurityPracticeQuestion("Securing Endpoint Devices", "How does the network security team monitor the OS version, security updates, and patches on user devices?", [
+    "Asset Management",
+    "Incident Management",
+    "Security Policy and procedures",
+    "Business Continuity Plan"
+  ]),
+  cybersecurityMatchingQuestion("Vulnerability Assessment and Risk Management", "Match each cyber tool from the list on the left to the correct vulnerability management process.", [
+    { prompt: "Discover", correct: "NMAP" },
+    { prompt: "Prioritize", correct: "CVSS" },
+    { prompt: "Remediate", correct: "Patch Management Software" }
+  ]),
+  cybersecurityPracticeQuestion("Securing Endpoint Devices", "What is the purpose of a hypervisor?", [
+    "It creates and runs virtual machines.",
+    "It monitors and logs network traffic for malicious packets",
+    "It provides and monitors firewall services for cloud computing.",
+    "It provides and services a gateway between users and the Internet"
+  ]),
+  cybersecurityPracticeQuestion("Security Principles", "What does hashing provide for data communication?", ["Origin authentication", "Data non-repudiation", "Data encryption", "Data integrity"], 3),
+  cybersecurityPracticeQuestion("Security Principles", "In order to do online banking, you enter a strong password and then enter the 5-digit code sent to you on your smartphone. Which type of authentication does this situation describe?", ["Multifactor", "RADIUS", "VPN", "AAA"]),
+  cybersecurityDropdownQuestion("Security Principles", "True or False: choose the correct value for each ethical security analyst statement.", [
+    { label: "A security analyst may use a disgruntled employee's network credentials to monitor behavior", options: ["T", "F"], correct: "F" },
+    { label: "A security analyst may access employee data on a company server if authorized", options: ["T", "F"], correct: "T" },
+    { label: "A security analyst may share sensitive data with unauthorized users", options: ["T", "F"], correct: "F" }
+  ]),
+  cybersecurityMatchingQuestion("Security Principles", "Match the appropriate control measures.", [
+    { prompt: "Restore a system after an event", correct: "Corrective measures" },
+    { prompt: "Discover unwanted events", correct: "Detective measures" },
+    { prompt: "Avert the occurrence of an event", correct: "Preventive measures" }
+  ], ["Corrective measures", "Detective measures", "Preventive measures", "Adaptive measures"]),
+  cybersecurityPracticeQuestion("Securing the Network", "Your network is encountering slower-than-usual response times from a system. To assess the system's status, you execute the netstat -l command to reveal all TCP ports currently in the listening state. What does the listening state indicate about these ports?", [
+    "The remote end disconnected and the ports are closing.",
+    "The ports are actively connected to another system or process",
+    "The state of the connection on the ports is unknown",
+    "The ports are open on the system and are waiting for connections"
+  ], 3),
+  cybersecurityMultiSelectQuestion("Securing Endpoint Devices", "Your task involves maintaining a malware-free network. Identify two strategies that will aid in keeping your device free from malware.", [
+    "Ensure that real time protection is disabled",
+    "Keep your anti-malware software definitions up to date",
+    "Ensure all network ports are available so all important network traffic can get through",
+    "Configure full antivirus and antimalware scans to run automatically on a regular schedule",
+    "Ensure that the network windows firewall is disabled so it doesn't interfere with any anti-malware software scans"
+  ], [1, 3]),
+  cybersecurityPracticeQuestion("Incident Management", "In your role as a security analyst, you examine the output from the SIEM. You come across an alert indicating the detection of malicious files by the IDS. Following a thorough review of user information, device data, and posture details, you conclude that it is indeed a valid incident. What do you do next?", [
+    "Log the alert and watch for second occurrence",
+    "Update the documentation to include the new alert information",
+    "Escalate the situation immediately",
+    "Prepare notes to present at the weekly cyber team meeting."
+  ], 2),
+  cybersecurityPracticeQuestion("Securing Endpoint Devices", "A cybersecurity analyst is looking into an unidentified executable file found on a Linux desktop computer. The analyst enters the following command in the terminal: ls -l. What is the purpose of this command?", [
+    "To open a text editor",
+    "To display the content of a text file",
+    "To navigate to the folder that is passed as an argument to the command",
+    "To display the file permissions and ownership of the executable file"
+  ], 3),
+  cybersecurityPracticeQuestion("Incident Management", "Which classification of security alert is the greatest threat to an organization because it represents undetected exploits?", ["True positive", "True negative", "False positive", "False negative"], 3),
+  cybersecurityPracticeQuestion("Incident Management", "Your organization's SIEM alerts you that users are connecting to an unusual URL. You need to determine whether the URL is malicious and what type of threat it represents. What should you do?", [
+    "Ask users why they visited the website",
+    "Submit the URL to a threat intel portal for analysis",
+    "Block the URL by placing it on the network block list",
+    "Visit the URL to determine whether the website is legitimate"
+  ], 1),
+  cybersecurityPracticeQuestion("Vulnerability Assessment and Risk Management", "You are working with the senior admin team to identify potential risks. Which phase of risk management are you in?", ["Mitigating Risks", "Choosing Risk Strategies", "Measuring residual risk", "Determining a risk profile"], 3),
+  cybersecurityPracticeQuestion("Securing the Network", "What should you create to prevent spoofing of the internal network?", ["A NAT rule", "A record in the host file", "A DNS record", "An ACL"]),
+  cybersecurityPracticeQuestion("Securing Endpoint Devices", "As a security technician who has just completed a full scan of a Windows 10 PC, where should you navigate to view the scan results?", ["Windows Application Logs", "Windows Security", "Windows System Logs", "Windows Task Manager"], 1),
+  cybersecurityMultiSelectQuestion("Vulnerability Assessment and Risk Management", "Which two fundamental metrics should be considered when determining the severity of a vulnerability in an assessment?", [
+    "The time involved in choosing replacement software to replace older systems",
+    "The impacts that an exploit of the vulnerability will have on the organization",
+    "The age of the hardware running the software that contains the vulnerability",
+    "The likelihood that an adversary can and will exploit the vulnerability"
+  ], [1, 3]),
+  cybersecurityPracticeQuestion("Vulnerability Assessment and Risk Management", "During a risk assessment within your company, you pinpoint risks associated with the office's web server. These risks encompass potential hardware and software failures, along with the threat of web service disruption due to cyber-attacks. To mitigate these risks, you suggest obtaining insurance and engaging another organization to oversee the maintenance of the web server.", ["Risk transfer", "Risk avoidance", "Risk acceptance", "Risk reduction"]),
+  cybersecurityMultiSelectQuestion("Securing the Network", "While examining the company's remote access procedures, you observe the use of Telnet to connect to the corporate database server for checking inventory levels. What are the two immediate actions you should take?", [
+    "Implement SSH access on the server",
+    "Force users to implement secure telnet passwords.",
+    "Disable telnet access on the server.",
+    "Reconfigure the server to only accept HTTPS connections."
+  ], [0, 2]),
+  cybersecurityPracticeQuestion("Security Principles", "What action taken by an adversary serves as an example of an exploit aiming to acquire user credentials?", [
+    "Obtaining a directory listing of files located on the web database server",
+    "Installing a backdoor in order to enable two-way communication with the device",
+    "Sending an email with a link to a fictitious web portal login page",
+    "Executing a remote port scan of all of the enterprise-registered IP addresses"
+  ], 2),
+  cybersecurityMultiSelectQuestion("Incident Management", "Multiple employees are encountering unexpected computer crashes and numerous unwanted pop-up messages. Identify two immediate actions you should take to resolve the issue without affecting data.", [
+    "Configure the network firewall to block malware from entering the internal network",
+    "Deploy a policy to install and automatically update antivirus and anti-malware software.",
+    "Reinstall Windows on the affected workstations",
+    "Scan affected workstations and remove malware."
+  ], [0, 3]),
+  cybersecurityMatchingQuestion("Incident Management", "Match the following log types to the description.", [
+    { prompt: "Application logs", correct: "Contain events that are received from programs running on the device" },
+    { prompt: "Security logs", correct: "Record the success or failure of audit policy events" },
+    { prompt: "System logs", correct: "List events generated by the operation of hardware, drivers, and processes" },
+    { prompt: "Setup logs", correct: "Record information about software installation and operating system updates" }
+  ]),
+  cybersecurityMatchingQuestion("Incident Management", "Match each NIST IR lifecycle phase from the list to the correct description.", [
+    { prompt: "Containment, Eradication, and Recovery", correct: "Mitigates the impact to the incident" },
+    { prompt: "Post-Incident Activity", correct: "Reports the cause and cost of the incident and the steps to prevent future incidents" },
+    { prompt: "Detection and Analysis", correct: "Evaluate incident indicators to determine whether they are legitimate attacks and alerts the organization of the incidents" },
+    { prompt: "Preparation", correct: "Establishes an incident response capability to ensure that organizational assets are sufficiently secure" }
+  ]),
+  cybersecurityPracticeQuestion("Securing the Network", "You need to transfer configuration files to a router across an unsecured network. Which protocol should you use to encrypt the files in transit?", ["HTTP", "SSH", "Telnet", "TFTP"], 1)
+];
 
 const itsNetworkingExam1QuestionBank = [
   networkingPracticeQuestion("Protocols and Services", "What are the main criteria used by firewalls to filter traffic? Choose 2.", ["Protocols and ports", "User accounts and applications", "Ports and applications", "Protocols and user accounts"]),
@@ -1375,8 +1588,8 @@ const fullLengthPracticeExams = [
     certification: "Pearson Cybersecurity",
     title: "Pearson Cybersecurity Full Length Practice Exam",
     minutes: 50,
-    questionBank: pearsonCybersecurityQuestionBank,
-    bankStatus: "Temporary bank: Cybersecurity quiz pool. Replace with official document when provided."
+    questionBank: cyberSecurityFullPracticeExamQuestionBank,
+    bankStatus: "Official uploaded bank: CyberSecurity Full Practice Exam."
   },
   {
     id: "pearson-network-security-full",
@@ -3604,6 +3817,29 @@ function initializeCertificationsPage() {
       };
     }
 
+    if (question.type === "multi-select") {
+      let answerOrder = shufflePracticeExamValues(question.answers.map((_, index) => index));
+      const originalOrder = question.answers.map((_, index) => index);
+
+      if (answerOrder.length > 1 && practiceExamArraysMatch(answerOrder, originalOrder)) {
+        answerOrder = [...answerOrder.slice(1), answerOrder[0]];
+      }
+
+      return {
+        ...question,
+        originalIndex,
+        originalAnswers: [...question.answers],
+        originalCorrect: [...question.correct],
+        answers: answerOrder.map((answerIndex) => question.answers[answerIndex]),
+        correct: answerOrder.reduce((selectedIndexes, originalAnswerIndex, newIndex) => {
+          if (question.correct.includes(originalAnswerIndex)) {
+            selectedIndexes.push(newIndex);
+          }
+          return selectedIndexes;
+        }, [])
+      };
+    }
+
     let answerOrder = shufflePracticeExamValues(question.answers.map((_, index) => index));
     const originalOrder = question.answers.map((_, index) => index);
 
@@ -3737,6 +3973,22 @@ function initializeCertificationsPage() {
       `;
     }
 
+    if (question.type === "multi-select") {
+      const selectedIndexes = selectedAnswer && Array.isArray(selectedAnswer.values) ? selectedAnswer.values : [];
+      const requiredCount = question.requiredSelections || question.correct.length;
+      return `
+        <div class="multi-select-note">Select exactly ${requiredCount} answer${requiredCount === 1 ? "" : "s"}.</div>
+        <div class="multi-answer-grid">
+          ${question.answers.map((answer, index) => `
+            <button class="multi-answer-button ${selectedIndexes.includes(index) ? "selected" : ""}" type="button" data-multi-answer="${index}">
+              <span class="multi-check">${selectedIndexes.includes(index) ? "&#10003;" : ""}</span>
+              <span>${escapePracticeExamHtml(answer)}</span>
+            </button>
+          `).join("")}
+        </div>
+      `;
+    }
+
     return `
       <div class="answer-grid">
         ${question.answers.map((answer, index) => `
@@ -3797,6 +4049,32 @@ function initializeCertificationsPage() {
             assignPracticeExamMatch(matchIndex, pendingPracticeMatchOption);
             pendingPracticeMatchOption = "";
           }
+        });
+      });
+      return;
+    }
+
+    if (question.type === "multi-select") {
+      examRunnerBody.querySelectorAll("[data-multi-answer]").forEach((button) => {
+        button.addEventListener("click", () => {
+          const answerIndex = Number(button.dataset.multiAnswer);
+          const requiredCount = question.requiredSelections || question.correct.length;
+          const selection = activePracticeExamSelections[activePracticeExamIndex] || { type: "multi-select", values: [] };
+          const selectedSet = new Set(selection.values || []);
+
+          if (selectedSet.has(answerIndex)) {
+            selectedSet.delete(answerIndex);
+          } else if (selectedSet.size < requiredCount) {
+            selectedSet.add(answerIndex);
+          } else {
+            showToast(`Select exactly ${requiredCount} answer${requiredCount === 1 ? "" : "s"}.`);
+          }
+
+          activePracticeExamSelections[activePracticeExamIndex] = {
+            type: "multi-select",
+            values: [...selectedSet].sort((first, second) => first - second)
+          };
+          renderPracticeExamQuestion();
         });
       });
       return;
@@ -3871,6 +4149,11 @@ function initializeCertificationsPage() {
     if (question.type === "matching") {
       return Boolean(selection.matches)
         && question.pairs.every((_, index) => Boolean(selection.matches[index]));
+    }
+
+    if (question.type === "multi-select") {
+      const requiredCount = question.requiredSelections || question.correct.length;
+      return Array.isArray(selection.values) && selection.values.length === requiredCount;
     }
 
     return Number.isInteger(selection);
@@ -4065,7 +4348,7 @@ function initializeCertificationsPage() {
         isCorrect: isPracticeExamSelectionCorrect(question, selectedIndex)
       };
     });
-    const subunitResults = calculatePracticeExamSubunitResults(questionReview);
+    const subunitResults = calculatePracticeExamSubunitResults(questionReview, activePracticeExam.id);
 
     const attempt = {
       examId: activePracticeExam.id,
@@ -4109,6 +4392,12 @@ function initializeCertificationsPage() {
       return question.pairs.every((pair, index) => selection.matches[index] === pair.correct);
     }
 
+    if (question.type === "multi-select") {
+      const selectedValues = [...selection.values].sort((first, second) => first - second);
+      const correctValues = [...question.correct].sort((first, second) => first - second);
+      return practiceExamArraysMatch(selectedValues, correctValues);
+    }
+
     return selection === question.correct;
   }
 
@@ -4125,6 +4414,14 @@ function initializeCertificationsPage() {
       return question.pairs.map((pair, index) => `${pair.prompt}: ${selection.matches[index]}`).join("; ");
     }
 
+    if (question.type === "multi-select") {
+      return selection.values
+        .slice()
+        .sort((first, second) => first - second)
+        .map((index) => question.answers[index])
+        .join("; ");
+    }
+
     return question.answers[selection];
   }
 
@@ -4137,11 +4434,26 @@ function initializeCertificationsPage() {
       return question.pairs.map((pair) => `${pair.prompt}: ${pair.correct}`).join("; ");
     }
 
+    if (question.type === "multi-select") {
+      return question.correct
+        .slice()
+        .sort((first, second) => first - second)
+        .map((index) => question.answers[index])
+        .join("; ");
+    }
+
     return question.answers[question.correct];
   }
 
-  function calculatePracticeExamSubunitResults(questionReview) {
+  function calculatePracticeExamSubunitResults(questionReview, examId = "") {
     const resultMap = new Map();
+    const subunitOrderMap = {
+      "pearson-cybersecurity-full": cyberSecurityPracticeExamSubunits,
+      "its-networking-exam-1-full": networkingPracticeExamSubunits,
+      "its-networking-exam-2-full": networkingPracticeExamSubunits,
+      "comptia-network-plus-full": networkingPracticeExamSubunits
+    };
+    const subunitOrder = subunitOrderMap[examId] || networkingPracticeExamSubunits;
 
     questionReview.forEach((item) => {
       const subunit = item.subunit || "General Review";
@@ -4154,10 +4466,10 @@ function initializeCertificationsPage() {
       resultMap.set(subunit, current);
     });
 
-    const ordered = networkingPracticeExamSubunits
+    const ordered = subunitOrder
       .filter((subunit) => resultMap.has(subunit))
       .map((subunit) => resultMap.get(subunit));
-    const remaining = [...resultMap.values()].filter((item) => !networkingPracticeExamSubunits.includes(item.subunit));
+    const remaining = [...resultMap.values()].filter((item) => !subunitOrder.includes(item.subunit));
     return [...ordered, ...remaining];
   }
 

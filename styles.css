@@ -1219,6 +1219,62 @@ button {
   box-shadow: 0 0 22px rgba(34, 211, 238, 0.2);
 }
 
+.multi-select-note {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.multi-answer-grid {
+  display: grid;
+  gap: 10px;
+}
+
+.multi-answer-button {
+  display: grid;
+  grid-template-columns: 26px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+  min-height: 48px;
+  padding: 12px 14px;
+  color: var(--text);
+  text-align: left;
+  border: 1px solid rgba(168, 85, 247, 0.26);
+  border-radius: 14px;
+  background: rgba(10, 10, 10, 0.34);
+  transition: border-color 180ms ease, box-shadow 180ms ease, transform 180ms ease, background 180ms ease;
+}
+
+.multi-answer-button:hover,
+.multi-answer-button.selected {
+  border-color: rgba(34, 211, 238, 0.72);
+  box-shadow: 0 0 22px rgba(34, 211, 238, 0.18);
+  transform: translateY(-1px);
+}
+
+.multi-answer-button.selected {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.18), rgba(34, 211, 238, 0.1));
+}
+
+.multi-check {
+  display: grid;
+  width: 24px;
+  height: 24px;
+  place-items: center;
+  color: #f8f5ff;
+  font-size: 0.84rem;
+  font-weight: 950;
+  border: 1px solid rgba(168, 85, 247, 0.46);
+  border-radius: 8px;
+  background: rgba(168, 85, 247, 0.12);
+}
+
+.multi-answer-button.selected .multi-check {
+  color: #0a0a0a;
+  border-color: rgba(34, 211, 238, 0.72);
+  background: var(--blue);
+}
+
 .dropdown-question-set,
 .matching-question-board {
   display: grid;
