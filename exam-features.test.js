@@ -36,6 +36,7 @@ assert.equal(practiceExamEngine.getPreviousIndex(0), 0, "Back navigation must st
 assert.equal(practiceExamEngine.getPreviousIndex(3), 2, "Back navigation should move to the previous question.");
 assert.equal(practiceExamEngine.getNextIndex(2, 4), 3, "Next navigation should move forward.");
 assert.equal(practiceExamEngine.getNextIndex(3, 4), 3, "Next navigation should stop at the last question.");
+assert.equal(practiceExamEngine.getNextIndex(0, 4), 1, "Next navigation should allow skipping an unanswered question.");
 
 let flags = [false, false, false];
 flags = practiceExamEngine.toggleFlag(flags, 1);
@@ -54,6 +55,19 @@ assert.equal(reviewItems[1].isCurrent, true, "Review should highlight the curren
 assert.equal(reviewItems[1].isFlagged, true, "Review should show flagged questions.");
 assert.equal(reviewItems[0].isAnswered, true, "Review should show answered questions.");
 
+const unansweredReviewItems = practiceExamEngine.buildReviewItems(
+  [choiceQuestion, multiSelectQuestion, dropdownQuestion, matchingQuestion],
+  [null, { type: "multi-select", values: [0] }, { type: "dropdown", values: ["A", "", ""] }, { type: "matching", matches: {} }],
+  [true, false, true, false],
+  0
+);
+assert.equal(unansweredReviewItems[0].isUnanswered, true, "Review should mark blank questions as unanswered.");
+assert.equal(unansweredReviewItems[0].isFlagged, true, "Manual flag should remain visible on unanswered questions.");
+assert.equal(unansweredReviewItems[0].index, 0, "Review item should allow direct return to an unanswered question.");
+assert.equal(unansweredReviewItems[1].isIncomplete, true, "Partially answered multi-select questions should be marked incomplete.");
+assert.equal(unansweredReviewItems[2].answerState, "incomplete", "Partially answered dropdown questions should be marked incomplete.");
+assert.equal(unansweredReviewItems[3].answerState, "unanswered", "Empty matching questions should be marked unanswered.");
+
 assert.equal(practiceExamEngine.shouldRequestFullscreen({
   activeExam: true,
   finished: false,
@@ -68,12 +82,18 @@ assert.equal(practiceExamEngine.shouldRequestFullscreen({
 assert.equal(practiceExamEngine.getQuestionPointValue(choiceQuestion), 1, "Single-answer questions are worth one point.");
 assert.equal(practiceExamEngine.getEarnedPoints(choiceQuestion, 1), 1, "Correct single-answer selection earns one point.");
 assert.equal(practiceExamEngine.getEarnedPoints(choiceQuestion, 0), 0, "Wrong single-answer selection earns no points.");
+assert.equal(practiceExamEngine.getEarnedPoints(choiceQuestion, null), 0, "Unanswered single-answer questions earn no points.");
 
 assert.equal(practiceExamEngine.getQuestionPointValue(multiSelectQuestion), 3, "Multi-answer questions are weighted by correct answers.");
 assert.equal(
   practiceExamEngine.getEarnedPoints(multiSelectQuestion, { type: "multi-select", values: [0, 1, 3] }),
   2,
   "Multi-answer scoring should award only correct selected answers."
+);
+assert.equal(
+  practiceExamEngine.getEarnedPoints(multiSelectQuestion, { type: "multi-select", values: [] }),
+  0,
+  "Unanswered multi-select questions earn no points."
 );
 
 assert.equal(practiceExamEngine.getQuestionPointValue(dropdownQuestion), 3, "Dropdown questions are weighted by dropdown count.");
@@ -82,6 +102,11 @@ assert.equal(
   2,
   "Dropdown scoring should award partial credit per correct dropdown."
 );
+assert.equal(
+  practiceExamEngine.getEarnedPoints(dropdownQuestion, { type: "dropdown", values: [] }),
+  0,
+  "Unanswered dropdown questions earn no points."
+);
 
 assert.equal(practiceExamEngine.getQuestionPointValue(matchingQuestion), 3, "Matching questions are weighted by match count.");
 assert.equal(
@@ -89,5 +114,10 @@ assert.equal(
   2,
   "Matching scoring should award partial credit per correct match."
 );
+assert.equal(
+  practiceExamEngine.getEarnedPoints(matchingQuestion, { type: "matching", matches: {} }),
+  0,
+  "Unanswered matching questions earn no points."
+);
 
-console.log("PASS: exam navigation, flags, review, fullscreen lifecycle, and weighted partial-credit scoring checks passed.");
+console.log("PASS: exam navigation, skipping, unanswered review states, flags, fullscreen lifecycle, and weighted partial-credit scoring checks passed.");

@@ -127,6 +127,36 @@ const practiceExamEngine = (() => {
     return Number.isInteger(selection);
   }
 
+  function hasQuestionResponse(question, selection) {
+    if (!question || selection === null || selection === undefined) {
+      return false;
+    }
+
+    if (question.type === "dropdown") {
+      return Boolean(selection.values)
+        && selection.values.some((value) => Boolean(value));
+    }
+
+    if (question.type === "matching") {
+      return Boolean(selection.matches)
+        && Object.values(selection.matches).some((value) => Boolean(value));
+    }
+
+    if (question.type === "multi-select") {
+      return Array.isArray(selection.values) && selection.values.length > 0;
+    }
+
+    return Number.isInteger(selection);
+  }
+
+  function getQuestionAnswerState(question, selection) {
+    if (isQuestionAnswered(question, selection)) {
+      return "answered";
+    }
+
+    return hasQuestionResponse(question, selection) ? "incomplete" : "unanswered";
+  }
+
   function isSelectionFullyCorrect(question, selection) {
     return getEarnedPoints(question, selection) === getQuestionPointValue(question);
   }
@@ -146,13 +176,19 @@ const practiceExamEngine = (() => {
   }
 
   function buildReviewItems(questions, selections, flags, currentIndex) {
-    return questions.map((question, index) => ({
-      number: index + 1,
-      index,
-      isAnswered: isQuestionAnswered(question, selections[index]),
-      isFlagged: Boolean(flags[index]),
-      isCurrent: index === currentIndex
-    }));
+    return questions.map((question, index) => {
+      const answerState = getQuestionAnswerState(question, selections[index]);
+      return {
+        number: index + 1,
+        index,
+        answerState,
+        isAnswered: answerState === "answered",
+        isIncomplete: answerState === "incomplete",
+        isUnanswered: answerState === "unanswered",
+        isFlagged: Boolean(flags[index]),
+        isCurrent: index === currentIndex
+      };
+    });
   }
 
   function shouldRequestFullscreen({ activeExam, finished, hasRequestFullscreen }) {
@@ -164,6 +200,8 @@ const practiceExamEngine = (() => {
     getQuestionPointValue,
     getEarnedPoints,
     isQuestionAnswered,
+    hasQuestionResponse,
+    getQuestionAnswerState,
     isSelectionFullyCorrect,
     getPreviousIndex,
     getNextIndex,
@@ -4561,13 +4599,6 @@ function initializeCertificationsPage() {
       return;
     }
 
-    const question = activePracticeExamQuestions[activePracticeExamIndex];
-    const selection = activePracticeExamSelections[activePracticeExamIndex];
-    if (!isPracticeExamQuestionAnswered(question, selection)) {
-      showToast("Complete this question before moving on.");
-      return;
-    }
-
     if (activePracticeExamIndex < activePracticeExamQuestions.length - 1) {
       activePracticeExamIndex = practiceExamEngine.getNextIndex(activePracticeExamIndex, activePracticeExamQuestions.length);
       renderPracticeExamQuestion();
@@ -4613,6 +4644,8 @@ function initializeCertificationsPage() {
       activePracticeExamIndex
     );
     const answeredCount = reviewItems.filter((item) => item.isAnswered).length;
+    const incompleteCount = reviewItems.filter((item) => item.isIncomplete).length;
+    const unansweredCount = reviewItems.filter((item) => item.isUnanswered).length;
     const flaggedCount = reviewItems.filter((item) => item.isFlagged).length;
 
     if (examRunnerTitle) {
@@ -4631,13 +4664,16 @@ function initializeCertificationsPage() {
         <div class="review-summary-card">
           <span class="category-chip">End-of-exam review</span>
           <h3>${answeredCount}/${activePracticeExamQuestions.length} answered</h3>
-          <p>${flaggedCount} flagged question${flaggedCount === 1 ? "" : "s"}. Click any question number to return to it.</p>
+          <p>${unansweredCount} question${unansweredCount === 1 ? "" : "s"} need answer${unansweredCount === 1 ? "" : "s"}, ${incompleteCount} incomplete, ${flaggedCount} manually flagged. Click any question number to return to it.</p>
         </div>
         <div class="review-question-grid" aria-label="Exam question review">
           ${reviewItems.map((item) => `
-            <button class="review-question-button ${item.isCurrent ? "current" : ""} ${item.isFlagged ? "flagged" : ""} ${item.isAnswered ? "answered" : "unanswered"}" type="button" data-review-question="${item.index}">
+            <button class="review-question-button ${item.isCurrent ? "current" : ""} ${item.isFlagged ? "flagged" : ""} ${item.answerState}" type="button" data-review-question="${item.index}">
               <span>Question ${item.number}</span>
-              <small>${item.isAnswered ? "Answered" : "Unanswered"}${item.isFlagged ? " | Flagged" : ""}</small>
+              <small>
+                <span class="review-status-badge answer-status ${item.answerState}">${formatPracticeExamReviewAnswerState(item.answerState)}</span>
+                ${item.isFlagged ? `<span class="review-status-badge manual-flag">Manual flag</span>` : ""}
+              </small>
             </button>
           `).join("")}
         </div>
@@ -4682,6 +4718,18 @@ function initializeCertificationsPage() {
 
   function isPracticeExamQuestionAnswered(question, selection) {
     return practiceExamEngine.isQuestionAnswered(question, selection);
+  }
+
+  function formatPracticeExamReviewAnswerState(answerState) {
+    if (answerState === "answered") {
+      return "Answered";
+    }
+
+    if (answerState === "incomplete") {
+      return "Incomplete";
+    }
+
+    return "Needs answer";
   }
 
   function startPracticeExamTimer() {
@@ -4859,6 +4907,12 @@ function initializeCertificationsPage() {
     const answered = activePracticeExamSelections.filter((answer, index) => {
       return isPracticeExamQuestionAnswered(activePracticeExamQuestions[index], answer);
     }).length;
+    const unanswered = activePracticeExamSelections.filter((answer, index) => {
+      return practiceExamEngine.getQuestionAnswerState(activePracticeExamQuestions[index], answer) === "unanswered";
+    }).length;
+    const incomplete = activePracticeExamSelections.filter((answer, index) => {
+      return practiceExamEngine.getQuestionAnswerState(activePracticeExamQuestions[index], answer) === "incomplete";
+    }).length;
     const totalPoints = activePracticeExamQuestions.reduce((sum, question) => {
       return sum + practiceExamEngine.getQuestionPointValue(question);
     }, 0);
@@ -4873,6 +4927,7 @@ function initializeCertificationsPage() {
       const selectedIndex = activePracticeExamSelections[index];
       const pointsEarned = practiceExamEngine.getEarnedPoints(question, selectedIndex);
       const pointsPossible = practiceExamEngine.getQuestionPointValue(question);
+      const answerState = practiceExamEngine.getQuestionAnswerState(question, selectedIndex);
       return {
         number: index + 1,
         subunit: question.subunit || "General Review",
@@ -4880,6 +4935,8 @@ function initializeCertificationsPage() {
         selectedAnswer: formatPracticeExamSelectedAnswer(question, selectedIndex),
         correctAnswer: formatPracticeExamCorrectAnswer(question),
         isCorrect: pointsEarned === pointsPossible,
+        answerState,
+        isUnanswered: answerState === "unanswered",
         pointsEarned,
         pointsPossible,
         isFlagged: Boolean(activePracticeExamFlags[index])
@@ -4895,6 +4952,8 @@ function initializeCertificationsPage() {
       total: totalPoints,
       questionTotal: total,
       answered,
+      unanswered,
+      incomplete,
       percent,
       timeLimitMinutes: activePracticeExam.minutes,
       timeSpentSeconds,
@@ -5017,8 +5076,8 @@ function initializeCertificationsPage() {
       : "";
     const answerReview = attempt.questionReview && attempt.questionReview.length
       ? attempt.questionReview.map((item) => `
-          <article class="exam-feedback-item ${item.isCorrect ? "correct" : "review"}">
-            <span>${escapePracticeExamHtml(item.subunit)}${item.isFlagged ? " | Flagged" : ""}</span>
+          <article class="exam-feedback-item ${item.isCorrect ? "correct" : "review"} ${item.isUnanswered ? "unanswered" : ""}">
+            <span>${escapePracticeExamHtml(item.subunit)}${item.isFlagged ? " | Flagged" : ""}${item.isUnanswered ? " | Unanswered counted as 0" : ""}</span>
             <h4>Question ${item.number}: ${escapePracticeExamHtml(item.question)}</h4>
             <p><strong>Points:</strong> ${item.pointsEarned}/${item.pointsPossible}</p>
             <p><strong>Your answer:</strong> ${escapePracticeExamHtml(item.selectedAnswer)}</p>
@@ -5054,7 +5113,7 @@ function initializeCertificationsPage() {
       <div class="practice-exam-result ${passed ? "passed" : "review"}">
         <span class="category-chip">${passed ? "Passed practice target" : "Review recommended"}</span>
         <h3>${attempt.score}/${attempt.total} points (${attempt.percent}%)</h3>
-        <p>${attempt.answered}/${attempt.questionTotal || attempt.total} questions answered. Time used: ${formatPracticeExamDuration(attempt.timeSpentSeconds)}.</p>
+        <p>${attempt.answered}/${attempt.questionTotal || attempt.total} questions fully answered. ${attempt.unanswered || 0} unanswered counted as 0 points${attempt.incomplete ? `; ${attempt.incomplete} incomplete scored with partial credit where possible` : ""}. Time used: ${formatPracticeExamDuration(attempt.timeSpentSeconds)}.</p>
       </div>
       ${subunitRows ? `
         <div class="subunit-breakdown-card">

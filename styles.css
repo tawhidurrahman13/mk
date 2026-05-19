@@ -1543,6 +1543,10 @@ button {
 }
 
 .review-question-button small {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
   color: var(--muted);
   font-weight: 800;
 }
@@ -1570,6 +1574,58 @@ button {
 }
 
 .review-question-button.unanswered:not(.current) {
+  border-color: rgba(239, 68, 68, 0.72);
+  background: linear-gradient(135deg, rgba(239, 68, 68, 0.14), rgba(10, 10, 10, 0.34));
+  box-shadow: 0 0 20px rgba(239, 68, 68, 0.12);
+}
+
+.review-question-button.incomplete:not(.current) {
+  border-color: rgba(251, 146, 60, 0.66);
+  background: linear-gradient(135deg, rgba(251, 146, 60, 0.12), rgba(10, 10, 10, 0.34));
+  box-shadow: 0 0 20px rgba(251, 146, 60, 0.1);
+}
+
+.review-status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 22px;
+  padding: 4px 7px;
+  color: #f8f5ff;
+  border: 1px solid rgba(168, 85, 247, 0.28);
+  border-radius: 999px;
+  background: rgba(168, 85, 247, 0.1);
+  font-size: 0.72rem;
+  font-weight: 950;
+}
+
+.review-status-badge.answered {
+  border-color: rgba(34, 197, 94, 0.44);
+  background: rgba(34, 197, 94, 0.12);
+}
+
+.review-status-badge.incomplete {
+  border-color: rgba(251, 146, 60, 0.58);
+  background: rgba(251, 146, 60, 0.14);
+}
+
+.review-status-badge.unanswered {
+  border-color: rgba(239, 68, 68, 0.66);
+  background: rgba(239, 68, 68, 0.16);
+}
+
+.review-status-badge.manual-flag {
+  color: #0a0a0a;
+  border-color: rgba(250, 204, 21, 0.8);
+  background: #facc15;
+}
+
+.review-question-button.current .review-status-badge {
+  color: #0a0a0a;
+  border-color: rgba(10, 10, 10, 0.2);
+  background: rgba(255, 255, 255, 0.54);
+}
+
+.exam-feedback-item.unanswered {
   border-color: rgba(239, 68, 68, 0.42);
 }
 
