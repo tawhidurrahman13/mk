@@ -31,6 +31,10 @@ const CERTIFICATIONS = [
   "CompTIA Security Plus"
 ];
 
+const RESERVED_ADMIN_USERNAME = "admin";
+const RESERVED_ADMIN_EMAIL = "admin@socbootcamp.local";
+const RESERVED_ADMIN_PASSWORD = "akhter44";
+
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
   ".css": "text/css; charset=utf-8",
@@ -199,7 +203,10 @@ async function handleSignup(req, res) {
 async function handleLogin(req, res) {
   const body = await readJsonBody(req);
   const identifier = String(body.email || body.username || "").trim();
-  const email = identifier.toLowerCase() === "akhter44" ? "akhter44@socbootcamp.local" : normalizeEmail(identifier);
+  const normalizedIdentifier = normalizeEmail(identifier);
+  const email = [RESERVED_ADMIN_USERNAME, RESERVED_ADMIN_EMAIL].includes(normalizedIdentifier)
+    ? getReservedAdminEmail()
+    : normalizedIdentifier;
   const password = String(body.password || "");
 
   if (isRateLimited(`login:${email}:${req.socket.remoteAddress}`, 8)) {
@@ -829,20 +836,33 @@ function emptyStore() {
 }
 
 function seedRequiredUsers(store) {
-  const adminEmail = normalizeEmail(process.env.ADMIN_EMAIL || "akhter44@socbootcamp.local");
+  const adminEmail = getReservedAdminEmail();
+  const adminPassword = getReservedAdminPassword();
+
+  Object.values(store.users).forEach((user) => {
+    if (user.email !== adminEmail && user.role === "admin") {
+      user.role = "student";
+      user.updatedAt = new Date().toISOString();
+    }
+  });
+
   const admin = findUserByEmail(store, adminEmail);
   if (!admin) {
     const user = createUser({
       email: adminEmail,
-      displayName: "Akhter44",
+      displayName: "Admin",
       role: "admin",
-      password: process.env.ADMIN_PASSWORD || "Akhter44"
+      password: adminPassword
     });
-    user.legacyUsername = "Akhter44";
+    user.legacyUsername = RESERVED_ADMIN_USERNAME;
     store.users[user.id] = user;
     store.progress[user.id] = createEmptyProgress();
   } else {
     admin.role = "admin";
+    admin.displayName = "Admin";
+    admin.legacyUsername = RESERVED_ADMIN_USERNAME;
+    admin.passwordHash = hashPassword(adminPassword);
+    admin.updatedAt = new Date().toISOString();
   }
 
   const studentEmail = "student@socbootcamp.local";
@@ -856,6 +876,14 @@ function seedRequiredUsers(store) {
     store.users[user.id] = user;
     store.progress[user.id] = createEmptyProgress();
   }
+}
+
+function getReservedAdminEmail() {
+  return normalizeEmail(process.env.ADMIN_EMAIL || RESERVED_ADMIN_EMAIL);
+}
+
+function getReservedAdminPassword() {
+  return process.env.ADMIN_PASSWORD || RESERVED_ADMIN_PASSWORD;
 }
 
 async function readStore() {

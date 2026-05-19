@@ -19,8 +19,8 @@ async function main() {
       AUTH_SECRET: "qa-secret-change-me",
       SESSION_SECRET: "qa-session-change-me",
       AUTH_DATA_FILE: TEST_STORE,
-      ADMIN_EMAIL: "akhter44@socbootcamp.local",
-      ADMIN_PASSWORD: "Akhter44",
+      ADMIN_EMAIL: "admin@socbootcamp.local",
+      ADMIN_PASSWORD: "akhter44",
       GOOGLE_CLIENT_ID: "",
       GOOGLE_CLIENT_SECRET: "",
       GOOGLE_REDIRECT_URI: `http://localhost:${TEST_PORT}/api/auth/google/callback`,
@@ -84,8 +84,8 @@ async function main() {
     assert.ok(relogin.body.challengeId);
 
     const adminLogin = await postJson("/api/auth/login", {
-      email: "akhter44@socbootcamp.local",
-      password: "Akhter44"
+      email: "admin",
+      password: "akhter44"
     });
     assert.equal(adminLogin.status, 200);
     assert.ok(adminLogin.body.challengeId);

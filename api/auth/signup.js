@@ -6,6 +6,7 @@ const {
   handleError,
   hashPassword,
   isAdminEmail,
+  isReservedAdminPassword,
   isValidEmail,
   normalizeEmail,
   readJson,
@@ -28,6 +29,10 @@ module.exports = async function signup(req, res) {
     }
     if (password.length < 8) {
       sendJson(res, 400, { error: "Password must be at least 8 characters." });
+      return;
+    }
+    if (isAdminEmail(email) && !isReservedAdminPassword(password)) {
+      sendJson(res, 403, { error: "Admin account uses the reserved admin password." });
       return;
     }
 

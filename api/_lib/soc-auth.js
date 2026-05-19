@@ -4,7 +4,8 @@ const tls = require("node:tls");
 const AUTH_SECRET = process.env.AUTH_SECRET || process.env.SESSION_SECRET || "";
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY || "";
-const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.SOC_ADMIN_EMAIL || "").trim().toLowerCase();
+const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.SOC_ADMIN_EMAIL || "admin@socbootcamp.local").trim().toLowerCase();
+const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD || process.env.SOC_ADMIN_PASSWORD || "akhter44");
 const CANONICAL_GOOGLE_REDIRECT_URI = "https://mk-git-main-tawhidurrahman13s-projects.vercel.app/api/auth/google/callback";
 
 function sendJson(res, statusCode, payload, headers = {}) {
@@ -53,7 +54,7 @@ function requireServerConfig() {
 
 function normalizeEmail(email) {
   const normalized = String(email || "").trim().toLowerCase();
-  if (normalized === "akhter44@socbootcamp.local" && ADMIN_EMAIL) {
+  if ((normalized === "admin" || normalized === "admin@socbootcamp.local") && ADMIN_EMAIL) {
     return ADMIN_EMAIL;
   }
   return normalized;
@@ -65,6 +66,10 @@ function isValidEmail(email) {
 
 function isAdminEmail(email) {
   return Boolean(ADMIN_EMAIL && normalizeEmail(email) === ADMIN_EMAIL);
+}
+
+function isReservedAdminPassword(password) {
+  return String(password || "") === ADMIN_PASSWORD;
 }
 
 async function supabaseRequest(table, options = {}) {
@@ -539,6 +544,7 @@ module.exports = {
   hashPassword,
   isAdminEmail,
   isAuthSecretConfigured,
+  isReservedAdminPassword,
   isValidEmail,
   makeOAuthState,
   normalizeEmail,

@@ -34,7 +34,8 @@ SMTP_PORT=465
 SMTP_USER=your_gmail_address@gmail.com
 SMTP_PASS=your_gmail_app_password
 EMAIL_FROM=SOC Bootcamp <your_gmail_address@gmail.com>
-ADMIN_EMAIL=your_admin_email@gmail.com
+ADMIN_EMAIL=admin@socbootcamp.local
+ADMIN_PASSWORD=akhter44
 ```
 
 Keep `SUPABASE_SERVICE_ROLE_KEY`, `SMTP_PASS`, `GOOGLE_CLIENT_SECRET`, and `AUTH_SECRET` private.
