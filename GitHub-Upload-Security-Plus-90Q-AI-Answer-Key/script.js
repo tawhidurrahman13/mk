@@ -1081,7 +1081,208 @@ const pearsonNetworkingQuestionBank = [
   }
 ];
 
-const comptiaSecurityPlusQuestionBank = [];
+const comptiaSecurityPlusQuestionBank = [
+  {
+    question: "A security team is investigating unauthorized access to an internal database. Which mitigation would best prevent this attack?",
+    answers: ["Deploying endpoint detection and response (EDR) solutions", "Enforcing multi-factor authentication (MFA)", "Installing a host-based intrusion detection system (HIDS)", "Implementing network segmentation"],
+    correct: 1
+  },
+  {
+    question: "Which security practice ensures that a developer's new code does not introduce vulnerabilities?",
+    answers: ["Continuous monitoring", "Secure coding practices", "Input sanitization", "Patch management"],
+    correct: 1
+  },
+  {
+    question: "An organization implements a full packet capture solution. Which scenario benefits most?",
+    answers: ["Identifying malware signatures in files", "Investigating the scope of a data breach", "Blocking phishing attempts in real time", "Monitoring compliance with privacy regulations"],
+    correct: 1
+  },
+  {
+    question: "During a penetration test, a tester exploits arbitrary code execution. What should happen next?",
+    answers: ["Escalate privileges", "Document the vulnerability and report it immediately", "Continue testing", "Install monitoring software"],
+    correct: 1
+  },
+  {
+    question: "What is the most effective way to ensure cloud data security?",
+    answers: ["Encrypt data both in transit and at rest", "Use a dedicated public IP", "Require VPN for all users", "Perform regular pentests"],
+    correct: 0
+  },
+  {
+    question: "Which indicates a successful DNS poisoning attack?",
+    answers: ["Users redirected to malicious websites", "Increase in ARP traffic", "DNS queries failing", "Unauthorized DNS logs"],
+    correct: 0
+  },
+  {
+    question: "What is the best countermeasure against malicious JavaScript injection?",
+    answers: ["Enforce strict input validation", "Encrypt user data", "Restrict API access", "Require MFA"],
+    correct: 0
+  },
+  {
+    question: "A ransomware message appears on a user's computer. What should be done first?",
+    answers: ["Isolate the affected device from the network", "Power off the device", "Pay the ransom", "Restore from backup"],
+    correct: 0
+  },
+  {
+    question: "Which technology best detects insider threats?",
+    answers: ["EDR", "UEBA", "DLP", "IPS"],
+    correct: 1
+  },
+  {
+    question: "What is the likely explanation for outbound traffic to a malicious IP?",
+    answers: ["DoS attack", "Compromised system communicating with C2", "Employee bypassing controls", "Firewall misconfiguration"],
+    correct: 1
+  },
+  {
+    question: "What is the best prevention method against ransomware delivered through phishing emails?",
+    answers: ["Regular vulnerability scanning", "User training on recognizing phishing emails", "Deployment of an IPS", "Blocking all email attachments"],
+    correct: 1
+  },
+  {
+    question: "Which firewall inspects packet content at the application layer?",
+    answers: ["Stateful firewall", "Packet-filtering firewall", "Next-generation firewall (NGFW)", "Circuit-level gateway"],
+    correct: 2
+  },
+  {
+    question: "What is the primary purpose of SIEM solutions?",
+    answers: ["Encrypt sensitive data", "Correlate and analyze security logs in real time", "Prevent malware infections", "Automate vulnerability management"],
+    correct: 1
+  },
+  {
+    question: "What is the best mitigation against attackers guessing weak passwords?",
+    answers: ["Password complexity policies", "Multi-factor authentication (MFA)", "Deploy a WAF", "Require password changes every 30 days"],
+    correct: 1
+  },
+  {
+    question: "What is the best action after identifying a rogue device on the network?",
+    answers: ["Block the MAC address", "Isolate the device using segmentation", "Deploy EDR", "Shut down the switch"],
+    correct: 1
+  },
+  {
+    question: "Which cryptographic method ensures authenticity of software updates?",
+    answers: ["Symmetric encryption", "Digital signatures", "MD5 hashing", "ECC"],
+    correct: 1
+  },
+  {
+    question: "What is the best immediate response to a DDoS attack?",
+    answers: ["Deploy a load balancer", "Block all incoming traffic", "Redirect traffic through a DDoS mitigation service", "Notify customers"],
+    correct: 2
+  },
+  {
+    question: "What is the purpose of a honeypot?",
+    answers: ["Divert attackers and gather intelligence", "Encrypt sensitive data", "Prevent brute-force attacks", "Analyze legitimate users"],
+    correct: 0
+  },
+  {
+    question: "Which protocol ensures confidentiality and integrity of email communications?",
+    answers: ["S/MIME", "SMTP", "IMAP", "POP3"],
+    correct: 0
+  },
+  {
+    question: "What type of attack repeatedly tries default usernames and passwords on IoT devices?",
+    answers: ["Brute force", "Credential stuffing", "Password spraying", "Dictionary attack"],
+    correct: 0
+  },
+  {
+    question: "Which scenario best demonstrates the principle of confidentiality?",
+    answers: ["Encrypting sensitive files before transmission", "Detecting unauthorized changes in a document", "Ensuring servers are available during peak hours", "Creating redundant backups of critical data"],
+    correct: 0
+  },
+  {
+    question: "Which framework provides a structured approach for managing security and risk in an organization?",
+    answers: ["GDPR", "ISO 27001", "COBIT", "PCI DSS"],
+    correct: 1
+  },
+  {
+    question: "In the CIA triad, availability ensures which of the following?",
+    answers: ["Only authorized users can access data", "Data remains accurate and trustworthy", "Resources are accessible when needed", "Unauthorized users are denied access"],
+    correct: 2
+  },
+  {
+    question: "Which access control model restricts access based on policies defined by the system administrator?",
+    answers: ["Discretionary Access Control (DAC)", "Role-Based Access Control (RBAC)", "Attribute-Based Access Control (ABAC)", "Mandatory Access Control (MAC)"],
+    correct: 3
+  },
+  {
+    question: "What does the principle of least privilege ensure?",
+    answers: ["Users have minimal access necessary to perform their tasks", "All users must authenticate with MFA", "Data access is monitored continuously", "Privileged accounts are disabled by default"],
+    correct: 0
+  },
+  {
+    question: "What type of malware disguises itself as legitimate software to gain unauthorized access?",
+    answers: ["Worm", "Rootkit", "Trojan", "Keylogger"],
+    correct: 2
+  },
+  {
+    question: "Which attack method uses DNS spoofing to redirect users to malicious websites?",
+    answers: ["Pharming", "Phishing", "Shoulder surfing", "Cross-site scripting"],
+    correct: 0
+  },
+  {
+    question: "Which of the following is an example of a social engineering attack?",
+    answers: ["SQL Injection", "Ransomware attack", "An attacker posing as IT support to obtain user credentials", "A brute force password attack"],
+    correct: 2
+  },
+  {
+    question: "Which vulnerability allows attackers to execute code remotely on a system?",
+    answers: ["Command injection", "Privilege escalation", "Buffer overflow", "Zero-day exploit"],
+    correct: 3
+  },
+  {
+    question: "What is the primary goal of implementing a honeypot in a network?",
+    answers: ["Detect and log unauthorized access attempts", "Prevent malware infections", "Encrypt sensitive data", "Improve network performance"],
+    correct: 0
+  },
+  {
+    question: "A company implements a Zero Trust model to secure its infrastructure. What is the core principle of this model?",
+    answers: ["Implicit trust within the internal network", "Continuous authentication and least privilege", "Network segmentation with firewalls", "Encrypting all data stored on-premises"],
+    correct: 1
+  },
+  {
+    question: "An attacker exploits a weak API endpoint to access sensitive customer data. What is the best defense against such attacks?",
+    answers: ["Encrypt all API communications", "Require multi-factor authentication for API users", "Use input validation and rate limiting", "Deploy endpoint protection on developer systems"],
+    correct: 2
+  },
+  {
+    question: "What is the primary purpose of a Business Impact Analysis (BIA)?",
+    answers: ["Ensure compliance with regulatory frameworks", "Identify critical business functions and assess the impact of disruptions", "Detect insider threats through behavior monitoring", "Analyze vulnerabilities in legacy systems"],
+    correct: 1
+  },
+  {
+    question: "A company experiences a ransomware attack. What should the incident response team prioritize?",
+    answers: ["Notify law enforcement and preserve evidence", "Pay the ransom to restore operations quickly", "Isolate affected systems and restore from backups", "Disable all network traffic to contain the attack"],
+    correct: 2
+  },
+  {
+    question: "Which cryptographic technique ensures the integrity of a transmitted file?",
+    answers: ["Encryption", "Hashing", "Tokenization", "Salting"],
+    correct: 1
+  },
+  {
+    question: "An attacker sends phishing emails targeting executives of an organization. What is this attack called?",
+    answers: ["Spear phishing", "Whaling", "Vishing", "Smishing"],
+    correct: 1
+  },
+  {
+    question: "Which of the following is a primary function of a SIEM system?",
+    answers: ["Encrypt sensitive files in real time", "Analyze and correlate security events across the network", "Automatically patch vulnerable systems", "Deploy firewalls and intrusion prevention systems"],
+    correct: 1
+  },
+  {
+    question: "What is the best method to secure data stored in a misconfigured cloud storage bucket?",
+    answers: ["Restrict public access and implement identity-based permissions", "Encrypt all files with RSA", "Configure logging to monitor access attempts", "Deploy an intrusion detection system (IDS)"],
+    correct: 0
+  },
+  {
+    question: "An attacker intercepts and modifies communication between two devices. What is this attack called?",
+    answers: ["Replay attack", "Man-in-the-middle (MITM)", "ARP poisoning", "Session hijacking"],
+    correct: 1
+  },
+  {
+    question: "Which of the following tools is used to analyze network traffic for suspicious activity?",
+    answers: ["Wireshark", "Nessus", "Splunk", "Metasploit"],
+    correct: 0
+  }
+];
 
 const networkingPracticeExamSubunits = [
   "Networking Fundamentals",
@@ -1717,7 +1918,7 @@ const certificationQuizzes = [
     title: "CompTIA Security Plus Quiz",
     certification: "CompTIA Security Plus",
     difficulty: "Advanced",
-    questions: comptiaSecurityPlusPracticeExamQuestionBank
+    questions: comptiaSecurityPlusQuestionBank
   }
 ];
 

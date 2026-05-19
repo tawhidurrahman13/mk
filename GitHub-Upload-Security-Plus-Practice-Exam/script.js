@@ -1081,7 +1081,208 @@ const pearsonNetworkingQuestionBank = [
   }
 ];
 
-const comptiaSecurityPlusQuestionBank = [];
+const comptiaSecurityPlusQuestionBank = [
+  {
+    question: "A security team is investigating unauthorized access to an internal database. Which mitigation would best prevent this attack?",
+    answers: ["Deploying endpoint detection and response (EDR) solutions", "Enforcing multi-factor authentication (MFA)", "Installing a host-based intrusion detection system (HIDS)", "Implementing network segmentation"],
+    correct: 1
+  },
+  {
+    question: "Which security practice ensures that a developer's new code does not introduce vulnerabilities?",
+    answers: ["Continuous monitoring", "Secure coding practices", "Input sanitization", "Patch management"],
+    correct: 1
+  },
+  {
+    question: "An organization implements a full packet capture solution. Which scenario benefits most?",
+    answers: ["Identifying malware signatures in files", "Investigating the scope of a data breach", "Blocking phishing attempts in real time", "Monitoring compliance with privacy regulations"],
+    correct: 1
+  },
+  {
+    question: "During a penetration test, a tester exploits arbitrary code execution. What should happen next?",
+    answers: ["Escalate privileges", "Document the vulnerability and report it immediately", "Continue testing", "Install monitoring software"],
+    correct: 1
+  },
+  {
+    question: "What is the most effective way to ensure cloud data security?",
+    answers: ["Encrypt data both in transit and at rest", "Use a dedicated public IP", "Require VPN for all users", "Perform regular pentests"],
+    correct: 0
+  },
+  {
+    question: "Which indicates a successful DNS poisoning attack?",
+    answers: ["Users redirected to malicious websites", "Increase in ARP traffic", "DNS queries failing", "Unauthorized DNS logs"],
+    correct: 0
+  },
+  {
+    question: "What is the best countermeasure against malicious JavaScript injection?",
+    answers: ["Enforce strict input validation", "Encrypt user data", "Restrict API access", "Require MFA"],
+    correct: 0
+  },
+  {
+    question: "A ransomware message appears on a user's computer. What should be done first?",
+    answers: ["Isolate the affected device from the network", "Power off the device", "Pay the ransom", "Restore from backup"],
+    correct: 0
+  },
+  {
+    question: "Which technology best detects insider threats?",
+    answers: ["EDR", "UEBA", "DLP", "IPS"],
+    correct: 1
+  },
+  {
+    question: "What is the likely explanation for outbound traffic to a malicious IP?",
+    answers: ["DoS attack", "Compromised system communicating with C2", "Employee bypassing controls", "Firewall misconfiguration"],
+    correct: 1
+  },
+  {
+    question: "What is the best prevention method against ransomware delivered through phishing emails?",
+    answers: ["Regular vulnerability scanning", "User training on recognizing phishing emails", "Deployment of an IPS", "Blocking all email attachments"],
+    correct: 1
+  },
+  {
+    question: "Which firewall inspects packet content at the application layer?",
+    answers: ["Stateful firewall", "Packet-filtering firewall", "Next-generation firewall (NGFW)", "Circuit-level gateway"],
+    correct: 2
+  },
+  {
+    question: "What is the primary purpose of SIEM solutions?",
+    answers: ["Encrypt sensitive data", "Correlate and analyze security logs in real time", "Prevent malware infections", "Automate vulnerability management"],
+    correct: 1
+  },
+  {
+    question: "What is the best mitigation against attackers guessing weak passwords?",
+    answers: ["Password complexity policies", "Multi-factor authentication (MFA)", "Deploy a WAF", "Require password changes every 30 days"],
+    correct: 1
+  },
+  {
+    question: "What is the best action after identifying a rogue device on the network?",
+    answers: ["Block the MAC address", "Isolate the device using segmentation", "Deploy EDR", "Shut down the switch"],
+    correct: 1
+  },
+  {
+    question: "Which cryptographic method ensures authenticity of software updates?",
+    answers: ["Symmetric encryption", "Digital signatures", "MD5 hashing", "ECC"],
+    correct: 1
+  },
+  {
+    question: "What is the best immediate response to a DDoS attack?",
+    answers: ["Deploy a load balancer", "Block all incoming traffic", "Redirect traffic through a DDoS mitigation service", "Notify customers"],
+    correct: 2
+  },
+  {
+    question: "What is the purpose of a honeypot?",
+    answers: ["Divert attackers and gather intelligence", "Encrypt sensitive data", "Prevent brute-force attacks", "Analyze legitimate users"],
+    correct: 0
+  },
+  {
+    question: "Which protocol ensures confidentiality and integrity of email communications?",
+    answers: ["S/MIME", "SMTP", "IMAP", "POP3"],
+    correct: 0
+  },
+  {
+    question: "What type of attack repeatedly tries default usernames and passwords on IoT devices?",
+    answers: ["Brute force", "Credential stuffing", "Password spraying", "Dictionary attack"],
+    correct: 0
+  },
+  {
+    question: "Which scenario best demonstrates the principle of confidentiality?",
+    answers: ["Encrypting sensitive files before transmission", "Detecting unauthorized changes in a document", "Ensuring servers are available during peak hours", "Creating redundant backups of critical data"],
+    correct: 0
+  },
+  {
+    question: "Which framework provides a structured approach for managing security and risk in an organization?",
+    answers: ["GDPR", "ISO 27001", "COBIT", "PCI DSS"],
+    correct: 1
+  },
+  {
+    question: "In the CIA triad, availability ensures which of the following?",
+    answers: ["Only authorized users can access data", "Data remains accurate and trustworthy", "Resources are accessible when needed", "Unauthorized users are denied access"],
+    correct: 2
+  },
+  {
+    question: "Which access control model restricts access based on policies defined by the system administrator?",
+    answers: ["Discretionary Access Control (DAC)", "Role-Based Access Control (RBAC)", "Attribute-Based Access Control (ABAC)", "Mandatory Access Control (MAC)"],
+    correct: 3
+  },
+  {
+    question: "What does the principle of least privilege ensure?",
+    answers: ["Users have minimal access necessary to perform their tasks", "All users must authenticate with MFA", "Data access is monitored continuously", "Privileged accounts are disabled by default"],
+    correct: 0
+  },
+  {
+    question: "What type of malware disguises itself as legitimate software to gain unauthorized access?",
+    answers: ["Worm", "Rootkit", "Trojan", "Keylogger"],
+    correct: 2
+  },
+  {
+    question: "Which attack method uses DNS spoofing to redirect users to malicious websites?",
+    answers: ["Pharming", "Phishing", "Shoulder surfing", "Cross-site scripting"],
+    correct: 0
+  },
+  {
+    question: "Which of the following is an example of a social engineering attack?",
+    answers: ["SQL Injection", "Ransomware attack", "An attacker posing as IT support to obtain user credentials", "A brute force password attack"],
+    correct: 2
+  },
+  {
+    question: "Which vulnerability allows attackers to execute code remotely on a system?",
+    answers: ["Command injection", "Privilege escalation", "Buffer overflow", "Zero-day exploit"],
+    correct: 3
+  },
+  {
+    question: "What is the primary goal of implementing a honeypot in a network?",
+    answers: ["Detect and log unauthorized access attempts", "Prevent malware infections", "Encrypt sensitive data", "Improve network performance"],
+    correct: 0
+  },
+  {
+    question: "A company implements a Zero Trust model to secure its infrastructure. What is the core principle of this model?",
+    answers: ["Implicit trust within the internal network", "Continuous authentication and least privilege", "Network segmentation with firewalls", "Encrypting all data stored on-premises"],
+    correct: 1
+  },
+  {
+    question: "An attacker exploits a weak API endpoint to access sensitive customer data. What is the best defense against such attacks?",
+    answers: ["Encrypt all API communications", "Require multi-factor authentication for API users", "Use input validation and rate limiting", "Deploy endpoint protection on developer systems"],
+    correct: 2
+  },
+  {
+    question: "What is the primary purpose of a Business Impact Analysis (BIA)?",
+    answers: ["Ensure compliance with regulatory frameworks", "Identify critical business functions and assess the impact of disruptions", "Detect insider threats through behavior monitoring", "Analyze vulnerabilities in legacy systems"],
+    correct: 1
+  },
+  {
+    question: "A company experiences a ransomware attack. What should the incident response team prioritize?",
+    answers: ["Notify law enforcement and preserve evidence", "Pay the ransom to restore operations quickly", "Isolate affected systems and restore from backups", "Disable all network traffic to contain the attack"],
+    correct: 2
+  },
+  {
+    question: "Which cryptographic technique ensures the integrity of a transmitted file?",
+    answers: ["Encryption", "Hashing", "Tokenization", "Salting"],
+    correct: 1
+  },
+  {
+    question: "An attacker sends phishing emails targeting executives of an organization. What is this attack called?",
+    answers: ["Spear phishing", "Whaling", "Vishing", "Smishing"],
+    correct: 1
+  },
+  {
+    question: "Which of the following is a primary function of a SIEM system?",
+    answers: ["Encrypt sensitive files in real time", "Analyze and correlate security events across the network", "Automatically patch vulnerable systems", "Deploy firewalls and intrusion prevention systems"],
+    correct: 1
+  },
+  {
+    question: "What is the best method to secure data stored in a misconfigured cloud storage bucket?",
+    answers: ["Restrict public access and implement identity-based permissions", "Encrypt all files with RSA", "Configure logging to monitor access attempts", "Deploy an intrusion detection system (IDS)"],
+    correct: 0
+  },
+  {
+    question: "An attacker intercepts and modifies communication between two devices. What is this attack called?",
+    answers: ["Replay attack", "Man-in-the-middle (MITM)", "ARP poisoning", "Session hijacking"],
+    correct: 1
+  },
+  {
+    question: "Which of the following tools is used to analyze network traffic for suspicious activity?",
+    answers: ["Wireshark", "Nessus", "Splunk", "Metasploit"],
+    correct: 0
+  }
+];
 
 const networkingPracticeExamSubunits = [
   "Networking Fundamentals",
@@ -1103,12 +1304,7 @@ const securityPlusPracticeExamSubunits = [
   "Malware and Persistence",
   "Social Engineering",
   "Web Application Attacks",
-  "Network Attacks",
-  "Wireless and Mobile Attacks",
-  "Assessment and Testing",
-  "Configuration and Vulnerability Management",
-  "Threat Actors and Attribution",
-  "Security Plus Review"
+  "Network Attacks"
 ];
 
 function networkingPracticeQuestion(subunit, question, answers, correct = 0) {
@@ -1350,96 +1546,16 @@ const cyberSecurityFullPracticeExamQuestionBank = [
 ];
 
 const comptiaSecurityPlusPracticeExamQuestionBank = [
-  securityPlusPracticeQuestion("Malware and Persistence", "John is analyzing strange behavior on computers in his network. He believes there is malware on the machines. The symptoms include strange behavior that persists, even if he boots the machine to a Linux Live CD. What is the most likely cause?", ["Ransomware", "Boot sector virus", "Rootkit", "Key logger"], 1),
-  securityPlusPracticeQuestion("Social Engineering", "Ahmed is a sales manager with a major insurance company. He has received an email that is encouraging him to click on a link and fill out a survey. He is suspicious of the email, but it does mention a major insurance association, and that makes him think it might be legitimate. Which of the following best describes this attack?", ["Phishing", "Social engineering", "Spear phishing", "Trojan horse"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "You are a security administrator for a medium-sized bank. You have discovered a piece of software on your bank\u2019s database server that is not supposed to be there. It appears that the software will begin deleting database files if a specific employee is terminated. What best describes this?", ["Worm", "Logic bomb", "Trojan horse", "Rootkit"], 1),
-  securityPlusPracticeQuestion("Web Application Attacks", "You are responsible for incident response at Acme bank. The Acme bank website has been attacked. The attacker used the login screen, but rather than enter login credentials, he or she entered some odd text: ' or '1' = '1. What is the best description for this attack?", ["Cross-site scripting", "Cross-site request forgery", "SQL injection", "ARP poisoning"], 2),
-  securityPlusPracticeQuestion("Network Attacks", "Juanita is a network administrator for a small accounting firm. The users on her network are complaining of slow connectivity. When she examines the firewall logs, she observes a large number of half-open connections. What best describes this attack?", ["DDoS", "SYN flood", "Buffer overflow", "ARP poisoning"], 1),
-  securityPlusPracticeQuestion("Web Application Attacks", "Frank is deeply concerned about attacks to his company\u2019s e-commerce server. He is particularly worried about cross-site scripting and SQL injection. Which of the following would best defend against these two specific attacks?", ["Encrypted web traffic", "Filtering user input", "A firewall", "An IDS"], 1),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "You are responsible for network security at Acme Company. Users have been reporting that personal data is being stolen when using the wireless network. They all insist they only connect to the corporate wireless access point (WAP). However, logs for the WAP show that these users have not connected to it. Which of the following could best explain this situation?", ["Session hijacking", "Clickjacking", "Rogue access point", "Bluejacking"], 2),
-  securityPlusPracticeQuestion("Web Application Attacks", "What type of attack depends on the attacker entering JavaScript into a text area that is intended for users to enter text that will be viewed by other users?", ["SQL injection", "Clickjacking", "Cross-site scripting", "Bluejacking"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "A sales manager at your company is complaining about slow performance on his computer. When you thoroughly investigate the issue, you find spyware on his computer. He insists that the only thing he has downloaded recently was a freeware stock trading application. What would best explain this situation?", ["Logic bomb", "Trojan horse", "Rootkit", "Macro virus"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "Your company outsourced development of an accounting application to a local programming firm. After three months of using the product, one of your accountants accidentally discovers a way to log in and bypass all security and authentication. What best describes this?", ["Logic bomb", "Trojan horse", "Backdoor", "Rootkit"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "Teresa is the security manager for a mid-sized insurance company. She receives a call from law enforcement, telling her that some computers on her network participated in a massive denial-of-service (DoS) attack. Teresa is certain that none of the employees at her company would be involved in a cybercrime. What would best explain this scenario?", ["It is a result of social engineering.", "The machines all have backdoors.", "The machines are bots.", "The machines are infected with crypto-viruses."], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "Mike is a network administrator with a small financial services company. He has received a popup window that states his files are now encrypted and he must pay .5 bitcoins to get them decrypted. He tries to check the files in question, but their extensions have changed, and he cannot open them. What best describes this situation?", ["Mike\u2019s machine has a rootkit.", "Mike\u2019s machine has ransomware.", "Mike\u2019s machine has a logic bomb.", "Mike\u2019s machine has been the target of whaling."], 1),
-  securityPlusPracticeQuestion("Web Application Attacks", "Terrance is examining logs for the company e-commerce web server. He discovers a number of redirects that cannot be explained. After carefully examining the website, he finds some attacker performed a watering hole attack by placing JavaScript in the website and is redirecting users to a phishing website. Which of the following techniques would be best at preventing this in the future?", ["An SPI firewall", "An active IDS/IPS", "Checking buffer boundaries", "Checking user input"], 3),
-  securityPlusPracticeQuestion("Web Application Attacks", "What type of attack is based on sending more data to a target variable than the data can actually hold?", ["Bluesnarfing", "Buffer overflow", "Bluejacking", "DDoS"], 1),
-  securityPlusPracticeQuestion("Assessment and Testing", "You have been asked to test your company network for security issues. The specific test you are conducting involves primarily using automated and semiautomated tools to look for known vulnerabilities with the various systems on your network. Which of the following best describes this type of test?", ["Vulnerability scan", "Penetration test", "Security audit", "Security test"], 0),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "Jared discovers that attackers have breached his WiFi network. They have gained access via the wireless access point (WAP) administrative panel, and have logged on with the credentials the WAP shipped with. What best describes this issue?", ["Default configuration", "Race conditions", "Failure to patch", "Weak encryption"], 0),
-  securityPlusPracticeQuestion("Social Engineering", "Joanne is concerned about social engineering. She is particularly concerned that this technique could be used by an attacker to obtain information about the network, including possibly even passwords. What countermeasure would be most effective in combating social engineering?", ["SPI firewall", "An IPS", "User training", "Strong policies"], 2),
-  securityPlusPracticeQuestion("Network Attacks", "You are responsible for incident response at a mid-sized bank. You have discovered that someone was able to successfully breach your network and steal data from your database server. All servers are configured to forward logs to a central logging server. However, when you examine that central log, there are no entries after 2:13 a.m. two days ago. You check the servers, and they are sending logs to the right server, but they are not getting there. Which of the following would be most likely to explain this?", ["Your log server has a backdoor.", "Your log server has been hit with a buffer overflow attack.", "Your switches have been hit with ARP poisoning.", "Your IDS is malfunctioning and blocking log transmissions."], 2),
-  securityPlusPracticeQuestion("Web Application Attacks", "Coleen is the web security administrator for an online auction website. A small number of users are complaining that when they visit the website and log in, they are told the service is down and to try again later. Coleen checks and she can visit the site without any problem, even from computers outside the network. She also checks the web server log and there is no record of those users ever connecting. Which of the following might best explain this?", ["Typosquatting", "SQL injection", "Cross-site scripting", "Cross-site request forgery"], 0),
-  securityPlusPracticeQuestion("Threat Actors and Attribution", "Mahmoud is responsible for managing security at a large university. He has just performed a threat analysis for the network, and based on past incidents and studies of similar networks, he has determined that the most prevalent threat to his network is low-skilled attackers who wish to breach the system, simply to prove they can or for some low-level crime, such as changing a grade. Which term best describes this type of attacker?", ["Hacktivist", "Amateur", "Insider", "Script kiddie"], 3),
-  securityPlusPracticeQuestion("Network Attacks", "Which of the following best describes a collection of computers that have been compromised and are being controlled from one central point?", ["Zombienet", "Botnet", "Nullnet", "Attacknet"], 1),
-  securityPlusPracticeQuestion("Assessment and Testing", "John is conducting a penetration test of a client\u2019s network. He is currently gathering information from sources such as archive.org, netcraft.com, social media, and information websites. What best describes this stage?", ["Active reconnaissance", "Passive reconnaissance", "Initial exploitation", "Pivot"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "One of the salespeople in your company reports that his computer is behaving sluggishly. You check but don\u2019t see any obvious malware. However, in his temp folder you find JPEGs that look like screenshots of his desktop. Which of the following is the most likely cause?", ["He is stealing data from the company.", "There is a backdoor on his computer.", "There is spyware on his computer.", "He needs to update his Windows."], 2),
-  securityPlusPracticeQuestion("Network Attacks", "What type of attack is based on entering fake entries into a target networks domain name server?", ["DNS poisoning", "ARP poisoning", "Bluesnarfing", "Bluejacking"], 0),
-  securityPlusPracticeQuestion("Assessment and Testing", "Frank has been asked to conduct a penetration test of a small bookkeeping firm. For the test, he has only been given the company name, the domain name for their website, and the IP address of their gateway router. What best describes this type of test?", ["White-box test", "External test", "Black-box test", "Threat test"], 2),
-  securityPlusPracticeQuestion("Assessment and Testing", "You work for a security company that performs penetration testing for clients. You are conducting a test of an e-commerce company. You discover that after compromising the web server, you can use the web server to launch a second attack into the company\u2019s internal network. What best describes this?", ["Internal attack", "White-box testing", "Black-box testing", "A pivot"], 3),
-  securityPlusPracticeQuestion("Security Plus Review", "While investigating a malware outbreak on your company network, you discover something very odd. There is a file that has the same name as a Windows system DLL, and even has the same API interface, but handles input very differently, in a manner to help compromise the system, and it appears that applications have been attaching to this file, rather than the real system DLL. What best describes this?", ["Shimming", "Trojan horse", "Backdoor", "Refactoring"], 0),
-  securityPlusPracticeQuestion("Assessment and Testing", "Your company has hired a penetration testing firm to test the network. For the test, you have given the company details on operating systems you use, applications you run, and network devices. What best describes this type of test?", ["White-box test", "External test", "Black-box test", "Threat test"], 0),
-  securityPlusPracticeQuestion("Network Attacks", "Frank is a network administrator for a small college. He discovers that several machines on his network are infected with malware. That malware is sending a flood of packets to a target external to the network. What best describes this attack?", ["SYN flood", "DDoS", "Botnet", "Backdoor"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "John is a salesman for an automobile company. He recently downloaded a program from an unknown website, and now his client files have their file extensions changed, and he cannot open them. He has received a popup window that states his files are now encrypted and he must pay .5 bitcoins to get them decrypted. What has happened?", ["His machine has a rootkit.", "His machine has a logic bomb.", "His machine has a boot sector virus.", "His machine has ransomware."], 3),
-  securityPlusPracticeQuestion("Social Engineering", "When phishing attacks are so focused that they target a specific individual, they are called what?", ["Spear phishing", "Targeted phishing", "Phishing", "Whaling"], 0),
-  securityPlusPracticeQuestion("Web Application Attacks", "You are concerned about a wide range of attacks that could affect your company\u2019s web server. You have recently read about an attack wherein the attacker sends more data to the target than the target is expecting. If done properly, this could cause the target to crash. What would best prevent this type of attack?", ["An SPI firewall", "An active IDS/IPS", "Checking buffer boundaries", "Checking user input"], 2),
-  securityPlusPracticeQuestion("Assessment and Testing", "You work for a large retail company that processes credit card purchases. You have been asked to test your company network for security issues. The specific test you are conducting involves primarily checking policies, documentation, and past incident reports. Which of the following best describes this type of test?", ["Vulnerability scan", "Penetration test", "Security audit", "Security test"], 2),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "Maria is a salesperson with your company. After a recent sales trip, she discovers that many of her logins have been compromised. You carefully scan her laptop and cannot find any sign of any malware. You do notice that she had recently connected to a public WiFi at a coffee shop, and it is only since that connection that she noticed her logins had been compromised. What would most likely explain what has occurred?", ["She connected to a rogue AP.", "She downloaded a Trojan horse.", "She downloaded spyware.", "She is the victim of a buffer overflow attack."], 0),
-  securityPlusPracticeQuestion("Social Engineering", "You are the manager for network operations at your company. One of the accountants sees you in the hall and thanks you for your team keeping his antivirus software up to date. When you ask him what he means, he mentions that one of your staff, named Mike, called him and remotely connected to update the antivirus. You don\u2019t have an employee named Mike. What has occurred?", ["IP spoofing", "MAC spoofing", "Man-in-the-middle attack", "Social engineering"], 3),
-  securityPlusPracticeQuestion("Assessment and Testing", "You are a security administrator for a bank. You are very interested in detecting any breaches or even attempted breaches of your network, including those from internal personnel. But you don\u2019t want false positives to disrupt work. Which of the following devices would be the best choice in this scenario?", ["IPS", "WAF", "SIEM", "IDS"], 3),
-  securityPlusPracticeQuestion("Assessment and Testing", "One of your users cannot recall the password for their laptop. You want to recover that password for them. You intend to use a tool/technique that is popular with hackers, and it consists of searching tables of precomputed hashes to recover the password. What best describes this?", ["Rainbow table", "Backdoor", "Social engineering", "Dictionary attack"], 0),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "You have noticed that when in a crowded area, you sometimes get a stream of unwanted text messages. The messages end when you leave the area. What describes this attack?", ["Bluejacking", "Bluesnarfing", "Evil twin", "Rogue access point"], 0),
-  securityPlusPracticeQuestion("Social Engineering", "Someone has been rummaging through your company\u2019s trash bins seeking to find documents, diagrams, or other sensitive information that has been thrown out. What is this called?", ["Dumpster diving", "Trash diving", "Social engineering", "Trash engineering"], 0),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "You have noticed that when in a crowded area, data from your cell phone is stolen. Later investigation shows a Bluetooth connection to your phone, one that you cannot explain. What describes this attack?", ["Bluejacking", "Bluesnarfing", "Evil twin", "RAT"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "Louis is investigating a malware incident on one of the computers on his network. He has discovered unknown software that seems to be opening a port, allowing someone to remotely connect to the computer. This software seems to have been installed at the same time as a small shareware application. Which of the following best describes this malware?", ["RAT", "Backdoor", "Logic bomb", "Rootkit"], 0),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "This is a common security issue that is extremely hard to control in large environments. It occurs when a user has more computer rights, permissions, and privileges than what is required for the tasks the user needs to perform. What best describes this scenario?", ["Excessive rights", "Excessive access", "Excessive permissions", "Excessive privileges"], 3),
-  securityPlusPracticeQuestion("Malware and Persistence", "Jared is responsible for network security at his company. He has discovered behavior on one computer that certainly appears to be a virus. He has even identified a file he thinks might be the virus. However, using three separate antivirus programs, he finds that none can detect the file. Which of the following is most likely to be occurring?", ["The computer has a RAT.", "The computer has a zero-day exploit.", "The computer has a logic bomb.", "The computer has a rootkit."], 1),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "There are some computers on your network that use Windows XP. They have to stay on Windows XP due to a specific application they are running. That application won\u2019t run on newer operating systems. What security concerns does this situation give you?", ["No special concerns; this is normal.", "The machines cannot be patched; XP is no longer supported.", "The machines cannot coordinate with an SIEM since XP won\u2019t support that.", "The machines are more vulnerable to DoS attacks."], 1),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "Far\u00e8s has discovered that attackers have breached his wireless network. They seem to have used a brute-force attack on the WiFi-protected setup PIN to exploit the WAP and recover the WPA2 password. What is this attack called?", ["Evil twin", "Rogue WAP", "IV attack", "WPS Attack"], 3),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "Your wireless network has been breached. It appears the attacker modified a portion of data used with the stream cipher and utilized this to expose wirelessly encrypted data. What is this attack called?", ["Evil twin", "Rogue WAP", "IV attack", "WPS Attack"], 2),
-  securityPlusPracticeQuestion("Network Attacks", "John is concerned about disgruntled employees stealing company documents and exfiltrating them from the network. He is looking for a solution that will detect likely exfiltration and block it. What type of system is John looking for?", ["IPS", "SIEM", "Honeypot", "Firewall"], 0),
-  securityPlusPracticeQuestion("Network Attacks", "Some users on your network use Acme Bank for their personal banking. Those users have all recently been the victim of an attack, wherein they visited a fake Acme Bank website and their logins were compromised. They all visited the bank website from your network, and all of them insist they typed in the correct URL. What is the most likely explanation for this situation?", ["Trojan horse", "IP spoofing", "Clickjacking", "DNS poisoning"], 3),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "Users are complaining that they cannot connect to the wireless network. You discover that the WAPs are being subjected to a wireless attack designed to block their WiFi signals. Which of the following is the best label for this attack?", ["IV attack", "Jamming", "WPS attack", "Botnet"], 1),
-  securityPlusPracticeQuestion("Web Application Attacks", "What type of attack involves users clicking on something different on a website than what they intended to click on?", ["Clickjacking", "Bluesnarfing", "Bluejacking", "Evil twin"], 0),
-  securityPlusPracticeQuestion("Web Application Attacks", "What type of attack exploits the trust that a website has for an authenticated user to attack that website by spoofing requests from the trusted user?", ["Cross-site scripting", "Cross-site request forgery", "Bluejacking", "Evil twin"], 1),
-  securityPlusPracticeQuestion("Web Application Attacks", "John is a network administrator for Acme Company. He has discovered that someone has registered a domain name that is spelled just one letter different than his company\u2019s domain. The website with the misspelled URL is a phishing site. What best describes this attack?", ["Session hijacking", "Cross-site request forgery", "Typosquatting", "Clickjacking"], 2),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "Frank has discovered that someone was able to get information from his smartphone using a Bluetooth connection. The attacker was able to get his contact list and some emails he had received. What is this type of attack called?", ["Bluesnarfing", "Session hijacking", "Backdoor attack", "CSRF"], 0),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "Juanita is a network administrator for Acme Company. Some users complain that they keep getting dropped from the network. When Juanita checks the logs for the wireless access point (WAP), she finds that a deauthentication packet has been sent to the WAP from the users\u2019 IP addresses. What seems to be happening here?", ["Problem with users\u2019 WiFi configuration", "Disassociation attack", "Session hijacking", "Backdoor attack"], 1),
-  securityPlusPracticeQuestion("Security Plus Review", "John has discovered that an attacker is trying to get network passwords by using software that attempts a number of passwords from a list of common passwords. What type of attack is this?", ["Dictionary", "Rainbow table", "Brute force", "Session hijacking"], 0),
-  securityPlusPracticeQuestion("Network Attacks", "You are a network security administrator for a bank. You discover that an attacker has exploited a flaw in OpenSSL and forced some connections to move to a weak cipher suite version of TLS, which the attacker could breach. What type of attack was this?", ["Disassociation attack", "Downgrade attack", "Session hijacking", "Brute force"], 1),
-  securityPlusPracticeQuestion("Web Application Attacks", "When an attacker tries to find an input value that will produce the same hash as a password, what type of attack is this?", ["Rainbow table", "Brute force", "Session hijacking", "Collision attack"], 3),
-  securityPlusPracticeQuestion("Threat Actors and Attribution", "Far\u00e8s is the network security administrator for a company that creates advanced routers and switches. He has discovered that his company\u2019s networks have been subjected to a series of advanced attacks over a period of time. What best describes this attack?", ["DDoS", "Brute force", "APT", "Disassociation attack"], 2),
-  securityPlusPracticeQuestion("Assessment and Testing", "You are responsible for incident response at Acme Company. One of your jobs is to attempt to attribute attacks to a specific type of attacker. Which of the following would not be one of the attributes you consider in attributing the attack?", ["Level of sophistication", "Resources/funding", "Intent/motivation", "Amount of data stolen"], 3),
-  securityPlusPracticeQuestion("Network Attacks", "John is running an IDS on his network. Users sometimes report that the IDS flags legitimate traffic as an attack. What describes this?", ["False positive", "False negative", "False trigger", "False flag"], 0),
-  securityPlusPracticeQuestion("Assessment and Testing", "You are performing a penetration test of your company\u2019s network. As part of the test, you will be given a login with minimal access and will attempt to gain administrative access with this account. What is this called?", ["Privilege escalation", "Session hijacking", "Root grabbing", "Climbing"], 0),
-  securityPlusPracticeQuestion("Threat Actors and Attribution", "Mary has discovered that a web application used by her company does not always handle multithreading properly, particularly when multiple threads access the same variable. This could allow an attacker who discovered this vulnerability to exploit it and crash the server. What type of error has Mary discovered?", ["Buffer overflow", "Logic bomb", "Race conditions", "Improper error handling"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "An attacker is trying to get access to your network. He is sending users on your network a link to a freeware stock-monitoring program. However, that stock-monitoring program has attached to it software that will give the attacker access to any machine that it is installed on. What type of attack is this?", ["Rootkit", "Trojan horse", "Spyware", "Boot sector virus"], 1),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "Acme Company uses its own internal certificate server for all internal encryption. However, their certificate authority only publishes a CRL once per week. Does this pose a danger, and if so what?", ["Yes, this means a revoked certificate could be used for up to seven days.", "No, this is standard for all certificate authorities.", "Yes, this means it would be easy to fake a certificate.", "No, since this is being used only internally."], 0),
-  securityPlusPracticeQuestion("Web Application Attacks", "When a program has variables, especially arrays, and does not check the boundary values before inputting data, what attack is the program vulnerable to?", ["XSS", "CSRF", "Buffer overflow", "Logic bomb"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "Which of the following best describes malware that will execute some malicious activity when a particular condition is met (i.e., if condition is met, then execute)?", ["Boot sector virus", "Logic bomb", "Buffer overflow", "Sparse infector virus"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "Gerald is a network administrator for Acme Company. Users are reporting odd behavior on their computers. He believes this may be due to malware, but the behavior is different on different computers. What might best explain this?", ["It is not malware, but hardware failure.", "It is a boot sector virus.", "It is a macro virus.", "It is a polymorphic virus."], 3),
-  securityPlusPracticeQuestion("Network Attacks", "Teresa is a security officer at ACME Inc. She has discovered an attack where the attacker sent multiple broadcast messages to the network routers, spoofing an IP address of one of the network servers. This caused the network to send a flood of packets to that server and it is no longer responding. What is this attack called?", ["Smurf attack", "DDoS attack", "TCP hijacking attack", "TCP SYN flood attack"], 0),
-  securityPlusPracticeQuestion("Malware and Persistence", "Which type of virus is able to alter its own code to avoid being detected by antivirus software?", ["Boot sector", "Hoax", "Polymorphic", "Stealth"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "Gerald is a network administrator for a small financial services company. Users are reporting odd behavior that appears to be caused by a virus on their machines. After isolating the machines that he believes are infected, Gerald analyzes them. He finds that all the infected machines received an email purporting to be from accounting, with an Excel spreadsheet, and the users opened the spreadsheet. What is the most likely issue on these machines?", ["A macro virus", "A boot sector virus", "A Trojan horse", "A RAT"], 0),
-  securityPlusPracticeQuestion("Malware and Persistence", "Fred is on the incident response team for a major insurance company. His specialty is malware analysis. He is studying a file that is suspected of being a virus that infected the company network last month. The file seems to intermittently have bursts of malicious activity, interspersed with periods of being dormant. What best describes this malware?", ["A macro virus", "A logic bomb", "A sparse infector virus", "A polymorphic virus"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "What is the term used to describe a virus that can infect both program files and boot sectors?", ["Polymorphic", "Multipartite", "Stealth", "Multiple encrypting"], 1),
-  securityPlusPracticeQuestion("Assessment and Testing", "Your company has hired an outside security firm to perform various tests of your network. During the vulnerability scan you will provide that company with logins for various systems (i.e., database server, application server, web server, etc.) to aid in their scan. What best describes this?", ["A white-box test", "A gray-box test", "A privileged scan", "An authenticated user scan"], 3),
-  securityPlusPracticeQuestion("Network Attacks", "Which of the following is commonly used in a distributed denial of service (DDoS) attack?", ["Phishing", "Adware", "Botnet", "Trojan"], 2),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "You are investigating a recent breach at Acme Company. You discover that the attacker used an old account of someone no longer at the company. The account was still active. Which of the following best describes what caused this vulnerability to exist?", ["Improperly configured accounts", "Untrained users", "Using default configuration", "Failure to patch systems"], 0),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "Juan is responsible for incident response at a large financial institution. He discovers that the company WiFi has been breached. The attacker used the same login credentials that ship with the wireless access point (WAP). The attacker was able to use those credentials to access the WAP administrative console and make changes. Which of the following best describes what caused this vulnerability to exist?", ["Improperly configured accounts", "Untrained users", "Using default configuration", "Failure to patch systems"], 2),
-  securityPlusPracticeQuestion("Web Application Attacks", "Elizabeth is investigating a network breach at her company. She discovers a program that was able to execute code within the address space of another process by using the target process to load a specific library. What best describes this attack?", ["Logic bomb", "Session hijacking", "Buffer overflow", "DLL injection"], 3),
-  securityPlusPracticeQuestion("Web Application Attacks", "Zackary is a malware investigator with a cybersecurity firm. He is investigating malware that is able to compromise a target program by finding null references in the target program and dereferencing them, causing an exception to be generated. What best describes this type of attack?", ["DLL injection", "Buffer overflow", "Memory leak", "Pointer dereference"], 3),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "Frank has just taken over as CIO of a mid-sized insurance company. One of the first things he does is order a thorough inventory of all network equipment. He discovers two routers that are not documented. He is concerned that if they are not documented, they might not be securely configured, tested, and safe. What best describes this situation?", ["Poor user training", "System sprawl", "Failure to patch systems", "Default configuration"], 1),
-  securityPlusPracticeQuestion("Assessment and Testing", "What is the primary difference between an intrusive and a nonintrusive vulnerability scan?", ["An intrusive scan is a penetration test.", "A nonintrusive scan is just a document check.", "An intrusive scan could potentially disrupt operations.", "A nonintrusive scan won\u2019t find most vulnerabilities."], 2),
-  securityPlusPracticeQuestion("Threat Actors and Attribution", "Daryl is investigating a recent breach of his company\u2019s web server. The attacker used sophisticated techniques and then defaced the website, leaving messages that were denouncing the company\u2019s public policies. He and his team are trying to determine the type of actor who most likely committed the breach. Based on the information provided, who was the most likely threat actor?", ["A script", "A nation-state", "Organized crime", "Hacktivists"], 3),
-  securityPlusPracticeQuestion("Threat Actors and Attribution", "When investigating breaches and attempting to attribute them to specific threat actors, which of the following is not one of the indicators of an APT?", ["Long-term access to the target", "Sophisticated attacks", "The attack comes from a foreign IP address.", "The attack is sustained over time."], 2),
-  securityPlusPracticeQuestion("Wireless and Mobile Attacks", "What type of attack uses a second wireless access point (WAP) that broadcasts the same SSID as a legitimate access point, in an attempt to get users to connect to the attacker\u2019s WAP?", ["Evil twin", "IP spoofing", "Trojan horse", "MAC spoofing"], 0),
-  securityPlusPracticeQuestion("Threat Actors and Attribution", "You are investigating a breach of a large technical company. You discover that there have been several different attacks over a period of a year. The attacks were sustained, each lasting several weeks of continuous attack. The attacks were somewhat sophisticated and originated from a variety of IP addresses, but all the IP addresses are within your country. Which threat actor would you most suspect of being involved in this attack?", ["Nation-state", "Hacktivist", "Script kiddie", "A lone highly skilled hacker"], 0),
-  securityPlusPracticeQuestion("Configuration and Vulnerability Management", "Which of the following best describes a zero-day vulnerability?", ["A vulnerability that has been known to the vendor for zero days", "A vulnerability that has not yet been breached", "A vulnerability that can be quickly exploited (i.e., in zero days)", "A vulnerability that will give the attacker brief access (i.e., zero days)"], 0),
-  securityPlusPracticeQuestion("Network Attacks", "You have discovered that there are entries in your network\u2019s domain name server that point legitimate domains to unknown and potentially harmful IP addresses. What best describes this type of attack?", ["A backdoor", "An APT", "DNS poisoning", "A Trojan horse"], 2),
-  securityPlusPracticeQuestion("Malware and Persistence", "What best describes an attack that attaches some malware to a legitimate program so that when the user installs the legitimate program, they inadvertently install the malware?", ["Backdoor", "Trojan horse", "RAT", "Polymorphic virus"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "Which of the following best describes software that will provide the attacker with remote access to the victim\u2019s machine, but that is wrapped with a legitimate program in an attempt to trick the victim into installing it?", ["RAT", "Backdoor", "Trojan horse", "Macro virus"], 0),
-  securityPlusPracticeQuestion("Web Application Attacks", "Which of the following is an attack that seeks to attack a website, based on the website\u2019s trust of an authenticated user?", ["XSS", "CSRF", "Buffer overflow", "RAT"], 1),
-  securityPlusPracticeQuestion("Malware and Persistence", "John is analyzing what he believes is a malware outbreak on his network. Many users report their machines are behaving strangely. The anomalous behavior seems to occur sporadically and John cannot find a pattern. What is the most likely cause?", ["APT", "Boot sector virus", "Sparse infector virus", "Key logger"], 2),
+  securityPlusPracticeQuestion("Malware and Persistence", "Malware persists even after booting to a Linux Live CD. What is the most likely cause?", ["Ransomware", "Boot sector virus", "Rootkit", "Key logger"], 1),
+  securityPlusPracticeQuestion("Social Engineering", "A suspicious email mentions an insurance association and appears tailored to the recipient. What is the best description of the attack?", ["Phishing", "Social engineering", "Spear phishing", "Trojan horse"], 2),
+  securityPlusPracticeQuestion("Malware and Persistence", "Software deletes database files if an employee is terminated. What type of malware or attack logic is this?", ["Worm", "Logic bomb", "Trojan horse", "Rootkit"], 1),
+  securityPlusPracticeQuestion("Web Application Attacks", "A login screen is attacked using the input ' or '1'='1. What attack is being attempted?", ["Cross-site scripting", "Cross-site request forgery", "SQL injection", "ARP poisoning"], 2),
+  securityPlusPracticeQuestion("Network Attacks", "A server is receiving a large number of half-open connections. What attack is most likely occurring?", ["DDoS", "SYN flood", "Buffer overflow", "ARP poisoning"], 1),
+  securityPlusPracticeQuestion("Web Application Attacks", "What is the best defense against cross-site scripting and SQL injection?", ["Encrypted web traffic", "Filtering user input", "Firewall", "IDS"], 1),
+  securityPlusPracticeQuestion("Network Attacks", "Users claim they are connecting to the corporate wireless access point, but logs show otherwise. What is the likely issue?", ["Session hijacking", "Clickjacking", "Rogue access point", "Bluejacking"], 2),
+  securityPlusPracticeQuestion("Web Application Attacks", "An attacker enters JavaScript into a text area. What attack does this describe?", ["SQL injection", "Clickjacking", "Cross-site scripting", "Bluejacking"], 2),
+  securityPlusPracticeQuestion("Malware and Persistence", "Spyware is found after a user downloads a freeware application. What is the most likely malware type?", ["Logic bomb", "Trojan horse", "Rootkit", "Macro virus"], 1),
+  securityPlusPracticeQuestion("Malware and Persistence", "A hidden bypass login is discovered in an application. What does this represent?", ["Logic bomb", "Trojan horse", "Backdoor", "Rootkit"], 2)
 ];
 
 const itsNetworkingExam1QuestionBank = [
@@ -1663,7 +1779,7 @@ const fullLengthPracticeExams = [
     title: "CompTIA Security Plus Practice Exam",
     minutes: 90,
     questionBank: comptiaSecurityPlusPracticeExamQuestionBank,
-    bankStatus: "Uploaded 90-question bank with AI-generated answer key."
+    bankStatus: "Official uploaded bank: CompTIA Security Practice Questions Answers."
   }
 ];
 
@@ -1717,7 +1833,7 @@ const certificationQuizzes = [
     title: "CompTIA Security Plus Quiz",
     certification: "CompTIA Security Plus",
     difficulty: "Advanced",
-    questions: comptiaSecurityPlusPracticeExamQuestionBank
+    questions: comptiaSecurityPlusQuestionBank
   }
 ];
 

@@ -1,0 +1,63 @@
+CompTIA Security+ Questions, Choices & Answers
+1. Malware persists even after booting to Linux Live CD. Most likely cause?
+A. Ransomware
+B. Boot sector virus
+C. Rootkit
+D. Key logger
+Correct Answer: B. Boot sector virus
+2. Suspicious email mentioning insurance association. Best description?
+A. Phishing
+B. Social engineering
+C. Spear phishing
+D. Trojan horse
+Correct Answer: C. Spear phishing
+3. Software deletes database files if employee terminated.
+A. Worm
+B. Logic bomb
+C. Trojan horse
+D. Rootkit
+Correct Answer: B. Logic bomb
+4. Login screen attack using ' or '1'='1
+A. Cross-site scripting
+B. Cross-site request forgery
+C. SQL injection
+D. ARP poisoning
+Correct Answer: C. SQL injection
+5. Large number of half-open connections.
+
+A. DDoS
+B. SYN flood
+C. Buffer overflow
+D. ARP poisoning
+Correct Answer: B. SYN flood
+6. Best defense against XSS and SQL injection.
+A. Encrypted web traffic
+B. Filtering user input
+C. Firewall
+D. IDS
+Correct Answer: B. Filtering user input
+7. Users claim connecting to corporate WAP but logs show otherwise.
+A. Session hijacking
+B. Clickjacking
+C. Rogue access point
+D. Bluejacking
+Correct Answer: C. Rogue access point
+8. Attack involving attacker entering JavaScript into text area.
+A. SQL injection
+B. Clickjacking
+C. Cross-site scripting
+D. Bluejacking
+Correct Answer: C. Cross-site scripting
+9. Spyware found after downloading freeware app.
+A. Logic bomb
+B. Trojan horse
+C. Rootkit
+D. Macro virus
+
+Correct Answer: B. Trojan horse
+10. Hidden bypass login discovered in app.
+A. Logic bomb
+B. Trojan horse
+C. Backdoor
+D. Rootkit
+Correct Answer: C. Backdoor
