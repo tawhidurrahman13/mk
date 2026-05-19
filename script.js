@@ -43,6 +43,132 @@ const MFA_CODE_TTL_MS = 5 * 60 * 1000;
 const RESET_CODE_TTL_MS = 10 * 60 * 1000;
 let serverCsrfToken = "";
 
+const practiceExamEngine = (() => {
+  function arraysMatch(first, second) {
+    return Array.isArray(first)
+      && Array.isArray(second)
+      && first.length === second.length
+      && first.every((value, index) => value === second[index]);
+  }
+
+  function getQuestionPointValue(question) {
+    if (!question) {
+      return 0;
+    }
+
+    if (question.type === "dropdown") {
+      return Array.isArray(question.prompts) ? question.prompts.length : 0;
+    }
+
+    if (question.type === "matching") {
+      return Array.isArray(question.pairs) ? question.pairs.length : 0;
+    }
+
+    if (question.type === "multi-select") {
+      return Array.isArray(question.correct) ? question.correct.length : 0;
+    }
+
+    return 1;
+  }
+
+  function getEarnedPoints(question, selection) {
+    if (!question || selection === null || selection === undefined) {
+      return 0;
+    }
+
+    if (question.type === "dropdown") {
+      const values = Array.isArray(selection.values) ? selection.values : [];
+      return question.prompts.reduce((points, prompt, index) => {
+        return points + (values[index] === prompt.correct ? 1 : 0);
+      }, 0);
+    }
+
+    if (question.type === "matching") {
+      const matches = selection.matches || {};
+      return question.pairs.reduce((points, pair, index) => {
+        return points + (matches[index] === pair.correct ? 1 : 0);
+      }, 0);
+    }
+
+    if (question.type === "multi-select") {
+      const selectedValues = Array.isArray(selection.values) ? selection.values : [];
+      return selectedValues.reduce((points, selectedIndex) => {
+        return points + (question.correct.includes(selectedIndex) ? 1 : 0);
+      }, 0);
+    }
+
+    return selection === question.correct ? 1 : 0;
+  }
+
+  function isQuestionAnswered(question, selection) {
+    if (!question || selection === null || selection === undefined) {
+      return false;
+    }
+
+    if (question.type === "dropdown") {
+      return Boolean(selection.values)
+        && question.prompts.every((_, index) => Boolean(selection.values[index]));
+    }
+
+    if (question.type === "matching") {
+      return Boolean(selection.matches)
+        && question.pairs.every((_, index) => Boolean(selection.matches[index]));
+    }
+
+    if (question.type === "multi-select") {
+      const requiredCount = question.requiredSelections || question.correct.length;
+      return Array.isArray(selection.values) && selection.values.length === requiredCount;
+    }
+
+    return Number.isInteger(selection);
+  }
+
+  function isSelectionFullyCorrect(question, selection) {
+    return getEarnedPoints(question, selection) === getQuestionPointValue(question);
+  }
+
+  function getPreviousIndex(currentIndex) {
+    return Math.max(0, currentIndex - 1);
+  }
+
+  function getNextIndex(currentIndex, questionCount) {
+    return Math.min(Math.max(0, questionCount - 1), currentIndex + 1);
+  }
+
+  function toggleFlag(flags, index) {
+    const nextFlags = Array.isArray(flags) ? [...flags] : [];
+    nextFlags[index] = !nextFlags[index];
+    return nextFlags;
+  }
+
+  function buildReviewItems(questions, selections, flags, currentIndex) {
+    return questions.map((question, index) => ({
+      number: index + 1,
+      index,
+      isAnswered: isQuestionAnswered(question, selections[index]),
+      isFlagged: Boolean(flags[index]),
+      isCurrent: index === currentIndex
+    }));
+  }
+
+  function shouldRequestFullscreen({ activeExam, finished, hasRequestFullscreen }) {
+    return Boolean(activeExam && !finished && hasRequestFullscreen);
+  }
+
+  return {
+    arraysMatch,
+    getQuestionPointValue,
+    getEarnedPoints,
+    isQuestionAnswered,
+    isSelectionFullyCorrect,
+    getPreviousIndex,
+    getNextIndex,
+    toggleFlag,
+    buildReviewItems,
+    shouldRequestFullscreen
+  };
+})();
+
 const certificationCatalog = [
   "Pearson Cybersecurity",
   "Pearson Network Security",
@@ -2223,6 +2349,11 @@ function getEndlessQuizQuestion(questionIndex) {
   return buildGeneratedKaliQuestion(questionIndex - quizQuestions.length);
 }
 
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = { practiceExamEngine };
+}
+
+if (typeof document !== "undefined") {
 document.addEventListener("DOMContentLoaded", async () => {
   // Each HTML file declares a data-page value, so this shared script can
   // initialize only the features needed on the current page.
@@ -2271,6 +2402,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     initializeTestsPage();
   }
 });
+}
 
 function initializeGlobalUi() {
   // Shared navigation, mobile sidebar, and feedback toast behavior.
@@ -3509,12 +3641,15 @@ function initializeCertificationsPage() {
   const examRunnerTimer = document.getElementById("examRunnerTimer");
   const examRunnerLockStatus = document.getElementById("examRunnerLockStatus");
   const examRunnerBody = document.getElementById("examRunnerBody");
+  const examRunnerBackButton = document.getElementById("examRunnerBackButton");
   const examRunnerNextButton = document.getElementById("examRunnerNextButton");
+  const examRunnerReviewButton = document.getElementById("examRunnerReviewButton");
   const examRunnerSubmitButton = document.getElementById("examRunnerSubmitButton");
   const examRunnerExitButton = document.getElementById("examRunnerExitButton");
   let activePracticeExam = null;
   let activePracticeExamQuestions = [];
   let activePracticeExamSelections = [];
+  let activePracticeExamFlags = [];
   let activePracticeExamIndex = 0;
   let practiceExamStartedAt = null;
   let practiceExamRemainingSeconds = 0;
@@ -3523,6 +3658,8 @@ function initializeCertificationsPage() {
   let practiceExamFinished = false;
   let lastPracticeExamViolation = "";
   let pendingPracticeMatchOption = "";
+  let practiceExamScratchNotes = "";
+  let practiceExamScratchDrawing = "";
 
   updateCertificationStatus();
   updatePracticeExamStatus();
@@ -3612,9 +3749,17 @@ function initializeCertificationsPage() {
     examRunnerNextButton.addEventListener("click", () => movePracticeExamForward());
   }
 
+  if (examRunnerBackButton) {
+    examRunnerBackButton.addEventListener("click", () => movePracticeExamBackward());
+  }
+
+  if (examRunnerReviewButton) {
+    examRunnerReviewButton.addEventListener("click", () => renderPracticeExamReviewPage());
+  }
+
   if (examRunnerSubmitButton) {
     examRunnerSubmitButton.addEventListener("click", () => {
-      if (activePracticeExam && window.confirm("Submit this practice exam now?")) {
+      if (activePracticeExam && window.confirm("Submit this practice exam now? You will not be able to change answers after final submission.")) {
         finishPracticeExam("Submitted by student");
       }
     });
@@ -3768,6 +3913,7 @@ function initializeCertificationsPage() {
     activePracticeExam = exam;
     activePracticeExamQuestions = createPracticeExamQuestionSet(questionPool);
     activePracticeExamSelections = new Array(activePracticeExamQuestions.length).fill(null);
+    activePracticeExamFlags = new Array(activePracticeExamQuestions.length).fill(false);
     activePracticeExamIndex = 0;
     practiceExamStartedAt = new Date();
     practiceExamRemainingSeconds = exam.minutes * 60;
@@ -3775,19 +3921,21 @@ function initializeCertificationsPage() {
     practiceExamFinished = false;
     lastPracticeExamViolation = "";
     pendingPracticeMatchOption = "";
+    practiceExamScratchNotes = "";
+    practiceExamScratchDrawing = "";
 
     savePracticeExam(exam.title);
     updatePracticeExamStatus();
     renderPracticeExamQuestion();
     startPracticeExamTimer();
     installPracticeExamLockdown();
-    requestPracticeExamFullscreen();
 
     if (practiceExamRunner) {
       practiceExamRunner.classList.remove("hidden");
       practiceExamRunner.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
+    requestPracticeExamFullscreen();
     showToast(`${exam.title} started. Lockdown mode is active.`);
   }
 
@@ -3899,9 +4047,16 @@ function initializeCertificationsPage() {
       <div class="exam-progress-strip">
         <span>Question ${activePracticeExamIndex + 1} of ${activePracticeExamQuestions.length}</span>
         <span>${answeredCount}/${activePracticeExamQuestions.length} answered</span>
+        <span>${activePracticeExamFlags[activePracticeExamIndex] ? "Flagged for review" : "Not flagged"}</span>
+      </div>
+      <div class="exam-question-tools">
+        <button class="flag-question-button ${activePracticeExamFlags[activePracticeExamIndex] ? "flagged" : ""}" id="practiceExamFlagButton" type="button">
+          ${activePracticeExamFlags[activePracticeExamIndex] ? "Unflag Question" : "Flag Question"}
+        </button>
       </div>
       <p class="question-title">${escapePracticeExamHtml(question.question)}</p>
       ${renderPracticeExamAnswerControl(question, selectedAnswer)}
+      ${renderPracticeExamScratchpad()}
       <div class="lockdown-warning">
         <strong>Lockdown active.</strong>
         <p>Do not switch tabs, leave fullscreen, copy/paste, print, right-click, or use browser shortcuts. Violations are saved with the attempt.</p>
@@ -3909,13 +4064,25 @@ function initializeCertificationsPage() {
     `;
 
     bindPracticeExamQuestionControls(question);
+    bindPracticeExamQuestionTools();
+    initializePracticeExamScratchpad();
+
+    if (examRunnerBackButton) {
+      examRunnerBackButton.classList.remove("hidden");
+      examRunnerBackButton.disabled = activePracticeExamIndex === 0;
+    }
 
     if (examRunnerNextButton) {
       examRunnerNextButton.classList.toggle("hidden", activePracticeExamIndex === activePracticeExamQuestions.length - 1);
     }
 
+    if (examRunnerReviewButton) {
+      examRunnerReviewButton.classList.toggle("hidden", activePracticeExamIndex !== activePracticeExamQuestions.length - 1);
+    }
+
     if (examRunnerSubmitButton) {
-      examRunnerSubmitButton.classList.toggle("hidden", activePracticeExamIndex !== activePracticeExamQuestions.length - 1);
+      examRunnerSubmitButton.classList.add("hidden");
+      examRunnerSubmitButton.textContent = "Submit Exam";
     }
 
     if (examRunnerExitButton) {
@@ -3998,6 +4165,144 @@ function initializeCertificationsPage() {
         `).join("")}
       </div>
     `;
+  }
+
+  function renderPracticeExamScratchpad() {
+    return `
+      <section class="exam-scratchpad" aria-label="Exam scratchpad">
+        <div class="scratchpad-heading">
+          <div>
+            <p class="panel-note">Scratchpad</p>
+            <h3>Notepad and Work Area</h3>
+          </div>
+          <span class="helper-line">Not graded</span>
+        </div>
+        <div class="scratchpad-grid">
+          <label class="scratchpad-notes">
+            Notes
+            <textarea id="practiceExamNotes" rows="7" placeholder="Type notes, formulas, reminders, or elimination work here.">${escapePracticeExamHtml(practiceExamScratchNotes)}</textarea>
+          </label>
+          <div class="scratchpad-canvas-wrap">
+            <span>Draw work</span>
+            <canvas id="practiceExamScratchCanvas" width="720" height="220" aria-label="Scratch drawing canvas"></canvas>
+            <div class="scratchpad-actions">
+              <button class="secondary-button compact-button" id="clearPracticeExamCanvas" type="button">Clear Drawing</button>
+              <button class="secondary-button compact-button" id="clearPracticeExamNotes" type="button">Clear Notes</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    `;
+  }
+
+  function bindPracticeExamQuestionTools() {
+    const flagButton = document.getElementById("practiceExamFlagButton");
+    if (flagButton) {
+      flagButton.addEventListener("click", () => {
+        activePracticeExamFlags = practiceExamEngine.toggleFlag(activePracticeExamFlags, activePracticeExamIndex);
+        renderPracticeExamQuestion();
+      });
+    }
+  }
+
+  function initializePracticeExamScratchpad() {
+    const notes = document.getElementById("practiceExamNotes");
+    const clearNotesButton = document.getElementById("clearPracticeExamNotes");
+    const canvas = document.getElementById("practiceExamScratchCanvas");
+    const clearCanvasButton = document.getElementById("clearPracticeExamCanvas");
+
+    if (notes) {
+      notes.addEventListener("input", () => {
+        practiceExamScratchNotes = notes.value;
+      });
+    }
+
+    if (clearNotesButton && notes) {
+      clearNotesButton.addEventListener("click", () => {
+        practiceExamScratchNotes = "";
+        notes.value = "";
+      });
+    }
+
+    if (!canvas) {
+      return;
+    }
+
+    const context = canvas.getContext("2d");
+    if (!context) {
+      return;
+    }
+
+    context.lineWidth = 3;
+    context.lineCap = "round";
+    context.lineJoin = "round";
+    context.strokeStyle = "#a855f7";
+
+    if (practiceExamScratchDrawing) {
+      const image = new Image();
+      image.onload = () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        context.drawImage(image, 0, 0, canvas.width, canvas.height);
+      };
+      image.src = practiceExamScratchDrawing;
+    }
+
+    let drawing = false;
+
+    const getCanvasPoint = (event) => {
+      const rect = canvas.getBoundingClientRect();
+      return {
+        x: (event.clientX - rect.left) * (canvas.width / rect.width),
+        y: (event.clientY - rect.top) * (canvas.height / rect.height)
+      };
+    };
+
+    const saveCanvasDrawing = () => {
+      practiceExamScratchDrawing = canvas.toDataURL("image/png");
+    };
+
+    canvas.addEventListener("pointerdown", (event) => {
+      event.preventDefault();
+      drawing = true;
+      canvas.setPointerCapture(event.pointerId);
+      const point = getCanvasPoint(event);
+      context.beginPath();
+      context.moveTo(point.x, point.y);
+    });
+
+    canvas.addEventListener("pointermove", (event) => {
+      if (!drawing) {
+        return;
+      }
+
+      event.preventDefault();
+      const point = getCanvasPoint(event);
+      context.lineTo(point.x, point.y);
+      context.stroke();
+    });
+
+    ["pointerup", "pointerleave", "pointercancel"].forEach((eventName) => {
+      canvas.addEventListener(eventName, (event) => {
+        if (!drawing) {
+          return;
+        }
+
+        drawing = false;
+        try {
+          canvas.releasePointerCapture(event.pointerId);
+        } catch (error) {
+          // Some browsers release pointer capture automatically on cancel.
+        }
+        saveCanvasDrawing();
+      });
+    });
+
+    if (clearCanvasButton) {
+      clearCanvasButton.addEventListener("click", () => {
+        context.clearRect(0, 0, canvas.width, canvas.height);
+        practiceExamScratchDrawing = "";
+      });
+    }
   }
 
   function bindPracticeExamQuestionControls(question) {
@@ -4128,35 +4433,119 @@ function initializeCertificationsPage() {
     }
 
     if (activePracticeExamIndex < activePracticeExamQuestions.length - 1) {
-      activePracticeExamIndex += 1;
+      activePracticeExamIndex = practiceExamEngine.getNextIndex(activePracticeExamIndex, activePracticeExamQuestions.length);
       renderPracticeExamQuestion();
       return;
     }
 
-    finishPracticeExam("Completed all questions");
+    renderPracticeExamReviewPage();
+  }
+
+  function movePracticeExamBackward() {
+    if (!activePracticeExam) {
+      return;
+    }
+
+    const previousIndex = practiceExamEngine.getPreviousIndex(activePracticeExamIndex);
+    if (previousIndex === activePracticeExamIndex) {
+      showToast("You are already on question 1.");
+      return;
+    }
+
+    activePracticeExamIndex = previousIndex;
+    renderPracticeExamQuestion();
+  }
+
+  function goToPracticeExamQuestion(questionIndex) {
+    if (!activePracticeExam || questionIndex < 0 || questionIndex >= activePracticeExamQuestions.length) {
+      return;
+    }
+
+    activePracticeExamIndex = questionIndex;
+    renderPracticeExamQuestion();
+  }
+
+  function renderPracticeExamReviewPage() {
+    if (!activePracticeExam || !examRunnerBody) {
+      return;
+    }
+
+    const reviewItems = practiceExamEngine.buildReviewItems(
+      activePracticeExamQuestions,
+      activePracticeExamSelections,
+      activePracticeExamFlags,
+      activePracticeExamIndex
+    );
+    const answeredCount = reviewItems.filter((item) => item.isAnswered).length;
+    const flaggedCount = reviewItems.filter((item) => item.isFlagged).length;
+
+    if (examRunnerTitle) {
+      examRunnerTitle.textContent = `${activePracticeExam.title} Review`;
+    }
+
+    if (examRunnerMeta) {
+      examRunnerMeta.textContent = `${activePracticeExam.certification} | Review flagged and unanswered questions before final submission.`;
+    }
+
+    updatePracticeExamTimerDisplay();
+    updatePracticeExamLockStatus();
+
+    examRunnerBody.innerHTML = `
+      <div class="practice-review-shell">
+        <div class="review-summary-card">
+          <span class="category-chip">End-of-exam review</span>
+          <h3>${answeredCount}/${activePracticeExamQuestions.length} answered</h3>
+          <p>${flaggedCount} flagged question${flaggedCount === 1 ? "" : "s"}. Click any question number to return to it.</p>
+        </div>
+        <div class="review-question-grid" aria-label="Exam question review">
+          ${reviewItems.map((item) => `
+            <button class="review-question-button ${item.isCurrent ? "current" : ""} ${item.isFlagged ? "flagged" : ""} ${item.isAnswered ? "answered" : "unanswered"}" type="button" data-review-question="${item.index}">
+              <span>Question ${item.number}</span>
+              <small>${item.isAnswered ? "Answered" : "Unanswered"}${item.isFlagged ? " | Flagged" : ""}</small>
+            </button>
+          `).join("")}
+        </div>
+        ${renderPracticeExamScratchpad()}
+        <div class="lockdown-warning">
+          <strong>Final submission is next.</strong>
+          <p>Review pages do not reveal answers. Your scratchpad is available here, but it is not included in grading.</p>
+        </div>
+      </div>
+    `;
+
+    examRunnerBody.querySelectorAll("[data-review-question]").forEach((button) => {
+      button.addEventListener("click", () => {
+        goToPracticeExamQuestion(Number(button.dataset.reviewQuestion));
+      });
+    });
+    initializePracticeExamScratchpad();
+
+    if (examRunnerBackButton) {
+      examRunnerBackButton.classList.remove("hidden");
+      examRunnerBackButton.disabled = activePracticeExamIndex === 0;
+    }
+
+    if (examRunnerNextButton) {
+      examRunnerNextButton.classList.add("hidden");
+    }
+
+    if (examRunnerReviewButton) {
+      examRunnerReviewButton.classList.add("hidden");
+    }
+
+    if (examRunnerSubmitButton) {
+      examRunnerSubmitButton.classList.remove("hidden");
+      examRunnerSubmitButton.textContent = "Submit Final Exam";
+    }
+
+    if (examRunnerExitButton) {
+      examRunnerExitButton.classList.remove("hidden");
+      examRunnerExitButton.textContent = "Exit Exam";
+    }
   }
 
   function isPracticeExamQuestionAnswered(question, selection) {
-    if (!question || selection === null || selection === undefined) {
-      return false;
-    }
-
-    if (question.type === "dropdown") {
-      return Boolean(selection.values)
-        && question.prompts.every((_, index) => Boolean(selection.values[index]));
-    }
-
-    if (question.type === "matching") {
-      return Boolean(selection.matches)
-        && question.pairs.every((_, index) => Boolean(selection.matches[index]));
-    }
-
-    if (question.type === "multi-select") {
-      const requiredCount = question.requiredSelections || question.correct.length;
-      return Array.isArray(selection.values) && selection.values.length === requiredCount;
-    }
-
-    return Number.isInteger(selection);
+    return practiceExamEngine.isQuestionAnswered(question, selection);
   }
 
   function startPracticeExamTimer() {
@@ -4184,7 +4573,11 @@ function initializeCertificationsPage() {
   }
 
   function requestPracticeExamFullscreen() {
-    if (!practiceExamRunner || !practiceExamRunner.requestFullscreen) {
+    if (!practiceExamEngine.shouldRequestFullscreen({
+      activeExam: Boolean(activePracticeExam),
+      finished: practiceExamFinished,
+      hasRequestFullscreen: Boolean(practiceExamRunner && practiceExamRunner.requestFullscreen)
+    })) {
       addPracticeExamViolation("Fullscreen API unavailable");
       return;
     }
@@ -4330,22 +4723,30 @@ function initializeCertificationsPage() {
     const answered = activePracticeExamSelections.filter((answer, index) => {
       return isPracticeExamQuestionAnswered(activePracticeExamQuestions[index], answer);
     }).length;
-    const correct = activePracticeExamQuestions.reduce((count, question, index) => {
-      return isPracticeExamSelectionCorrect(question, activePracticeExamSelections[index]) ? count + 1 : count;
+    const totalPoints = activePracticeExamQuestions.reduce((sum, question) => {
+      return sum + practiceExamEngine.getQuestionPointValue(question);
     }, 0);
-    const percent = total ? Math.round((correct / total) * 100) : 0;
+    const earnedPoints = activePracticeExamQuestions.reduce((sum, question, index) => {
+      return sum + practiceExamEngine.getEarnedPoints(question, activePracticeExamSelections[index]);
+    }, 0);
+    const percent = totalPoints ? Math.round((earnedPoints / totalPoints) * 100) : 0;
     const timeSpentSeconds = practiceExamStartedAt
       ? Math.round((Date.now() - practiceExamStartedAt.getTime()) / 1000)
       : 0;
     const questionReview = activePracticeExamQuestions.map((question, index) => {
       const selectedIndex = activePracticeExamSelections[index];
+      const pointsEarned = practiceExamEngine.getEarnedPoints(question, selectedIndex);
+      const pointsPossible = practiceExamEngine.getQuestionPointValue(question);
       return {
         number: index + 1,
         subunit: question.subunit || "General Review",
         question: question.question,
         selectedAnswer: formatPracticeExamSelectedAnswer(question, selectedIndex),
         correctAnswer: formatPracticeExamCorrectAnswer(question),
-        isCorrect: isPracticeExamSelectionCorrect(question, selectedIndex)
+        isCorrect: pointsEarned === pointsPossible,
+        pointsEarned,
+        pointsPossible,
+        isFlagged: Boolean(activePracticeExamFlags[index])
       };
     });
     const subunitResults = calculatePracticeExamSubunitResults(questionReview, activePracticeExam.id);
@@ -4354,8 +4755,9 @@ function initializeCertificationsPage() {
       examId: activePracticeExam.id,
       title: activePracticeExam.title,
       certification: activePracticeExam.certification,
-      score: correct,
-      total,
+      score: earnedPoints,
+      total: totalPoints,
+      questionTotal: total,
       answered,
       percent,
       timeLimitMinutes: activePracticeExam.minutes,
@@ -4380,41 +4782,29 @@ function initializeCertificationsPage() {
   }
 
   function isPracticeExamSelectionCorrect(question, selection) {
-    if (!isPracticeExamQuestionAnswered(question, selection)) {
-      return false;
-    }
-
-    if (question.type === "dropdown") {
-      return question.prompts.every((prompt, index) => selection.values[index] === prompt.correct);
-    }
-
-    if (question.type === "matching") {
-      return question.pairs.every((pair, index) => selection.matches[index] === pair.correct);
-    }
-
-    if (question.type === "multi-select") {
-      const selectedValues = [...selection.values].sort((first, second) => first - second);
-      const correctValues = [...question.correct].sort((first, second) => first - second);
-      return practiceExamArraysMatch(selectedValues, correctValues);
-    }
-
-    return selection === question.correct;
+    return practiceExamEngine.isSelectionFullyCorrect(question, selection);
   }
 
   function formatPracticeExamSelectedAnswer(question, selection) {
-    if (!isPracticeExamQuestionAnswered(question, selection)) {
+    if (selection === null || selection === undefined) {
       return "Not answered";
     }
 
     if (question.type === "dropdown") {
-      return question.prompts.map((prompt, index) => `${prompt.label}: ${selection.values[index]}`).join("; ");
+      const values = Array.isArray(selection.values) ? selection.values : [];
+      return question.prompts.map((prompt, index) => `${prompt.label}: ${values[index] || "Not answered"}`).join("; ");
     }
 
     if (question.type === "matching") {
-      return question.pairs.map((pair, index) => `${pair.prompt}: ${selection.matches[index]}`).join("; ");
+      const matches = selection.matches || {};
+      return question.pairs.map((pair, index) => `${pair.prompt}: ${matches[index] || "Not answered"}`).join("; ");
     }
 
     if (question.type === "multi-select") {
+      if (!Array.isArray(selection.values) || !selection.values.length) {
+        return "Not answered";
+      }
+
       return selection.values
         .slice()
         .sort((first, second) => first - second)
@@ -4457,12 +4847,11 @@ function initializeCertificationsPage() {
 
     questionReview.forEach((item) => {
       const subunit = item.subunit || "General Review";
-      const current = resultMap.get(subunit) || { subunit, correct: 0, total: 0, percent: 0 };
-      current.total += 1;
-      if (item.isCorrect) {
-        current.correct += 1;
-      }
-      current.percent = Math.round((current.correct / current.total) * 100);
+      const current = resultMap.get(subunit) || { subunit, correct: 0, total: 0, questions: 0, percent: 0 };
+      current.correct += item.pointsEarned || 0;
+      current.total += item.pointsPossible || 0;
+      current.questions += 1;
+      current.percent = current.total ? Math.round((current.correct / current.total) * 100) : 0;
       resultMap.set(subunit, current);
     });
 
@@ -4491,8 +4880,9 @@ function initializeCertificationsPage() {
     const answerReview = attempt.questionReview && attempt.questionReview.length
       ? attempt.questionReview.map((item) => `
           <article class="exam-feedback-item ${item.isCorrect ? "correct" : "review"}">
-            <span>${escapePracticeExamHtml(item.subunit)}</span>
+            <span>${escapePracticeExamHtml(item.subunit)}${item.isFlagged ? " | Flagged" : ""}</span>
             <h4>Question ${item.number}: ${escapePracticeExamHtml(item.question)}</h4>
+            <p><strong>Points:</strong> ${item.pointsEarned}/${item.pointsPossible}</p>
             <p><strong>Your answer:</strong> ${escapePracticeExamHtml(item.selectedAnswer)}</p>
             <p><strong>Correct answer:</strong> ${escapePracticeExamHtml(item.correctAnswer)}</p>
           </article>
@@ -4525,8 +4915,8 @@ function initializeCertificationsPage() {
     examRunnerBody.innerHTML = `
       <div class="practice-exam-result ${passed ? "passed" : "review"}">
         <span class="category-chip">${passed ? "Passed practice target" : "Review recommended"}</span>
-        <h3>${attempt.score}/${attempt.total} correct (${attempt.percent}%)</h3>
-        <p>${attempt.answered}/${attempt.total} questions answered. Time used: ${formatPracticeExamDuration(attempt.timeSpentSeconds)}.</p>
+        <h3>${attempt.score}/${attempt.total} points (${attempt.percent}%)</h3>
+        <p>${attempt.answered}/${attempt.questionTotal || attempt.total} questions answered. Time used: ${formatPracticeExamDuration(attempt.timeSpentSeconds)}.</p>
       </div>
       ${subunitRows ? `
         <div class="subunit-breakdown-card">
@@ -4561,8 +4951,16 @@ function initializeCertificationsPage() {
       ` : ""}
     `;
 
+    if (examRunnerBackButton) {
+      examRunnerBackButton.classList.add("hidden");
+    }
+
     if (examRunnerNextButton) {
       examRunnerNextButton.classList.add("hidden");
+    }
+
+    if (examRunnerReviewButton) {
+      examRunnerReviewButton.classList.add("hidden");
     }
 
     if (examRunnerSubmitButton) {
@@ -4582,6 +4980,14 @@ function initializeCertificationsPage() {
 
     if (examRunnerExitButton) {
       examRunnerExitButton.classList.add("hidden");
+    }
+
+    if (examRunnerBackButton) {
+      examRunnerBackButton.classList.add("hidden");
+    }
+
+    if (examRunnerReviewButton) {
+      examRunnerReviewButton.classList.add("hidden");
     }
   }
 
