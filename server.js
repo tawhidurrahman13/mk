@@ -34,6 +34,11 @@ const CERTIFICATIONS = [
 const RESERVED_ADMIN_USERNAME = "admin";
 const RESERVED_ADMIN_EMAIL = "eakhter@brooklynsteamcenter.org";
 const RESERVED_ADMIN_PASSWORD = "akhter44";
+const LEGACY_ADMIN_EMAILS = new Set([
+  "admin@socbootcamp.local",
+  "akhter44@socbootcamp.local"
+]);
+const LEGACY_ADMIN_USERNAMES = new Set(["Akhter44", "akhter44"]);
 
 const MIME_TYPES = {
   ".html": "text/html; charset=utf-8",
@@ -189,6 +194,8 @@ async function handleSignup(req, res) {
   const email = normalizeEmail(body.email);
   const password = String(body.password || "");
   const displayName = String(body.displayName || "").trim() || email.split("@")[0];
+  const requestedRole = String(body.role || "student").trim().toLowerCase();
+  const wantsAdmin = requestedRole === "admin" || email === getReservedAdminEmail();
 
   if (!isValidEmail(email)) {
     sendJson(res, 400, { error: "Valid email is required" });
@@ -205,15 +212,31 @@ async function handleSignup(req, res) {
     return;
   }
 
+  if (wantsAdmin) {
+    if (email !== getReservedAdminEmail() || password !== getReservedAdminPassword() || displayName.toLowerCase() !== RESERVED_ADMIN_USERNAME) {
+      sendJson(res, 403, { error: "Admin signup is reserved for username admin, email eakhter@brooklynsteamcenter.org, and the configured admin password." });
+      return;
+    }
+  }
+
   const store = await readStore();
   if (findUserByEmail(store, email)) {
     sendJson(res, 409, { error: "An account already exists for that email" });
     return;
   }
 
-  const user = createUser({ email, displayName, role: "student", password });
+  const user = createUser({
+    email,
+    displayName: wantsAdmin ? "Admin" : displayName,
+    role: wantsAdmin ? "admin" : "student",
+    password
+  });
+  if (wantsAdmin) {
+    user.legacyUsername = RESERVED_ADMIN_USERNAME;
+  }
   store.users[user.id] = user;
   store.progress[user.id] = createEmptyProgress();
+  enforceSingleAdminAccount(store);
   await writeStore(store);
 
   const challenge = await createEmailChallenge(store, user, "mfa", "SOC Bootcamp MFA Code");
@@ -372,14 +395,19 @@ async function handleGoogleCallback(req, res, url) {
 
     const email = normalizeEmail(profile.email);
     let user = findUserByEmail(store, email);
+    const isReservedAdmin = email === getReservedAdminEmail();
     if (!user) {
       user = createUser({
         email,
-        displayName: profile.name || email.split("@")[0],
-        role: "student",
+        displayName: isReservedAdmin ? "Admin" : profile.name || email.split("@")[0],
+        role: isReservedAdmin ? "admin" : "student",
         provider: "google",
         googleProfile: profile
       });
+      if (isReservedAdmin) {
+        user.legacyUsername = RESERVED_ADMIN_USERNAME;
+        user.passwordHash = hashPassword(getReservedAdminPassword());
+      }
       store.users[user.id] = user;
       store.progress[user.id] = createEmptyProgress();
     } else {
@@ -390,9 +418,15 @@ async function handleGoogleCallback(req, res, url) {
         profileImage: profile.picture || "",
         linkedAt: new Date().toISOString()
       };
-      user.displayName = user.displayName || profile.name || email.split("@")[0];
+      user.role = isReservedAdmin ? "admin" : "student";
+      user.displayName = isReservedAdmin ? "Admin" : user.displayName || profile.name || email.split("@")[0];
       user.profileImage = user.profileImage || profile.picture || "";
+      if (isReservedAdmin) {
+        user.legacyUsername = RESERVED_ADMIN_USERNAME;
+        user.passwordHash = hashPassword(getReservedAdminPassword());
+      }
     }
+    enforceSingleAdminAccount(store);
 
     const challenge = await createEmailChallenge(store, user, "mfa", "SOC Bootcamp Google Login MFA Code");
     await writeStore(store);
@@ -460,6 +494,11 @@ async function handleResetConfirm(req, res) {
 
   if (!isValidEmail(email) || newPassword.length < 8) {
     sendJson(res, 400, { error: "Valid email and an 8+ character password are required" });
+    return;
+  }
+
+  if (email === getReservedAdminEmail() && newPassword !== getReservedAdminPassword()) {
+    sendJson(res, 403, { error: "The Admin password is fixed. Use the reserved Admin password." });
     return;
   }
 
@@ -1016,15 +1055,10 @@ function normalizeStore(store) {
 }
 
 function seedRequiredUsers(store) {
+  enforceSingleAdminAccount(store);
+
   const adminEmail = getReservedAdminEmail();
   const adminPassword = getReservedAdminPassword();
-
-  Object.values(store.users).forEach((user) => {
-    if (user.email !== adminEmail && user.role === "admin") {
-      user.role = "student";
-      user.updatedAt = new Date().toISOString();
-    }
-  });
 
   const admin = findUserByEmail(store, adminEmail);
   if (!admin) {
@@ -1045,6 +1079,8 @@ function seedRequiredUsers(store) {
     admin.updatedAt = new Date().toISOString();
   }
 
+  enforceSingleAdminAccount(store);
+
   const studentEmail = "student@socbootcamp.local";
   if (!findUserByEmail(store, studentEmail)) {
     const user = createUser({
@@ -1058,12 +1094,65 @@ function seedRequiredUsers(store) {
   }
 }
 
+function enforceSingleAdminAccount(store) {
+  const adminEmail = getReservedAdminEmail();
+  const adminIds = [];
+  const now = new Date().toISOString();
+
+  Object.entries(store.users).forEach(([id, user]) => {
+    if (!user) return;
+    user.email = normalizeEmail(user.email);
+    const isApprovedAdmin = user.email === adminEmail;
+    const isLegacyAdmin = LEGACY_ADMIN_EMAILS.has(user.email) || LEGACY_ADMIN_USERNAMES.has(user.legacyUsername);
+
+    if (isLegacyAdmin && !isApprovedAdmin) {
+      delete store.users[id];
+      delete store.progress[id];
+      Object.keys(store.sessions || {}).forEach((sessionId) => {
+        if (store.sessions[sessionId].userId === id) {
+          delete store.sessions[sessionId];
+        }
+      });
+      return;
+    }
+
+    if (isApprovedAdmin) {
+      adminIds.push(id);
+      user.role = "admin";
+      user.displayName = "Admin";
+      user.legacyUsername = RESERVED_ADMIN_USERNAME;
+      user.email = adminEmail;
+      return;
+    }
+
+    if (user.role === "admin") {
+      user.role = "student";
+      user.updatedAt = now;
+      Object.keys(store.sessions || {}).forEach((sessionId) => {
+        if (store.sessions[sessionId].userId === id) {
+          delete store.sessions[sessionId];
+        }
+      });
+    }
+  });
+
+  adminIds.slice(1).forEach((duplicateId) => {
+    delete store.users[duplicateId];
+    delete store.progress[duplicateId];
+    Object.keys(store.sessions || {}).forEach((sessionId) => {
+      if (store.sessions[sessionId].userId === duplicateId) {
+        delete store.sessions[sessionId];
+      }
+    });
+  });
+}
+
 function getReservedAdminEmail() {
-  return normalizeEmail(process.env.ADMIN_EMAIL || RESERVED_ADMIN_EMAIL);
+  return RESERVED_ADMIN_EMAIL;
 }
 
 function getReservedAdminPassword() {
-  return process.env.ADMIN_PASSWORD || RESERVED_ADMIN_PASSWORD;
+  return RESERVED_ADMIN_PASSWORD;
 }
 
 async function readStore() {

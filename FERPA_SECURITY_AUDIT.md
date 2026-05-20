@@ -56,7 +56,7 @@ This is an engineering checklist for safer handling of student education records
 
 - Deploy only on HTTPS.
 - Configure strong `AUTH_SECRET` / `SESSION_SECRET` values.
-- Configure `ADMIN_EMAIL=eakhter@brooklynsteamcenter.org`.
+- Keep the reserved admin identity fixed to username `admin`, email `eakhter@brooklynsteamcenter.org`, and password `akhter44` unless school leadership approves a secure rotation.
 - Configure Gmail SMTP or an approved school email provider through environment variables only.
 - Store student records in Supabase with RLS enabled and reviewed.
 - Keep `SUPABASE_SERVICE_ROLE_KEY` server-only.

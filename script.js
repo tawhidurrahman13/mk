@@ -3178,16 +3178,17 @@ function initializeLoginPage() {
 
     if (authMode === "create") {
       if (selectedRole === "admin") {
-        if (username !== RESERVED_ADMIN_USERNAME || password !== RESERVED_ADMIN_PASSWORD) {
+        if (username !== RESERVED_ADMIN_USERNAME || password !== RESERVED_ADMIN_PASSWORD || email !== RESERVED_ADMIN_EMAIL) {
           usernameError.textContent = "The only Admin username is admin.";
-          passwordError.textContent = "Use the reserved Admin password to activate this account.";
+          passwordError.textContent = "Use the reserved Admin password and approved Admin email.";
+          emailError.textContent = `Admin email must be ${RESERVED_ADMIN_EMAIL}.`;
           return;
         }
 
         accounts[RESERVED_ADMIN_USERNAME] = {
           password: RESERVED_ADMIN_PASSWORD,
           role: "admin",
-          email: email || demoAccounts[RESERVED_ADMIN_USERNAME].email,
+          email: RESERVED_ADMIN_EMAIL,
           displayName: "Admin"
         };
         localStorage.setItem(storageKeys.accounts, JSON.stringify(accounts));
@@ -3222,17 +3223,25 @@ function initializeLoginPage() {
       return;
     }
 
-    if (!accounts[username] || accounts[username].password !== password) {
+    let loginUsername = username;
+    if (!accounts[loginUsername]) {
+      const accountByEmail = findAccountByEmail(normalizeLoginIdentifier(username));
+      if (accountByEmail) {
+        loginUsername = accountByEmail.username;
+      }
+    }
+
+    if (!accounts[loginUsername] || accounts[loginUsername].password !== password) {
       passwordError.textContent = "Username or password is incorrect.";
       return;
     }
 
-    if (!accounts[username].role) {
-      accounts[username].role = "student";
+    if (!accounts[loginUsername].role) {
+      accounts[loginUsername].role = "student";
       localStorage.setItem(storageKeys.accounts, JSON.stringify(accounts));
     }
 
-    beginMfaChallenge(username, `Welcome, ${username}. Enter the email MFA code to continue.`);
+    beginMfaChallenge(loginUsername, `Welcome, ${loginUsername}. Enter the email MFA code to continue.`);
   });
 
   logoutButton.addEventListener("click", async () => {
@@ -3294,6 +3303,11 @@ function initializeLoginPage() {
       isValid = false;
     }
 
+    if (authMode === "create" && roleSelect?.value === "admin" && email.toLowerCase() !== RESERVED_ADMIN_EMAIL) {
+      emailError.textContent = `Admin email must be ${RESERVED_ADMIN_EMAIL}.`;
+      isValid = false;
+    }
+
     return isValid;
   }
 
@@ -3308,7 +3322,7 @@ function initializeLoginPage() {
     }
 
     if (roleSelect.value === "admin") {
-      roleHelpText.innerHTML = `Admin is one account only: <strong>${RESERVED_ADMIN_USERNAME}</strong> / <strong>${RESERVED_ADMIN_PASSWORD}</strong>.`;
+      roleHelpText.innerHTML = `Admin is one account only: <strong>${RESERVED_ADMIN_USERNAME}</strong> / <strong>${RESERVED_ADMIN_PASSWORD}</strong> / <strong>${RESERVED_ADMIN_EMAIL}</strong>.`;
       return;
     }
 
@@ -3573,6 +3587,11 @@ function initializeLoginPage() {
       return;
     }
 
+    if (foundAccount.username === RESERVED_ADMIN_USERNAME && newPassword !== RESERVED_ADMIN_PASSWORD) {
+      resetError.textContent = "The Admin password is fixed. Use the reserved Admin password.";
+      return;
+    }
+
     if (newPassword.length < 8) {
       resetError.textContent = "New password must be at least 8 characters.";
       return;
@@ -3674,18 +3693,29 @@ function initializeLoginPage() {
 
     const accounts = getStoredObject(storageKeys.accounts, {});
     const existingAccount = findAccountByEmail(email);
-    const username = existingAccount ? existingAccount.username : createUsernameFromEmail(email);
+    const isReservedAdminEmail = email === RESERVED_ADMIN_EMAIL;
+    const username = isReservedAdminEmail ? RESERVED_ADMIN_USERNAME : existingAccount ? existingAccount.username : createUsernameFromEmail(email);
 
     if (!existingAccount) {
       accounts[username] = {
-        password: `google:${generateVerificationCode()}`,
-        role: "student",
+        password: isReservedAdminEmail ? RESERVED_ADMIN_PASSWORD : `google:${generateVerificationCode()}`,
+        role: isReservedAdminEmail ? "admin" : "student",
         email,
-        displayName: username,
+        displayName: isReservedAdminEmail ? "Admin" : username,
         provider: "google-demo"
       };
       localStorage.setItem(storageKeys.accounts, JSON.stringify(accounts));
       initializeUserProgress(username);
+    } else if (isReservedAdminEmail) {
+      accounts[RESERVED_ADMIN_USERNAME] = {
+        ...accounts[RESERVED_ADMIN_USERNAME],
+        password: RESERVED_ADMIN_PASSWORD,
+        role: "admin",
+        email: RESERVED_ADMIN_EMAIL,
+        displayName: "Admin",
+        provider: accounts[RESERVED_ADMIN_USERNAME]?.provider || "google-demo"
+      };
+      localStorage.setItem(storageKeys.accounts, JSON.stringify(accounts));
     }
 
     beginMfaChallenge(username, "Google OAuth demo sign-up accepted. Enter the email MFA code to continue.");
@@ -3738,6 +3768,23 @@ function seedDemoAccounts() {
     }
   });
 
+  const existingAdminByEmail = findAccountByEmail(RESERVED_ADMIN_EMAIL);
+  if (existingAdminByEmail && existingAdminByEmail.username !== RESERVED_ADMIN_USERNAME) {
+    const oldAdminAccount = accounts[existingAdminByEmail.username];
+    accounts[RESERVED_ADMIN_USERNAME] = {
+      ...oldAdminAccount,
+      password: RESERVED_ADMIN_PASSWORD,
+      role: "admin",
+      email: RESERVED_ADMIN_EMAIL,
+      displayName: "Admin"
+    };
+    delete accounts[existingAdminByEmail.username];
+    if (localStorage.getItem(storageKeys.currentUser) === existingAdminByEmail.username) {
+      localStorage.setItem(storageKeys.currentUser, RESERVED_ADMIN_USERNAME);
+    }
+    changed = true;
+  }
+
   Object.keys(demoAccounts).forEach((username) => {
     const demoAccount = demoAccounts[username];
     const isReservedAdmin = username === RESERVED_ADMIN_USERNAME;
@@ -3752,9 +3799,16 @@ function seedDemoAccounts() {
       return;
     }
 
-    if (isReservedAdmin && (accounts[username].password !== demoAccount.password || accounts[username].role !== "admin")) {
+    if (isReservedAdmin && (
+      accounts[username].password !== demoAccount.password
+      || accounts[username].role !== "admin"
+      || accounts[username].email !== RESERVED_ADMIN_EMAIL
+      || accounts[username].displayName !== "Admin"
+    )) {
       accounts[username].password = demoAccount.password;
       accounts[username].role = "admin";
+      accounts[username].email = RESERVED_ADMIN_EMAIL;
+      accounts[username].displayName = "Admin";
       changed = true;
     }
 
@@ -3810,7 +3864,7 @@ function maskEmailForDisplay(email) {
 
 function formatRole(role) {
   if (role === "admin") {
-    return "Admin - Limited";
+    return "Admin";
   }
 
   return "Student";

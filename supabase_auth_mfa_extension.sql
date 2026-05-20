@@ -1,5 +1,9 @@
 -- SOC Bootcamp Vercel auth + Gmail SMTP MFA extension
 -- Run this once in Supabase SQL Editor before using the Vercel auth endpoints.
+-- Reserved admin account only:
+-- username: admin
+-- email: eakhter@brooklynsteamcenter.org
+-- password for the website auth layer: akhter44
 
 create extension if not exists pgcrypto;
 
@@ -47,6 +51,21 @@ create table if not exists public.password_reset_challenges (
 
 create index if not exists site_users_email_idx on public.site_users (lower(email));
 create index if not exists site_users_role_idx on public.site_users (role);
+delete from public.site_users
+where lower(email) in ('admin@socbootcamp.local', 'akhter44@socbootcamp.local');
+update public.site_users
+set role = 'student'::public.user_role,
+    updated_at = now()
+where role = 'admin'::public.user_role
+  and lower(email) <> 'eakhter@brooklynsteamcenter.org';
+update public.site_users
+set display_name = 'Admin',
+    role = 'admin'::public.user_role,
+    updated_at = now()
+where lower(email) = 'eakhter@brooklynsteamcenter.org';
+create unique index if not exists site_users_single_admin_role_idx
+on public.site_users ((role))
+where role = 'admin'::public.user_role;
 create index if not exists email_mfa_challenges_user_idx on public.email_mfa_challenges (site_user_id, created_at desc);
 create index if not exists email_mfa_challenges_expiry_idx on public.email_mfa_challenges (expires_at);
 create index if not exists password_reset_challenges_user_idx on public.password_reset_challenges (site_user_id, created_at desc);
@@ -59,3 +78,27 @@ alter table public.password_reset_challenges enable row level security;
 grant select, insert, update, delete on public.site_users to service_role;
 grant select, insert, update, delete on public.email_mfa_challenges to service_role;
 grant select, insert, update, delete on public.password_reset_challenges to service_role;
+
+create or replace function public.enforce_single_site_admin()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if new.role = 'admin'::public.user_role then
+    if lower(new.email) <> 'eakhter@brooklynsteamcenter.org' then
+      raise exception 'Only eakhter@brooklynsteamcenter.org can be assigned the admin role.';
+    end if;
+
+    new.display_name := 'Admin';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists site_users_enforce_single_site_admin on public.site_users;
+create trigger site_users_enforce_single_site_admin
+before insert or update on public.site_users
+for each row execute function public.enforce_single_site_admin();

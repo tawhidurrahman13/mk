@@ -85,6 +85,8 @@ assert.match(adminGradesHtml, /adminPracticeGradeRows/, "Admin grades page shoul
 const loginHtml = readFile("login.html");
 assert.doesNotMatch(loginHtml, /Demo accounts|Quick test logins|student123/, "Login page should not show demo account section.");
 assert.match(loginHtml, /privacy\.html/, "Login page should link to the privacy notice.");
+assert.match(loginHtml, /eakhter@brooklynsteamcenter\.org/, "Login page should show the approved admin email.");
+assert.doesNotMatch(loginHtml, /Admin - Limited/, "Admin label should not describe the only admin as limited.");
 
 const indexHtml = readFile("index.html");
 assert.match(indexHtml, /data-reset-local-progress="true"/, "Reset settings button should have a working hook.");
@@ -110,6 +112,7 @@ const sourceFiles = [
 ].map(readFile).join("\n");
 assert.doesNotMatch(sourceFiles, /jguartan@brooklynsteamcenter\.org/i, "Old admin email must not appear.");
 assert.match(sourceFiles, /eakhter@brooklynsteamcenter\.org/i, "Correct admin email should be configured.");
+assert.doesNotMatch(sourceFiles, /Admin - Limited/i, "Admin role label should use full Admin access language.");
 
 console.log("PASS: admin grades helpers, role-aware sidebar rules, welcome/resources routes, and login cleanup checks passed.");
 

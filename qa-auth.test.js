@@ -110,6 +110,22 @@ async function main() {
     assert.equal(relogin.status, 200);
     assert.ok(relogin.body.challengeId);
 
+    const blockedAdminSignup = await postJson("/api/auth/signup", {
+      email: "extra-admin@example.com",
+      password: "akhter44",
+      displayName: "admin",
+      role: "admin"
+    });
+    assert.equal(blockedAdminSignup.status, 403, "Only the reserved admin email can create an admin account.");
+
+    const blockedAdminReset = await postJson("/api/auth/password-reset/confirm", {
+      challengeId: "missing",
+      email: "eakhter@brooklynsteamcenter.org",
+      code: "000000",
+      newPassword: "Different123!"
+    });
+    assert.equal(blockedAdminReset.status, 403, "Admin password must remain the reserved password.");
+
     const adminLogin = await postJson("/api/auth/login", {
       email: "admin",
       password: "akhter44"
@@ -131,6 +147,10 @@ async function main() {
     assert.equal(users.status, 200);
     assert.ok(Array.isArray(users.body.auditLogs), "Admin user reads should return recent audit logs.");
     assert.ok(users.body.auditLogs.some((entry) => entry.action === "admin.users.read"));
+    const adminUsers = users.body.users.filter((user) => user.role === "admin");
+    assert.equal(adminUsers.length, 1, "Only one account can have admin privileges.");
+    assert.equal(adminUsers[0].email, "eakhter@brooklynsteamcenter.org");
+    assert.equal(adminUsers[0].displayName, "Admin");
     assert.deepEqual(users.body.certifications, [
       "Pearson Cybersecurity",
       "Pearson Network Security",

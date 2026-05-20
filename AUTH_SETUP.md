@@ -96,12 +96,15 @@ SMTP_PASS
 EMAIL_FROM
 ```
 
-Optional local admin seed:
+Reserved admin account:
 
 ```text
-ADMIN_EMAIL=eakhter@brooklynsteamcenter.org
-ADMIN_PASSWORD=akhter44
+username=admin
+email=eakhter@brooklynsteamcenter.org
+password=akhter44
 ```
+
+The app demotes/deletes older admin accounts and reserves all admin dashboard/grade features for this one account.
 
 ## Security Notes
 

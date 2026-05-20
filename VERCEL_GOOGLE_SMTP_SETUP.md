@@ -34,11 +34,11 @@ SMTP_PORT=465
 SMTP_USER=your_gmail_address@gmail.com
 SMTP_PASS=your_gmail_app_password
 EMAIL_FROM=SOC Bootcamp <your_gmail_address@gmail.com>
-ADMIN_EMAIL=eakhter@brooklynsteamcenter.org
-ADMIN_PASSWORD=akhter44
 ```
 
 Keep `SUPABASE_SERVICE_ROLE_KEY`, `SMTP_PASS`, `GOOGLE_CLIENT_SECRET`, and `AUTH_SECRET` private.
+
+Reserved admin login is fixed in the app as username `admin`, email `eakhter@brooklynsteamcenter.org`, and password `akhter44`. Any older admin accounts are demoted or removed by the updated SQL/bootstrap logic.
 
 ## 3. Create a Gmail App Password
 

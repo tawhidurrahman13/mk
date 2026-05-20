@@ -6,9 +6,11 @@
 --
 -- IMPORTANT ADMIN SETUP:
 -- 1. Run this schema first.
--- 2. Confirm the approved admin email exists in public.admin_emails.
---    Current approved admin email: eakhter@brooklynsteamcenter.org
--- 3. When that email signs in through Supabase Auth, their public.users role becomes admin.
+-- 2. SOC Bootcamp supports one admin account only:
+--    username: admin
+--    email: eakhter@brooklynsteamcenter.org
+--    password for the website auth layer: akhter44
+-- 3. This schema removes older admin email allow-list rows and demotes any other admin role.
 
 create extension if not exists pgcrypto;
 
@@ -55,6 +57,9 @@ create table if not exists public.admin_emails (
 insert into public.admin_emails (email)
 values ('eakhter@brooklynsteamcenter.org')
 on conflict do nothing;
+
+delete from public.admin_emails
+where lower(email) <> 'eakhter@brooklynsteamcenter.org';
 
 create table if not exists public.users (
   id uuid primary key references auth.users(id) on delete cascade,
@@ -180,6 +185,14 @@ create table if not exists public.password_reset_challenges (
 
 create index if not exists users_email_idx on public.users (lower(email));
 create index if not exists users_role_idx on public.users (role);
+update public.users
+set role = 'student'::public.user_role,
+    updated_at = now()
+where role = 'admin'::public.user_role
+  and lower(email) <> 'eakhter@brooklynsteamcenter.org';
+create unique index if not exists users_single_admin_role_idx
+on public.users ((role))
+where role = 'admin'::public.user_role;
 create index if not exists certifications_slug_idx on public.certifications (slug);
 create index if not exists certification_scores_user_idx on public.certification_scores (user_id);
 create index if not exists certification_scores_certification_idx on public.certification_scores (certification_id);
@@ -187,6 +200,21 @@ create index if not exists quiz_attempts_user_created_idx on public.quiz_attempt
 create index if not exists quiz_attempts_certification_idx on public.quiz_attempts (certification_id);
 create index if not exists site_users_email_idx on public.site_users (lower(email));
 create index if not exists site_users_role_idx on public.site_users (role);
+delete from public.site_users
+where lower(email) in ('admin@socbootcamp.local', 'akhter44@socbootcamp.local');
+update public.site_users
+set role = 'student'::public.user_role,
+    updated_at = now()
+where role = 'admin'::public.user_role
+  and lower(email) <> 'eakhter@brooklynsteamcenter.org';
+update public.site_users
+set display_name = 'Admin',
+    role = 'admin'::public.user_role,
+    updated_at = now()
+where lower(email) = 'eakhter@brooklynsteamcenter.org';
+create unique index if not exists site_users_single_admin_role_idx
+on public.site_users ((role))
+where role = 'admin'::public.user_role;
 create index if not exists email_mfa_challenges_user_idx on public.email_mfa_challenges (site_user_id, created_at desc);
 create index if not exists email_mfa_challenges_expiry_idx on public.email_mfa_challenges (expires_at);
 create index if not exists password_reset_challenges_user_idx on public.password_reset_challenges (site_user_id, created_at desc);
@@ -270,6 +298,58 @@ create trigger users_prevent_role_escalation
 before update on public.users
 for each row execute function public.prevent_user_role_escalation();
 
+create or replace function public.enforce_single_public_admin()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if new.role = 'admin'::public.user_role then
+    if not exists (
+      select 1
+      from public.admin_emails
+      where lower(email) = lower(new.email)
+    ) then
+      raise exception 'Only eakhter@brooklynsteamcenter.org can be assigned the admin role.';
+    end if;
+
+    new.name := 'Admin';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists users_enforce_single_public_admin on public.users;
+create trigger users_enforce_single_public_admin
+before insert or update on public.users
+for each row execute function public.enforce_single_public_admin();
+
+create or replace function public.enforce_single_site_admin()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
+begin
+  if new.role = 'admin'::public.user_role then
+    if lower(new.email) <> 'eakhter@brooklynsteamcenter.org' then
+      raise exception 'Only eakhter@brooklynsteamcenter.org can be assigned the admin role.';
+    end if;
+
+    new.display_name := 'Admin';
+  end if;
+
+  return new;
+end;
+$$;
+
+drop trigger if exists site_users_enforce_single_site_admin on public.site_users;
+create trigger site_users_enforce_single_site_admin
+before insert or update on public.site_users
+for each row execute function public.enforce_single_site_admin();
+
 create or replace function public.handle_new_auth_user()
 returns trigger
 language plpgsql
@@ -333,10 +413,7 @@ begin
     email = excluded.email,
     google_id = excluded.google_id,
     profile_image = excluded.profile_image,
-    role = case
-      when public.users.role = 'admin' then 'admin'::public.user_role
-      else excluded.role
-    end,
+    role = excluded.role,
     last_login = now(),
     updated_at = now();
 
@@ -393,10 +470,7 @@ on conflict (id) do update set
   email = excluded.email,
   google_id = excluded.google_id,
   profile_image = excluded.profile_image,
-  role = case
-    when public.users.role = 'admin' then 'admin'::public.user_role
-    else excluded.role
-  end,
+  role = excluded.role,
   updated_at = now();
 
 create or replace function public.touch_user_login()
