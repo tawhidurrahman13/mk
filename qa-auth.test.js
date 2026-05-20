@@ -19,7 +19,7 @@ async function main() {
       AUTH_SECRET: "qa-secret-change-me",
       SESSION_SECRET: "qa-session-change-me",
       AUTH_DATA_FILE: TEST_STORE,
-      ADMIN_EMAIL: "admin@socbootcamp.local",
+      ADMIN_EMAIL: "eakhter@brooklynsteamcenter.org",
       ADMIN_PASSWORD: "akhter44",
       GOOGLE_CLIENT_ID: "",
       GOOGLE_CLIENT_SECRET: "",
@@ -64,6 +64,15 @@ async function main() {
     assert.equal(studentMfa.body.redirect, "welcome.html");
     const studentCookie = getCookie(studentMfa.response);
 
+    const blockedPracticeAttempt = await postJson("/api/progress/practice-exam-attempt", {
+      title: "Blocked Practice Exam",
+      certification: "Pearson Network Security",
+      score: 1,
+      total: 1,
+      percent: 100
+    }, studentCookie);
+    assert.equal(blockedPracticeAttempt.status, 403, "Student-data writes should require CSRF.");
+
     const practiceAttempt = await postJson("/api/progress/practice-exam-attempt", {
       title: "Pearson Network Security Full Length Practice Exam",
       certification: "Pearson Network Security",
@@ -77,7 +86,7 @@ async function main() {
       questionReview: [
         { subunit: "ACL Design", isCorrect: false, answerState: "unanswered" }
       ]
-    }, studentCookie);
+    }, studentCookie, studentMfa.body.csrfToken);
     assert.equal(practiceAttempt.status, 200);
     assert.equal(practiceAttempt.body.progress.practiceExamAttempts.length, 1);
 
@@ -120,6 +129,8 @@ async function main() {
 
     const users = await getJson("/api/admin/users", adminCookie);
     assert.equal(users.status, 200);
+    assert.ok(Array.isArray(users.body.auditLogs), "Admin user reads should return recent audit logs.");
+    assert.ok(users.body.auditLogs.some((entry) => entry.action === "admin.users.read"));
     assert.deepEqual(users.body.certifications, [
       "Pearson Cybersecurity",
       "Pearson Network Security",
@@ -153,6 +164,10 @@ async function main() {
     assert.equal(practiceScoreUpdate.status, 200);
     assert.equal(practiceScoreUpdate.body.attempt.percent, 89);
     assert.equal(practiceScoreUpdate.body.attempt.manuallyAdjusted, true);
+
+    const audit = await getJson("/api/admin/audit-logs", adminCookie);
+    assert.equal(audit.status, 200);
+    assert.ok(audit.body.auditLogs.some((entry) => entry.action === "admin.practice_exam_score.update"));
 
     console.log("PASS: auth, MFA, password reset, Google route, admin score editing, practice exam grade editing, and certification catalog checks passed.");
   } finally {

@@ -4,7 +4,7 @@ const tls = require("node:tls");
 const AUTH_SECRET = process.env.AUTH_SECRET || process.env.SESSION_SECRET || "";
 const SUPABASE_URL = (process.env.SUPABASE_URL || "").replace(/\/$/, "");
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.SUPABASE_SERVICE_KEY || "";
-const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.SOC_ADMIN_EMAIL || "admin@socbootcamp.local").trim().toLowerCase();
+const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || process.env.SOC_ADMIN_EMAIL || "eakhter@brooklynsteamcenter.org").trim().toLowerCase();
 const ADMIN_PASSWORD = String(process.env.ADMIN_PASSWORD || process.env.SOC_ADMIN_PASSWORD || "akhter44");
 const CANONICAL_GOOGLE_REDIRECT_URI = "https://mk-git-main-tawhidurrahman13s-projects.vercel.app/api/auth/google/callback";
 
@@ -12,6 +12,10 @@ function sendJson(res, statusCode, payload, headers = {}) {
   res.statusCode = statusCode;
   res.setHeader("Content-Type", "application/json; charset=utf-8");
   res.setHeader("Cache-Control", "no-store");
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
   Object.entries(headers).forEach(([key, value]) => res.setHeader(key, value));
   res.end(JSON.stringify(payload));
 }
@@ -54,7 +58,7 @@ function requireServerConfig() {
 
 function normalizeEmail(email) {
   const normalized = String(email || "").trim().toLowerCase();
-  if ((normalized === "admin" || normalized === "admin@socbootcamp.local") && ADMIN_EMAIL) {
+  if ((normalized === "admin" || normalized === "eakhter@brooklynsteamcenter.org") && ADMIN_EMAIL) {
     return ADMIN_EMAIL;
   }
   return normalized;
@@ -525,7 +529,7 @@ function formatEmail(from, message) {
 }
 
 function handleError(res, error) {
-  console.error("[soc-auth]", error);
+  console.error("[soc-auth]", error.statusCode || 500, error.message || "Server request failed");
   sendJson(res, error.statusCode || 500, { error: error.message || "Server request failed" });
 }
 

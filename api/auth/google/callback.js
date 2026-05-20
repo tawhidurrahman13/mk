@@ -60,9 +60,9 @@ module.exports = async function googleCallback(req, res) {
       : await createSiteUser(patch);
 
     const challenge = await createMfaChallenge(user, "google");
-    redirect(res, `/login.html?serverMfa=${encodeURIComponent(challenge.challengeId)}&email=${encodeURIComponent(challenge.email)}&oauth=google`);
+    redirect(res, `/login.html?serverMfa=${encodeURIComponent(challenge.challengeId)}&oauth=google`);
   } catch (error) {
-    console.error("[google-callback]", error);
+    console.error("[google-callback]", error.message || "callback_failed");
     redirect(res, `/login.html?authError=google_failed&reason=${encodeURIComponent(error.message || "callback_failed")}`);
   }
 };

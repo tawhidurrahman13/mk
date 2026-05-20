@@ -32,7 +32,7 @@ const CERTIFICATIONS = [
 ];
 
 const RESERVED_ADMIN_USERNAME = "admin";
-const RESERVED_ADMIN_EMAIL = "admin@socbootcamp.local";
+const RESERVED_ADMIN_EMAIL = "eakhter@brooklynsteamcenter.org";
 const RESERVED_ADMIN_PASSWORD = "akhter44";
 
 const MIME_TYPES = {
@@ -52,6 +52,12 @@ async function main() {
 
   const server = http.createServer(async (req, res) => {
     try {
+      applySecurityHeaders(req, res);
+      if (shouldRedirectToHttps(req)) {
+        const host = req.headers.host || `${HOST}:${PORT}`;
+        redirect(res, `https://${host}${req.url}`);
+        return;
+      }
       applyCorsHeaders(req, res);
       if (req.method === "OPTIONS") {
         res.writeHead(204);
@@ -157,6 +163,11 @@ async function routeApi(req, res, url) {
 
   if (req.method === "GET" && url.pathname === "/api/admin/users") {
     await handleAdminUsers(req, res);
+    return;
+  }
+
+  if (req.method === "GET" && url.pathname === "/api/admin/audit-logs") {
+    await handleAdminAuditLogs(req, res);
     return;
   }
 
@@ -277,6 +288,14 @@ async function handleLogout(req, res) {
   const sessionId = cookies[SESSION_COOKIE];
   if (sessionId) {
     const store = await readStore();
+    const session = store.sessions[sessionId];
+    if (session && !validateCsrf(req, session)) {
+      sendJson(res, 403, { error: "CSRF validation failed" });
+      return;
+    }
+    if (session) {
+      recordAuditEvent(store, req, { id: session.userId }, "auth.logout", session.userId);
+    }
     delete store.sessions[sessionId];
     await writeStore(store);
   }
@@ -377,9 +396,9 @@ async function handleGoogleCallback(req, res, url) {
 
     const challenge = await createEmailChallenge(store, user, "mfa", "SOC Bootcamp Google Login MFA Code");
     await writeStore(store);
-    redirect(res, `/login.html?serverMfa=${encodeURIComponent(challenge.id)}&email=${encodeURIComponent(user.email)}&oauth=google`);
+    redirect(res, `/login.html?serverMfa=${encodeURIComponent(challenge.id)}&oauth=google`);
   } catch (error) {
-    console.error("[oauth:error]", error);
+    console.error("[oauth:error]", error.message || "Google OAuth failed");
     await writeStore(store);
     redirect(res, "/login.html?authError=google_oauth_failed");
   }
@@ -466,6 +485,7 @@ async function handleResetConfirm(req, res) {
 async function handleProgressSelection(req, res) {
   const auth = await requireSession(req, res);
   if (!auth) return;
+  if (!requireCsrf(req, res, auth.session)) return;
   const body = await readJsonBody(req);
   const certification = String(body.certification || "");
   if (certification && !CERTIFICATIONS.includes(certification)) {
@@ -485,6 +505,7 @@ async function handleProgressSelection(req, res) {
 async function handleProgressScores(req, res) {
   const auth = await requireSession(req, res);
   if (!auth) return;
+  if (!requireCsrf(req, res, auth.session)) return;
   const body = await readJsonBody(req);
   const certification = String(body.certification || body.certificationName || "");
   if (!CERTIFICATIONS.includes(certification)) {
@@ -501,6 +522,7 @@ async function handleProgressScores(req, res) {
 async function handleQuizAttempt(req, res) {
   const auth = await requireSession(req, res);
   if (!auth) return;
+  if (!requireCsrf(req, res, auth.session)) return;
   const body = await readJsonBody(req);
   const certification = String(body.certification || "");
   if (!CERTIFICATIONS.includes(certification) && certification !== "Kali Linux Guide") {
@@ -529,6 +551,7 @@ async function handleQuizAttempt(req, res) {
 async function handlePracticeExamAttempt(req, res) {
   const auth = await requireSession(req, res);
   if (!auth) return;
+  if (!requireCsrf(req, res, auth.session)) return;
   const body = await readJsonBody(req);
   const certification = String(body.certification || "");
   if (!CERTIFICATIONS.includes(certification)) {
@@ -571,21 +594,34 @@ async function handlePracticeExamAttempt(req, res) {
 async function handleAdminUsers(req, res) {
   const auth = await requireAdmin(req, res);
   if (!auth) return;
-  const store = await readStore();
+  const store = auth.store;
+  recordAuditEvent(store, req, auth.user, "admin.users.read", "all", { route: "/api/admin/users" });
   const users = Object.values(store.users).map((user) => ({
     ...publicUser(user),
     progress: store.progress[user.id] || createEmptyProgress()
   }));
-  sendJson(res, 200, { users, certifications: CERTIFICATIONS, csrfToken: auth.session.csrf });
+  await writeStore(store);
+  sendJson(res, 200, {
+    users,
+    certifications: CERTIFICATIONS,
+    auditLogs: getRecentAuditLogs(store),
+    csrfToken: auth.session.csrf
+  });
+}
+
+async function handleAdminAuditLogs(req, res) {
+  const auth = await requireAdmin(req, res);
+  if (!auth) return;
+  const store = auth.store;
+  recordAuditEvent(store, req, auth.user, "admin.audit.read", "audit-log", { route: "/api/admin/audit-logs" });
+  await writeStore(store);
+  sendJson(res, 200, { auditLogs: getRecentAuditLogs(store), csrfToken: auth.session.csrf });
 }
 
 async function handleAdminScoreUpdate(req, res) {
   const auth = await requireAdmin(req, res);
   if (!auth) return;
-  if (!validateCsrf(req, auth.session)) {
-    sendJson(res, 403, { error: "CSRF validation failed" });
-    return;
-  }
+  if (!requireCsrf(req, res, auth.session)) return;
   const body = await readJsonBody(req);
   const userId = String(body.userId || "");
   const certification = String(body.certification || "");
@@ -593,7 +629,7 @@ async function handleAdminScoreUpdate(req, res) {
     sendJson(res, 400, { error: "Unknown certification" });
     return;
   }
-  const store = await readStore();
+  const store = auth.store;
   if (!store.users[userId]) {
     sendJson(res, 404, { error: "User not found" });
     return;
@@ -602,6 +638,10 @@ async function handleAdminScoreUpdate(req, res) {
     ...scoreUpdatesFromBody(body),
     status: normalizeStatus(body.status)
   });
+  recordAuditEvent(store, req, auth.user, "admin.certification_score.update", userId, {
+    certification,
+    fields: Object.keys(removeUndefined(scoreUpdatesFromBody(body))).concat(["status"])
+  });
   await writeStore(store);
   sendJson(res, 200, { progress: store.progress[userId] });
 }
@@ -609,10 +649,7 @@ async function handleAdminScoreUpdate(req, res) {
 async function handleAdminPracticeExamScoreUpdate(req, res) {
   const auth = await requireAdmin(req, res);
   if (!auth) return;
-  if (!validateCsrf(req, auth.session)) {
-    sendJson(res, 403, { error: "CSRF validation failed" });
-    return;
-  }
+  if (!requireCsrf(req, res, auth.session)) return;
 
   const body = await readJsonBody(req);
   const userId = String(body.userId || "");
@@ -623,7 +660,7 @@ async function handleAdminPracticeExamScoreUpdate(req, res) {
     return;
   }
 
-  const store = await readStore();
+  const store = auth.store;
   if (!store.users[userId]) {
     sendJson(res, 404, { error: "User not found" });
     return;
@@ -665,6 +702,11 @@ async function handleAdminPracticeExamScoreUpdate(req, res) {
   }
   progress.updatedAt = new Date().toISOString();
   store.progress[userId] = progress;
+  recordAuditEvent(store, req, auth.user, "admin.practice_exam_score.update", userId, {
+    attemptId,
+    percent: Number(percent),
+    certification: attempt.certification || ""
+  });
   await writeStore(store);
   sendJson(res, 200, { attempt: attempts[attemptIndex], progress });
 }
@@ -718,6 +760,14 @@ async function requireAdmin(req, res) {
     return null;
   }
   return auth;
+}
+
+function requireCsrf(req, res, session) {
+  if (validateCsrf(req, session)) {
+    return true;
+  }
+  sendJson(res, 403, { error: "CSRF validation failed" });
+  return false;
 }
 
 async function getSession(req) {
@@ -784,7 +834,7 @@ function challengeResponse(challenge) {
 async function sendEmail({ to, subject, text }) {
   const config = smtpConfig();
   if (!config.ready) {
-    console.warn(`[email:dev] ${subject} -> ${to}: ${text}`);
+    console.warn(`[email:dev] ${subject} generated in development mode; recipient and code are not logged.`);
     return { sent: false, devCode: true };
   }
 
@@ -935,6 +985,7 @@ async function ensureStore() {
     store = emptyStore();
   }
 
+  normalizeStore(store);
   seedRequiredUsers(store);
   await writeStore(store);
 }
@@ -946,8 +997,22 @@ function emptyStore() {
     sessions: {},
     mfaChallenges: {},
     resetChallenges: {},
-    oauthStates: {}
+    oauthStates: {},
+    auditLogs: []
   };
+}
+
+function normalizeStore(store) {
+  const defaults = emptyStore();
+  Object.keys(defaults).forEach((key) => {
+    if (store[key] === undefined) {
+      store[key] = defaults[key];
+    }
+  });
+  if (!Array.isArray(store.auditLogs)) {
+    store.auditLogs = [];
+  }
+  return store;
 }
 
 function seedRequiredUsers(store) {
@@ -1002,7 +1067,7 @@ function getReservedAdminPassword() {
 }
 
 async function readStore() {
-  return JSON.parse(await fsp.readFile(DATA_FILE, "utf8"));
+  return normalizeStore(JSON.parse(await fsp.readFile(DATA_FILE, "utf8")));
 }
 
 async function writeStore(store) {
@@ -1090,7 +1155,10 @@ function publicUser(user) {
     displayName: user.displayName,
     role: user.role,
     profileImage: user.profileImage || "",
-    providers: user.providers || {}
+    providers: {
+      google: Boolean(user.providers?.google),
+      email: Boolean(user.passwordHash)
+    }
   };
 }
 
@@ -1185,6 +1253,30 @@ function validateCsrf(req, session) {
   return req.headers["x-csrf-token"] && req.headers["x-csrf-token"] === session.csrf;
 }
 
+function applySecurityHeaders(req, res) {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
+  res.setHeader("Content-Security-Policy", [
+    "default-src 'self'",
+    "script-src 'self' 'unsafe-inline'",
+    "style-src 'self' 'unsafe-inline'",
+    "img-src 'self' data:",
+    "connect-src 'self' https://accounts.google.com https://oauth2.googleapis.com",
+    "form-action 'self'",
+    "frame-ancestors 'none'",
+    "base-uri 'self'"
+  ].join("; "));
+  if (IS_PRODUCTION) {
+    res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  }
+}
+
+function shouldRedirectToHttps(req) {
+  return IS_PRODUCTION && req.headers["x-forwarded-proto"] === "http";
+}
+
 function applyCorsHeaders(req, res) {
   const origin = req.headers.origin;
   if (!origin || !isAllowedDevOrigin(origin)) {
@@ -1199,7 +1291,39 @@ function applyCorsHeaders(req, res) {
 }
 
 function isAllowedDevOrigin(origin) {
-  return origin === "null" || /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin);
+  return (!IS_PRODUCTION && origin === "null") || /^https?:\/\/(127\.0\.0\.1|localhost)(:\d+)?$/.test(origin);
+}
+
+function recordAuditEvent(store, req, actor, action, targetUserId = "", details = {}) {
+  store.auditLogs = Array.isArray(store.auditLogs) ? store.auditLogs : [];
+  store.auditLogs.unshift({
+    id: randomToken(12),
+    action,
+    actorUserId: actor?.id || "",
+    actorRole: actor?.role || "",
+    targetUserId,
+    details,
+    ipHash: hashAuditValue(req.socket?.remoteAddress || ""),
+    userAgentHash: hashAuditValue(req.headers["user-agent"] || ""),
+    createdAt: new Date().toISOString()
+  });
+  store.auditLogs = store.auditLogs.slice(0, 500);
+}
+
+function getRecentAuditLogs(store, limit = 50) {
+  return (store.auditLogs || []).slice(0, limit).map((entry) => ({
+    id: entry.id,
+    action: entry.action,
+    actorUserId: entry.actorUserId,
+    actorRole: entry.actorRole,
+    targetUserId: entry.targetUserId,
+    details: entry.details || {},
+    createdAt: entry.createdAt
+  }));
+}
+
+function hashAuditValue(value) {
+  return crypto.createHmac("sha256", AUTH_SECRET).update(String(value || "")).digest("hex").slice(0, 16);
 }
 
 function loadDotEnv() {

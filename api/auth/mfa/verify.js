@@ -15,7 +15,7 @@ module.exports = async function verifyMfa(req, res) {
     const user = await verifyMfaChallenge(body.challengeId, body.code);
     sendJson(res, 200, {
       user: publicUser(user),
-      redirect: user.role === "admin" ? "admin.html" : "index.html"
+      redirect: user.role === "admin" ? "admin.html" : "welcome.html"
     });
   } catch (error) {
     handleError(res, error);

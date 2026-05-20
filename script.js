@@ -26,7 +26,7 @@ const storageKeys = {
 
 const RESERVED_ADMIN_USERNAME = "admin";
 const RESERVED_ADMIN_PASSWORD = "akhter44";
-const RESERVED_ADMIN_EMAIL = "admin@socbootcamp.local";
+const RESERVED_ADMIN_EMAIL = "eakhter@brooklynsteamcenter.org";
 
 const demoAccounts = {
   student: {
@@ -2756,6 +2756,10 @@ function initializeGlobalUi() {
     menuToggle.addEventListener("click", () => {
       sidebar.classList.toggle("open");
     });
+  } else if (menuToggle) {
+    menuToggle.addEventListener("click", () => {
+      window.location.href = "index.html";
+    });
   }
 
   if (feedbackButton) {
@@ -2835,7 +2839,7 @@ function updateGlobalAccountUser() {
   }
 
   const account = getCurrentUserAccount();
-  accountUserLabel.textContent = `${currentUser} | ${formatRole(account.role)}`;
+  accountUserLabel.textContent = `${getSafeCurrentUserLabel()} | ${formatRole(account.role)}`;
   accountUserPill.classList.add("signed-in");
   accountUserPill.classList.toggle("admin-limited", account.role === "admin");
 }
@@ -2859,7 +2863,7 @@ function showReturningUserToast() {
   const currentUser = localStorage.getItem(storageKeys.currentUser);
   if (currentUser) {
     const account = getCurrentUserAccount();
-    showToast(`Welcome Back, ${currentUser} (${formatRole(account.role)})`);
+    showToast(`Welcome Back, ${getSafeCurrentUserLabel()} (${formatRole(account.role)})`);
   }
 }
 
@@ -2993,9 +2997,17 @@ function initializeHomePage() {
   const accountText = document.getElementById("homeAccountText");
   const homeLoginButton = document.getElementById("homeLoginButton");
   const homeLogoutButton = document.getElementById("homeLogoutButton");
+  const cyberDefenseTabButton = document.getElementById("cyberDefenseTabButton");
   const startLearningButton = document.getElementById("startLearningButton");
 
   updateHomeAccountStatus();
+
+  if (cyberDefenseTabButton) {
+    cyberDefenseTabButton.addEventListener("click", () => {
+      document.querySelector(".session-panel")?.scrollIntoView({ behavior: "smooth", block: "center" });
+      showToast("Cyber Defense session controls are ready.");
+    });
+  }
 
   if (startLearningButton) {
     startLearningButton.addEventListener("click", () => {
@@ -3022,7 +3034,7 @@ function initializeHomePage() {
     if (currentUser) {
       const account = getCurrentUserAccount();
       const roleText = formatRole(account.role);
-      accountText.textContent = `Welcome, ${currentUser} (${roleText})`;
+      accountText.textContent = `Welcome, ${getSafeCurrentUserLabel()} (${roleText})`;
       homeLoginButton.textContent = "Account Page";
       homeLogoutButton.classList.remove("hidden");
       if (accountStatus) {
@@ -3399,7 +3411,7 @@ function initializeLoginPage() {
       mfaPanel.classList.remove("hidden");
     }
     if (mfaMessage) {
-      mfaMessage.textContent = `${message} Email target: ${data.email || "account email"}.`;
+      mfaMessage.textContent = `${message} Email target: ${maskEmailForDisplay(data.email || "account email")}.`;
     }
     if (mfaDemoCode) {
       mfaDemoCode.textContent = data.devCode ? `Development email code: ${data.devCode}` : "MFA code sent by email.";
@@ -3455,7 +3467,7 @@ function initializeLoginPage() {
       mfaPanel.classList.remove("hidden");
     }
     if (mfaMessage) {
-      mfaMessage.textContent = `${message} Demo email target: ${challenge.email}`;
+      mfaMessage.textContent = `${message} Demo email target: ${maskEmailForDisplay(challenge.email)}`;
     }
     if (mfaDemoCode) {
       mfaDemoCode.textContent = `Demo email code: ${code} (expires in 5 minutes)`;
@@ -3464,7 +3476,7 @@ function initializeLoginPage() {
       mfaCodeInput.value = "";
       mfaCodeInput.focus();
     }
-    showToast(`MFA code generated for ${challenge.email}.`);
+    showToast("MFA code generated for the account email.");
   }
 
   async function verifyMfaChallenge() {
@@ -3509,7 +3521,7 @@ function initializeLoginPage() {
 
     localStorage.removeItem(storageKeys.mfaChallenge);
     hideMfaPanel();
-    finishSuccessfulAuth(challenge.username, `MFA verified. Welcome, ${challenge.username}`);
+    finishSuccessfulAuth(challenge.username, "MFA verified. Welcome back.");
   }
 
   function hideMfaPanel() {
@@ -3778,6 +3790,22 @@ function getCurrentUserAccount() {
   const currentUser = localStorage.getItem(storageKeys.currentUser);
   const accounts = getStoredObject(storageKeys.accounts, {});
   return accounts[currentUser] || { role: "student" };
+}
+
+function getSafeCurrentUserLabel() {
+  const currentUser = localStorage.getItem(storageKeys.currentUser) || "";
+  const account = getCurrentUserAccount();
+  return account.displayName || maskEmailForDisplay(account.email || currentUser) || "SOC Analyst";
+}
+
+function maskEmailForDisplay(email) {
+  const value = String(email || "");
+  if (!value.includes("@")) {
+    return value;
+  }
+  const [name, domain] = value.split("@");
+  const safeName = name.length <= 2 ? `${name[0] || "*"}*` : `${name.slice(0, 2)}***`;
+  return `${safeName}@${domain}`;
 }
 
 function formatRole(role) {

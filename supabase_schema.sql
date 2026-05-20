@@ -6,9 +6,8 @@
 --
 -- IMPORTANT ADMIN SETUP:
 -- 1. Run this schema first.
--- 2. Add your real Google admin email to public.admin_emails.
---    Example:
---    insert into public.admin_emails (email) values ('your-admin@gmail.com') on conflict do nothing;
+-- 2. Confirm the approved admin email exists in public.admin_emails.
+--    Current approved admin email: eakhter@brooklynsteamcenter.org
 -- 3. When that email signs in through Supabase Auth, their public.users role becomes admin.
 
 create extension if not exists pgcrypto;
@@ -52,6 +51,10 @@ create table if not exists public.admin_emails (
   email text primary key,
   created_at timestamptz not null default now()
 );
+
+insert into public.admin_emails (email)
+values ('eakhter@brooklynsteamcenter.org')
+on conflict do nothing;
 
 create table if not exists public.users (
   id uuid primary key references auth.users(id) on delete cascade,
@@ -131,6 +134,15 @@ create table if not exists public.kali_progress (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.audit_logs (
+  id uuid primary key default gen_random_uuid(),
+  actor_user_id uuid references public.users(id) on delete set null,
+  action text not null,
+  target_user_id uuid references public.users(id) on delete set null,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 create table if not exists public.site_users (
   id uuid primary key default gen_random_uuid(),
   email text not null unique,
@@ -179,6 +191,8 @@ create index if not exists email_mfa_challenges_user_idx on public.email_mfa_cha
 create index if not exists email_mfa_challenges_expiry_idx on public.email_mfa_challenges (expires_at);
 create index if not exists password_reset_challenges_user_idx on public.password_reset_challenges (site_user_id, created_at desc);
 create index if not exists password_reset_challenges_expiry_idx on public.password_reset_challenges (expires_at);
+create index if not exists audit_logs_actor_created_idx on public.audit_logs (actor_user_id, created_at desc);
+create index if not exists audit_logs_target_created_idx on public.audit_logs (target_user_id, created_at desc);
 
 create or replace function public.set_updated_at()
 returns trigger
@@ -478,6 +492,7 @@ alter table public.kali_progress enable row level security;
 alter table public.site_users enable row level security;
 alter table public.email_mfa_challenges enable row level security;
 alter table public.password_reset_challenges enable row level security;
+alter table public.audit_logs enable row level security;
 
 drop policy if exists admin_emails_select on public.admin_emails;
 create policy admin_emails_select
@@ -640,6 +655,20 @@ for delete
 to authenticated
 using (public.is_admin(auth.uid()));
 
+drop policy if exists audit_logs_select_admin on public.audit_logs;
+create policy audit_logs_select_admin
+on public.audit_logs
+for select
+to authenticated
+using (public.is_admin(auth.uid()));
+
+drop policy if exists audit_logs_insert_admin on public.audit_logs;
+create policy audit_logs_insert_admin
+on public.audit_logs
+for insert
+to authenticated
+with check (public.is_admin(auth.uid()));
+
 grant usage on schema public to anon, authenticated;
 grant select, insert, update, delete on public.admin_emails to authenticated;
 grant select, insert, update, delete on public.certifications to authenticated;
@@ -648,9 +677,10 @@ grant select, insert, update, delete on public.users to authenticated;
 grant select, insert, update, delete on public.certification_scores to authenticated;
 grant select, insert, update, delete on public.quiz_attempts to authenticated;
 grant select, insert, update, delete on public.kali_progress to authenticated;
+grant select, insert on public.audit_logs to authenticated;
 grant select, insert, update, delete on public.site_users to service_role;
 grant select, insert, update, delete on public.email_mfa_challenges to service_role;
 grant select, insert, update, delete on public.password_reset_challenges to service_role;
 
--- Optional bootstrap command after you replace the email:
--- insert into public.admin_emails (email) values ('your-admin@gmail.com') on conflict do nothing;
+-- Optional bootstrap command if the authorized admin changes after legal/admin review:
+-- insert into public.admin_emails (email) values ('new-approved-admin@example.edu') on conflict do nothing;

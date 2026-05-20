@@ -76,6 +76,7 @@ assert.match(welcomeHtml, /SOC Bootcamp command center/, "Welcome page should in
 const resourcesHtml = readFile("resources.html");
 assert.match(resourcesHtml, /data-page="resources"/, "Resource page should render with route marker.");
 assert.match(resourcesHtml, /Resource library/, "Resource page should include resource structure.");
+assert.match(resourcesHtml, /privacy\.html/, "Resources should link to the privacy notice.");
 
 const adminGradesHtml = readFile("admin-practice-grades.html");
 assert.match(adminGradesHtml, /data-page="admin-grades"/, "Admin grades page should render with route marker.");
@@ -83,10 +84,32 @@ assert.match(adminGradesHtml, /adminPracticeGradeRows/, "Admin grades page shoul
 
 const loginHtml = readFile("login.html");
 assert.doesNotMatch(loginHtml, /Demo accounts|Quick test logins|student123/, "Login page should not show demo account section.");
+assert.match(loginHtml, /privacy\.html/, "Login page should link to the privacy notice.");
 
 const indexHtml = readFile("index.html");
 assert.match(indexHtml, /data-reset-local-progress="true"/, "Reset settings button should have a working hook.");
+assert.match(indexHtml, /cyberDefenseTabButton/, "Home page Cyber Defense tab should have a working hook.");
 assert.match(indexHtml, /resources\.html/, "Sidebar or quick links should include resources.");
+
+const certificationsHtml = readFile("certifications.html");
+assert.match(certificationsHtml, /data-reset-local-progress="true"/, "Certification reset button should have a working hook.");
+
+const brandPreviewHtml = readFile("brand-preview.html");
+assert.doesNotMatch(brandPreviewHtml, /<button class="primary-button" type="button">Continue<\/button>/, "Brand preview Continue should route instead of being a dead button.");
+
+const privacyHtml = readFile("privacy.html");
+assert.match(privacyHtml, /SOC Bootcamp Privacy Notice/, "Privacy notice should render.");
+
+const sourceFiles = [
+  "server.js",
+  "script.js",
+  ".env.example",
+  "AUTH_SETUP.md",
+  "VERCEL_GOOGLE_SMTP_SETUP.md",
+  "api/_lib/soc-auth.js"
+].map(readFile).join("\n");
+assert.doesNotMatch(sourceFiles, /jguartan@brooklynsteamcenter\.org/i, "Old admin email must not appear.");
+assert.match(sourceFiles, /eakhter@brooklynsteamcenter\.org/i, "Correct admin email should be configured.");
 
 console.log("PASS: admin grades helpers, role-aware sidebar rules, welcome/resources routes, and login cleanup checks passed.");
 

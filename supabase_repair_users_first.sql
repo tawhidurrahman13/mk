@@ -35,6 +35,10 @@ create table if not exists public.admin_emails (
   created_at timestamptz not null default now()
 );
 
+insert into public.admin_emails (email)
+values ('eakhter@brooklynsteamcenter.org')
+on conflict do nothing;
+
 create table if not exists public.users (
   id uuid primary key references auth.users(id) on delete cascade,
   name text not null default 'SOC Analyst',
@@ -113,6 +117,15 @@ create table if not exists public.kali_progress (
   updated_at timestamptz not null default now()
 );
 
+create table if not exists public.audit_logs (
+  id uuid primary key default gen_random_uuid(),
+  actor_user_id uuid references public.users(id) on delete set null,
+  action text not null,
+  target_user_id uuid references public.users(id) on delete set null,
+  metadata jsonb not null default '{}'::jsonb,
+  created_at timestamptz not null default now()
+);
+
 create table if not exists public.site_users (
   id uuid primary key default gen_random_uuid(),
   email text not null unique,
@@ -161,6 +174,8 @@ create index if not exists email_mfa_challenges_user_idx on public.email_mfa_cha
 create index if not exists email_mfa_challenges_expiry_idx on public.email_mfa_challenges (expires_at);
 create index if not exists password_reset_challenges_user_idx on public.password_reset_challenges (site_user_id, created_at desc);
 create index if not exists password_reset_challenges_expiry_idx on public.password_reset_challenges (expires_at);
+create index if not exists audit_logs_actor_created_idx on public.audit_logs (actor_user_id, created_at desc);
+create index if not exists audit_logs_target_created_idx on public.audit_logs (target_user_id, created_at desc);
 
 create or replace function public.is_admin(user_uuid uuid default auth.uid())
 returns boolean

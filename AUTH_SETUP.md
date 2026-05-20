@@ -99,7 +99,7 @@ EMAIL_FROM
 Optional local admin seed:
 
 ```text
-ADMIN_EMAIL=admin@socbootcamp.local
+ADMIN_EMAIL=eakhter@brooklynsteamcenter.org
 ADMIN_PASSWORD=akhter44
 ```
 
