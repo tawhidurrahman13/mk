@@ -2518,6 +2518,67 @@ socaiKnowledge.push(
   socaiCommand("pandoc", "Documentation", ["convert docs", "reports"], "Converts documents between formats such as Markdown and HTML/PDF.", "pandoc report.md -o report.html")
 );
 
+socaiKnowledge.push(
+  socaiCommand("kali-tweaks", "Kali Setup", ["kali settings", "metapackages", "shell"], "Opens Kali's helper menu for common desktop, shell, and package tuning tasks.", "kali-tweaks"),
+  socaiCommand("kali-undercover", "Kali Setup", ["undercover mode", "desktop"], "Toggles Kali's undercover desktop theme for classroom or presentation environments.", "kali-undercover"),
+  socaiCommand("wordlists", "Kali Setup", ["wordlist location", "rockyou", "seclists"], "Prints the path to common Kali wordlists when the helper package is installed.", "wordlists"),
+  socaiCommand("seclists", "Kali Setup", ["wordlists", "payload lists", "discovery lists"], "References the SecLists collection used for authorized discovery and training labs.", "ls /usr/share/seclists"),
+
+  socaiCommand("ip neigh", "Networking", ["neighbors", "arp", "local network"], "Shows neighbor table entries for nearby IP/MAC mappings.", "ip neigh"),
+  socaiCommand("ethtool", "Networking", ["interface speed", "link settings"], "Displays or changes wired interface driver and link settings.", "sudo ethtool eth0"),
+  socaiCommand("mtr", "Networking", ["traceroute", "latency", "packet loss"], "Combines ping and traceroute into a live path-quality view.", "mtr example.com"),
+  socaiCommand("hping3", "Packets", ["custom packets", "tcp ping", "firewall test"], "Builds custom TCP/IP probes for authorized firewall and packet-behavior labs.", "sudo hping3 -S <authorized-host> -p 443 -c 3", "Use only against lab systems or approved targets."),
+  socaiCommand("arping", "Networking", ["arp ping", "local reachability"], "Tests local-link reachability with ARP instead of ICMP.", "sudo arping -c 3 <authorized-ip>"),
+  socaiCommand("mitmproxy", "Web", ["intercept proxy", "http debugging"], "Runs an interactive HTTP/S proxy for authorized app debugging and labs.", "mitmproxy"),
+  socaiCommand("mitmdump", "Web", ["proxy log", "http capture"], "Runs mitmproxy in terminal logging mode.", "mitmdump -w flows.mitm"),
+
+  socaiCommand("amass enum", "OSINT", ["subdomains", "asset discovery"], "Runs Amass enumeration for authorized external asset mapping.", "amass enum -d example.com"),
+  socaiCommand("assetfinder", "OSINT", ["subdomains", "passive"], "Finds related domains and subdomains from passive sources.", "assetfinder example.com"),
+  socaiCommand("recon-ng", "OSINT", ["recon framework", "workspace"], "Opens a reconnaissance framework for approved OSINT labs.", "recon-ng"),
+  socaiCommand("maltego", "OSINT", ["graph osint", "relationships"], "Opens Maltego for graph-based OSINT analysis.", "maltego"),
+
+  socaiCommand("dirb", "Web", ["directory brute force", "content discovery"], "Discovers web directories using built-in wordlists in authorized labs.", "dirb http://<authorized-lab>"),
+  socaiCommand("wfuzz", "Web", ["fuzzing", "parameters", "directories"], "Fuzzes web paths or parameters in authorized labs.", "wfuzz -c -w wordlist.txt http://<authorized-lab>/FUZZ"),
+  socaiCommand("xsser", "Web", ["xss", "web testing"], "Tests for cross-site scripting in intentionally vulnerable or approved web apps.", "xsser --url http://<authorized-lab>", "Use only in approved web security labs."),
+  socaiCommand("wapiti", "Web", ["web scanner", "authorized lab"], "Scans authorized web applications for common vulnerability classes.", "wapiti -u http://<authorized-lab>"),
+  socaiCommand("httprobe", "Web", ["probe hosts", "http https"], "Checks which hosts respond over HTTP or HTTPS.", "cat hosts.txt | httprobe"),
+  socaiCommand("arjun", "Web", ["parameter discovery", "query params"], "Discovers HTTP parameters in authorized web labs.", "arjun -u http://<authorized-lab>/page"),
+
+  socaiCommand("enum4linux-ng", "Enumeration", ["smb", "windows", "shares"], "Modern SMB enumeration helper for authorized Windows/Samba hosts.", "enum4linux-ng -A <authorized-host>"),
+  socaiCommand("netexec", "Enumeration", ["smb", "winrm", "active directory"], "Checks authorized Windows/AD lab services and authentication posture.", "netexec smb <authorized-host>"),
+  socaiCommand("crackmapexec", "Enumeration", ["smb", "legacy cme", "active directory"], "Legacy command for authorized Windows/AD lab enumeration.", "crackmapexec smb <authorized-host>"),
+  socaiCommand("evil-winrm", "Remote Access", ["winrm", "windows shell"], "Connects to WinRM when you have explicit credentials and authorization.", "evil-winrm -i <authorized-host> -u analyst", "Only use with approved credentials in a lab or authorized environment."),
+  socaiCommand("impacket-smbserver", "Enumeration", ["impacket", "smb server", "file share"], "Starts a temporary SMB server for controlled lab file transfer.", "impacket-smbserver share ./shared"),
+  socaiCommand("impacket-secretsdump", "Enumeration", ["impacket", "credential audit", "ad lab"], "Audits credential storage in approved Windows/AD labs.", "impacket-secretsdump <authorized-domain>/<user>@<authorized-host>", "Use only in owned labs or explicit assessments."),
+
+  socaiCommand("nxc", "Enumeration", ["netexec", "ad", "windows"], "Runs NetExec using the short command name on systems where it is installed.", "nxc smb <authorized-host>"),
+  socaiCommand("ldapdomaindump", "Enumeration", ["ldap", "active directory", "report"], "Dumps LDAP domain information into reports for approved AD labs.", "ldapdomaindump -u lab.local\\\\analyst <authorized-dc>"),
+  socaiCommand("smbget", "Remote Access", ["download smb", "file transfer"], "Downloads files from SMB shares you are allowed to access.", "smbget smb://<authorized-host>/share/file.txt"),
+  socaiCommand("showmount", "Enumeration", ["nfs", "exports"], "Lists NFS exports from authorized systems.", "showmount -e <authorized-host>"),
+  socaiCommand("mount -t nfs", "Remote Access", ["nfs mount", "file share"], "Mounts an NFS export when you are authorized to access it.", "sudo mount -t nfs <authorized-host>:/export /mnt/lab"),
+
+  socaiCommand("airbase-ng", "Wireless", ["wireless lab", "access point"], "Creates lab wireless access point scenarios for defensive training.", "sudo airbase-ng --help", "Use only in isolated wireless labs."),
+  socaiCommand("wash", "Wireless", ["wps", "wifi audit"], "Lists WPS-enabled access points during approved Wi-Fi labs.", "sudo wash -i wlan0mon", "Use only in authorized wireless lab environments."),
+  socaiCommand("reaver", "Wireless", ["wps audit", "wifi lab"], "Runs WPS security testing in approved wireless labs.", "reaver --help", "Do not use against real networks without explicit written permission."),
+  socaiCommand("hcxdumptool", "Wireless", ["wifi capture", "handshake"], "Captures Wi-Fi authentication material for approved password-policy labs.", "sudo hcxdumptool --help", "Use only in isolated Wi-Fi labs."),
+  socaiCommand("hcxpcapngtool", "Wireless", ["convert capture", "hashcat"], "Converts Wi-Fi captures into formats used for authorized password audits.", "hcxpcapngtool -o hashes.22000 capture.pcapng"),
+
+  socaiCommand("radare2", "Reverse Engineering", ["binary analysis", "disassemble"], "Analyzes binaries for reverse-engineering and malware-analysis labs.", "radare2 sample.bin"),
+  socaiCommand("rabin2", "Reverse Engineering", ["binary info", "imports"], "Shows binary metadata, strings, imports, and sections.", "rabin2 -I sample.bin"),
+  socaiCommand("objdump", "Reverse Engineering", ["disassemble", "binary"], "Displays object file and binary details.", "objdump -d sample.bin | head"),
+  socaiCommand("readelf", "Reverse Engineering", ["elf", "binary headers"], "Displays ELF binary headers and sections.", "readelf -h sample.bin"),
+  socaiCommand("gdb", "Reverse Engineering", ["debugger", "binary"], "Debugs binaries in controlled analysis labs.", "gdb ./lab-binary"),
+  socaiCommand("ltrace -f", "Reverse Engineering", ["library trace", "child processes"], "Traces dynamic library calls, including child processes.", "ltrace -f ./lab-binary"),
+
+  socaiCommand("autopsy", "Forensics", ["digital forensics gui", "case"], "Opens Autopsy for case-based disk image analysis.", "autopsy"),
+  socaiCommand("sleuthkit", "Forensics", ["tsk", "filesystem analysis"], "Refers to The Sleuth Kit command suite for filesystem forensics.", "fls -r disk.img"),
+  socaiCommand("fls", "Forensics", ["sleuthkit", "list files"], "Lists files and directories in disk images.", "fls -r disk.img"),
+  socaiCommand("icat", "Forensics", ["sleuthkit", "extract file"], "Extracts file contents from disk images by inode.", "icat disk.img <inode> > recovered.bin"),
+  socaiCommand("mmls", "Forensics", ["partition layout", "disk image"], "Displays partition layout for disk images.", "mmls disk.img"),
+  socaiCommand("photorec", "Forensics", ["file recovery", "carving"], "Recovers files from disks or images in forensic recovery labs.", "photorec disk.img"),
+  socaiCommand("testdisk", "Forensics", ["partition recovery", "disk"], "Analyzes and recovers partition information.", "testdisk disk.img")
+);
+
 function uniqueValues(values) {
   return [...new Set(values.filter(Boolean))];
 }
@@ -2735,12 +2796,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 }
 
 function initializeGlobalUi() {
-  // Shared navigation, mobile sidebar, and feedback toast behavior.
+  // Shared navigation, mobile sidebar, and utility behavior.
   const currentPage = document.body.dataset.page;
   const navLinks = document.querySelectorAll("[data-nav]");
   const menuToggle = document.getElementById("menuToggle");
   const sidebar = document.getElementById("sidebar");
-  const feedbackButton = document.getElementById("feedbackButton");
 
   updateGlobalAccountUser();
   configureSidebarForRole();
@@ -2762,11 +2822,6 @@ function initializeGlobalUi() {
     });
   }
 
-  if (feedbackButton) {
-    feedbackButton.addEventListener("click", () => {
-      showToast("Feedback terminal armed. In a real deployment, this opens a feedback form.");
-    });
-  }
 }
 
 function configureSidebarForRole() {
@@ -4111,9 +4166,6 @@ function initializeCertificationsPage() {
   const currentExamText = document.getElementById("currentExamText");
   const lastExamText = document.getElementById("lastExamText");
   const resumeExamButton = document.getElementById("resumeExamButton");
-  const certificationScoreInput = document.getElementById("certificationScoreInput");
-  const questionBankScoreInput = document.getElementById("questionBankScoreInput");
-  const saveScoreCheckpointButton = document.getElementById("saveScoreCheckpointButton");
   const practiceExamScoreInput = document.getElementById("practiceExamScoreInput");
   const savePracticeExamScoreButton = document.getElementById("savePracticeExamScoreButton");
   const practiceExamRunner = document.getElementById("practiceExamRunner");
@@ -4174,11 +4226,14 @@ function initializeCertificationsPage() {
   });
 
   startButtons.forEach((button) => {
-    button.addEventListener("click", () => {
+    button.addEventListener("click", (event) => {
       const card = button.closest(".cert-card");
       saveCertification(card.dataset.cert);
       updateCertificationStatus();
-      card.scrollIntoView({ behavior: "smooth", block: "center" });
+      if (button.tagName !== "A") {
+        event.preventDefault();
+        window.location.href = "quizzes.html";
+      }
     });
   });
 
@@ -4256,16 +4311,6 @@ function initializeCertificationsPage() {
       if (activePracticeExam && window.confirm("Exit and submit your current progress?")) {
         addPracticeExamViolation("Student exited before finishing");
         finishPracticeExam("Exited early");
-      }
-    });
-  }
-
-  if (saveScoreCheckpointButton) {
-    saveScoreCheckpointButton.addEventListener("click", () => {
-      const certSaved = saveScoreFromInput(certificationScoreInput, storageKeys.certificationPrepScore);
-      const questionBankSaved = saveScoreFromInput(questionBankScoreInput, storageKeys.questionBankScore);
-      if (certSaved || questionBankSaved) {
-        showToast("Score checkpoint saved for Admin overview.");
       }
     });
   }
@@ -4359,14 +4404,6 @@ function initializeCertificationsPage() {
   }
 
   function hydrateScoreInputs() {
-    if (certificationScoreInput) {
-      certificationScoreInput.value = getCurrentUserScoreByStorageKey(storageKeys.certificationPrepScore) || localStorage.getItem(storageKeys.certificationPrepScore) || "";
-    }
-
-    if (questionBankScoreInput) {
-      questionBankScoreInput.value = getCurrentUserScoreByStorageKey(storageKeys.questionBankScore) || localStorage.getItem(storageKeys.questionBankScore) || "";
-    }
-
     if (practiceExamScoreInput) {
       practiceExamScoreInput.value = getCurrentUserScoreByStorageKey(storageKeys.practiceExamScore) || localStorage.getItem(storageKeys.practiceExamScore) || "";
     }

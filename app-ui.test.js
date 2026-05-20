@@ -76,10 +76,14 @@ assert.match(welcomeHtml, /SOC Bootcamp command center/, "Welcome page should in
 const resourcesHtml = readFile("resources.html");
 assert.match(resourcesHtml, /data-page="resources"/, "Resource page should render with route marker.");
 assert.match(resourcesHtml, /Resource library/, "Resource page should include resource structure.");
-assert.match(resourcesHtml, /privacy\.html/, "Resources should link to the privacy notice.");
+assert.match(resourcesHtml, /certifications\.html/, "Exam Objectives Map should route to the Certification page.");
+assert.match(resourcesHtml, /MTA%20Network%20Fundamentals%20Study%20Sheet\.pdf/, "Resources should link to the MTA Network Fundamentals PDF.");
+assert.match(resourcesHtml, /Network%20Security%20Study%20Sheet\.pdf/, "Resources should link to the Network Security PDF.");
+assert.doesNotMatch(resourcesHtml, /Instructor Support|Student Records Notice|Study Templates/, "Removed resource items should not render.");
 
 const adminGradesHtml = readFile("admin-practice-grades.html");
 assert.match(adminGradesHtml, /data-page="admin-grades"/, "Admin grades page should render with route marker.");
+assert.match(adminGradesHtml, /Admin Dashboard/, "Practice grades page should be labeled as Admin Dashboard.");
 assert.match(adminGradesHtml, /adminPracticeGradeRows/, "Admin grades page should include grade table.");
 
 const loginHtml = readFile("login.html");
@@ -89,12 +93,18 @@ assert.match(loginHtml, /eakhter@brooklynsteamcenter\.org/, "Login page should s
 assert.doesNotMatch(loginHtml, /Admin - Limited/, "Admin label should not describe the only admin as limited.");
 
 const indexHtml = readFile("index.html");
-assert.match(indexHtml, /data-reset-local-progress="true"/, "Reset settings button should have a working hook.");
 assert.match(indexHtml, /cyberDefenseTabButton/, "Home page Cyber Defense tab should have a working hook.");
 assert.match(indexHtml, /resources\.html/, "Sidebar or quick links should include resources.");
+assert.doesNotMatch(indexHtml, /Labs available|mega-number\">592/, "Home page should not show the old Labs Available box.");
 
 const certificationsHtml = readFile("certifications.html");
 assert.match(certificationsHtml, /data-reset-local-progress="true"/, "Certification reset button should have a working hook.");
+assert.doesNotMatch(certificationsHtml, /Source:|source-pill|Score Checkpoint|saveScoreCheckpointButton/, "Certification source and score checkpoint sections should be removed.");
+assert.match(certificationsHtml, /class="secondary-button start-prep-button" href="quizzes\.html"/, "Start Preparation should route directly to quizzes.");
+
+const kaliHtml = readFile("kali.html");
+assert.match(kaliHtml, /no-section-sidebar/, "Kali guide should not render the old left-side section card.");
+assert.doesNotMatch(kaliHtml, /kali-chat-sidebar/, "Kali left-side section sidebar should be removed.");
 
 const brandPreviewHtml = readFile("brand-preview.html");
 assert.doesNotMatch(brandPreviewHtml, /<button class="primary-button" type="button">Continue<\/button>/, "Brand preview Continue should route instead of being a dead button.");
@@ -113,6 +123,18 @@ const sourceFiles = [
 assert.doesNotMatch(sourceFiles, /jguartan@brooklynsteamcenter\.org/i, "Old admin email must not appear.");
 assert.match(sourceFiles, /eakhter@brooklynsteamcenter\.org/i, "Correct admin email should be configured.");
 assert.doesNotMatch(sourceFiles, /Admin - Limited/i, "Admin role label should use full Admin access language.");
+assert.doesNotMatch([
+  "index.html",
+  "certifications.html",
+  "kali.html",
+  "login.html",
+  "quizzes.html",
+  "welcome.html",
+  "resources.html",
+  "admin.html",
+  "admin-practice-grades.html",
+  "script.js"
+].map(readFile).join("\n"), /feedbackButton/, "Feedback widget should be removed globally.");
 
 console.log("PASS: admin grades helpers, role-aware sidebar rules, welcome/resources routes, and login cleanup checks passed.");
 

@@ -89,7 +89,7 @@ async function handleRequest(req, res) {
     return;
   }
 
-  await serveStatic(res, url.pathname);
+  await serveStatic(req, res, url.pathname);
 }
 
 async function routeApi(req, res, url) {
@@ -993,8 +993,21 @@ function formatEmailMessage({ from, to, subject, text }) {
   ].join("\r\n");
 }
 
-async function serveStatic(res, pathname) {
+async function serveStatic(req, res, pathname) {
   const cleanPath = decodeURIComponent(pathname === "/" ? "/login.html" : pathname);
+  if (["/admin.html", "/admin-practice-grades.html"].includes(cleanPath)) {
+    const auth = await getSession(req);
+    if (!auth) {
+      redirect(res, `/login.html?authNotice=${encodeURIComponent("Admin Dashboard requires the admin account.")}`);
+      return;
+    }
+    const store = await readStore();
+    const user = store.users[auth.userId];
+    if (!user || user.role !== "admin" || user.email !== getReservedAdminEmail()) {
+      redirect(res, "/index.html");
+      return;
+    }
+  }
   const filePath = path.normalize(path.join(ROOT, cleanPath));
   if (!filePath.startsWith(ROOT)) {
     sendText(res, 403, "Forbidden");

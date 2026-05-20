@@ -479,6 +479,10 @@ button {
   align-items: stretch;
 }
 
+.home-practice-layout {
+  grid-template-columns: minmax(0, 960px);
+}
+
 .cert-quiz-layout {
   grid-template-columns: minmax(0, 820px) 360px;
   align-items: start;
@@ -558,7 +562,6 @@ button {
 }
 
 .filter-pill,
-.source-pill,
 .segment,
 .badge,
 .category-chip,
@@ -579,18 +582,11 @@ button {
 }
 
 .filter-pill.active,
-.segment.active,
-.source-pill.active {
+.segment.active {
   color: #fff;
   border-color: rgba(168, 85, 247, 0.7);
   background: #141827;
   box-shadow: 0 0 22px rgba(168, 85, 247, 0.22);
-}
-
-.source-pill {
-  color: #c9d3e5;
-  border-color: rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .clock-pill {
@@ -641,8 +637,7 @@ button {
 .get-started-button:hover,
 .resource-button:hover,
 .filter-pill:hover,
-.segment:hover,
-.source-pill:hover {
+.segment:hover {
   transform: translateY(-2px);
   border-color: var(--line-strong);
   box-shadow: 0 0 26px rgba(168, 85, 247, 0.3);
@@ -2188,6 +2183,10 @@ button {
   align-items: start;
 }
 
+.kali-chat-layout.no-section-sidebar {
+  grid-template-columns: minmax(0, 1fr) 300px;
+}
+
 .kali-chat-sidebar,
 .kali-chat-panel {
   padding: 18px;
@@ -2234,6 +2233,16 @@ button {
   display: grid;
   align-content: start;
   gap: 10px;
+}
+
+.inline-guide-menu {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 18px;
+}
+
+.inline-guide-menu .guide-section-button {
+  flex: 1 1 170px;
 }
 
 .guide-panel {

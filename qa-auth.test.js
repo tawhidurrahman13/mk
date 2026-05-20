@@ -64,6 +64,15 @@ async function main() {
     assert.equal(studentMfa.body.redirect, "welcome.html");
     const studentCookie = getCookie(studentMfa.response);
 
+    const guestAdminPage = await fetch(`${BASE_URL}/admin-practice-grades.html`, { redirect: "manual" });
+    assert.equal(guestAdminPage.status, 302, "Guest users should be redirected away from Admin Dashboard.");
+
+    const studentAdminPage = await fetch(`${BASE_URL}/admin-practice-grades.html`, {
+      redirect: "manual",
+      headers: { Cookie: studentCookie }
+    });
+    assert.equal(studentAdminPage.status, 302, "Students should be redirected away from Admin Dashboard.");
+
     const blockedPracticeAttempt = await postJson("/api/progress/practice-exam-attempt", {
       title: "Blocked Practice Exam",
       certification: "Pearson Network Security",
@@ -142,6 +151,12 @@ async function main() {
     assert.equal(adminMfa.body.user.role, "admin");
     assert.equal(adminMfa.body.redirect, "admin.html");
     const adminCookie = getCookie(adminMfa.response);
+
+    const adminDashboardPage = await fetch(`${BASE_URL}/admin-practice-grades.html`, {
+      redirect: "manual",
+      headers: { Cookie: adminCookie }
+    });
+    assert.equal(adminDashboardPage.status, 200, "The reserved admin should access Admin Dashboard.");
 
     const users = await getJson("/api/admin/users", adminCookie);
     assert.equal(users.status, 200);

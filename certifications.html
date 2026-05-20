@@ -65,11 +65,11 @@
         </a>
         <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true">
           <span class="nav-icon">D</span>
-          <span>Admin</span>
+          <span>Admin Tools</span>
         </a>
         <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true">
           <span class="nav-icon">G</span>
-          <span>Exam Grades</span>
+          <span>Admin Dashboard</span>
         </a>
         <a href="login.html" data-nav="login">
           <span class="nav-icon">A</span>
@@ -78,10 +78,6 @@
       </nav>
 
       <div class="sidebar-footer">
-        <button class="ghost-link" id="feedbackButton" type="button">
-          <span class="nav-icon">F</span>
-          Feedback
-        </button>
         <div class="mode-label">
           <span class="pulse-dot"></span>
           Dark Mode
@@ -130,32 +126,6 @@
             </div>
           </div>
 
-          <div class="session-row">
-            <h2>Source:</h2>
-            <div class="pill-cluster">
-              <span class="source-pill">Official Objectives</span>
-              <span class="source-pill">Lab Notes</span>
-              <span class="source-pill active">SOC Bootcamp</span>
-            </div>
-          </div>
-
-          <div class="score-entry-panel">
-            <div>
-              <h2>Score Checkpoint:</h2>
-              <p class="helper-line">Save your latest certification and question bank scores to your user record for Admin dashboard review.</p>
-            </div>
-            <div class="score-entry-grid">
-              <label>
-                Certification Prep Score
-                <input id="certificationScoreInput" type="number" min="0" max="100" placeholder="0-100">
-              </label>
-              <label>
-                Question Bank Score
-                <input id="questionBankScoreInput" type="number" min="0" max="100" placeholder="0-100">
-              </label>
-            </div>
-            <button class="secondary-button" id="saveScoreCheckpointButton" type="button">Save Score Checkpoint</button>
-          </div>
         </article>
 
         <aside class="summary-panel glass-card">
@@ -178,7 +148,7 @@
           </div>
           <h3>Pearson Networking</h3>
           <p>Build core networking vocabulary, ports, routing basics, and troubleshooting habits.</p>
-          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
         </article>
 
         <article class="cert-card glass-card" data-category="pearson security" data-cert="Pearson Network Security">
@@ -188,7 +158,7 @@
           </div>
           <h3>Pearson Network Security</h3>
           <p>Study firewall concepts, segmentation, secure network operations, and defensive monitoring.</p>
-          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
         </article>
 
         <article class="cert-card glass-card" data-category="pearson security" data-cert="Pearson Cybersecurity">
@@ -198,7 +168,7 @@
           </div>
           <h3>Pearson Cybersecurity</h3>
           <p>Practice SOC foundations, threats, controls, incident response, and risk-aware analysis.</p>
-          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
         </article>
 
         <article class="cert-card glass-card" data-category="comptia networking" data-cert="CompTIA Network Plus">
@@ -208,7 +178,7 @@
           </div>
           <h3>CompTIA Network Plus</h3>
           <p>Prepare for network devices, protocols, subnetting, wireless, and operational troubleshooting.</p>
-          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
         </article>
 
         <article class="cert-card glass-card" data-category="comptia security" data-cert="CompTIA Security Plus">
@@ -218,7 +188,7 @@
           </div>
           <h3>CompTIA Security Plus</h3>
           <p>Review security architecture, identity, risk, incident response, and defensive controls.</p>
-          <button class="secondary-button start-prep-button" type="button">Start Preparation</button>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
         </article>
       </section>
 
