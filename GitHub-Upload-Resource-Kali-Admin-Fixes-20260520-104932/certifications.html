@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Certification</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="certifications">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Certifications</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="kali.html">Open Labs</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">
+          <span class="nav-icon">H</span>
+          <span>Home</span>
+        </a>
+        <a href="welcome.html" data-nav="welcome">
+          <span class="nav-icon">W</span>
+          <span>Welcome</span>
+        </a>
+        <a href="certifications.html" data-nav="certifications">
+          <span class="nav-icon">C</span>
+          <span>Certification</span>
+        </a>
+        <a href="quizzes.html" data-nav="quizzes">
+          <span class="nav-icon">Q</span>
+          <span>Quizzes</span>
+        </a>
+        <a href="kali.html" data-nav="kali">
+          <span class="nav-icon">K</span>
+          <span>Kali Guide</span>
+        </a>
+        <a href="resources.html" data-nav="resources">
+          <span class="nav-icon">R</span>
+          <span>Resources</span>
+        </a>
+        <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true">
+          <span class="nav-icon">D</span>
+          <span>Admin Tools</span>
+        </a>
+        <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true">
+          <span class="nav-icon">G</span>
+          <span>Admin Dashboard</span>
+        </a>
+        <a href="login.html" data-nav="login">
+          <span class="nav-icon">A</span>
+          <span>Login</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="practice-heading page-enter">
+          <h1>Certification Practice Mode</h1>
+          <p>Practice with the five approved certification paths across Pearson and CompTIA readiness tracks.</p>
+      </section>
+
+      <section class="practice-tabs" aria-label="Certification mode tabs">
+        <button class="practice-tab active" type="button" data-cert-mode="tracks">Certification Tracks</button>
+        <button class="practice-tab" type="button" data-cert-mode="exams">Practice Exams</button>
+      </section>
+
+      <section class="practice-layout cert-mode-panel" id="certTrackControls">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Customize your certification session</p>
+
+          <div class="session-row">
+            <h2>Domain:</h2>
+            <div class="pill-cluster filter-row" aria-label="Certification filters">
+              <button class="filter-pill active" type="button" data-filter="all">All</button>
+              <button class="filter-pill" type="button" data-filter="pearson">Pearson</button>
+              <button class="filter-pill" type="button" data-filter="comptia">CompTIA</button>
+              <button class="filter-pill" type="button" data-filter="networking">Networking</button>
+              <button class="filter-pill" type="button" data-filter="security">Security</button>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Skill:</h2>
+            <p class="helper-line">Select exactly one domain to focus the visible certification cards.</p>
+          </div>
+
+          <div class="session-row">
+            <h2>Difficulty:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">All</span>
+              <span class="filter-pill">Beginner</span>
+              <span class="filter-pill">Intermediate</span>
+              <span class="filter-pill">Advanced</span>
+            </div>
+          </div>
+
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Tracks available</p>
+          <strong class="mega-number">6</strong>
+          <div class="study-summary">
+            <h3 id="currentStudyText">No certification selected yet.</h3>
+            <p id="lastAccessedText">Last Accessed Certification: none</p>
+          </div>
+          <button class="secondary-button full-width" type="button" data-reset-local-progress="true">Reset All Settings</button>
+          <button class="primary-button full-width" id="resumeCertificationButton" type="button">Resume</button>
+        </aside>
+      </section>
+
+      <section class="cert-grid" id="certGrid">
+        <article class="cert-card glass-card" data-category="pearson networking" data-cert="Pearson Networking">
+          <div class="card-topline">
+            <span class="category-chip">Pearson</span>
+            <span class="difficulty-badge beginner">Beginner</span>
+          </div>
+          <h3>Pearson Networking</h3>
+          <p>Build core networking vocabulary, ports, routing basics, and troubleshooting habits.</p>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
+        </article>
+
+        <article class="cert-card glass-card" data-category="pearson security" data-cert="Pearson Network Security">
+          <div class="card-topline">
+            <span class="category-chip">Pearson</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>Pearson Network Security</h3>
+          <p>Study firewall concepts, segmentation, secure network operations, and defensive monitoring.</p>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
+        </article>
+
+        <article class="cert-card glass-card" data-category="pearson security" data-cert="Pearson Cybersecurity">
+          <div class="card-topline">
+            <span class="category-chip">Pearson</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>Pearson Cybersecurity</h3>
+          <p>Practice SOC foundations, threats, controls, incident response, and risk-aware analysis.</p>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
+        </article>
+
+        <article class="cert-card glass-card" data-category="comptia networking" data-cert="CompTIA Network Plus">
+          <div class="card-topline">
+            <span class="category-chip">CompTIA</span>
+            <span class="difficulty-badge intermediate">Intermediate</span>
+          </div>
+          <h3>CompTIA Network Plus</h3>
+          <p>Prepare for network devices, protocols, subnetting, wireless, and operational troubleshooting.</p>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
+        </article>
+
+        <article class="cert-card glass-card" data-category="comptia security" data-cert="CompTIA Security Plus">
+          <div class="card-topline">
+            <span class="category-chip">CompTIA</span>
+            <span class="difficulty-badge advanced">Advanced</span>
+          </div>
+          <h3>CompTIA Security Plus</h3>
+          <p>Review security architecture, identity, risk, incident response, and defensive controls.</p>
+          <a class="secondary-button start-prep-button" href="quizzes.html">Start Preparation</a>
+        </article>
+      </section>
+
+      <section class="practice-layout cert-mode-panel hidden" id="practiceExamMode">
+        <article class="session-panel glass-card">
+          <p class="panel-note">Practice exam command center</p>
+
+          <div class="session-row">
+            <h2>Exam Mode:</h2>
+            <div class="pill-cluster">
+              <span class="filter-pill active">Timed</span>
+              <span class="filter-pill active">Lockdown</span>
+              <span class="filter-pill">Fullscreen</span>
+              <span class="filter-pill">Violation Log</span>
+            </div>
+          </div>
+
+          <div class="session-row">
+            <h2>Exam Bank:</h2>
+            <p class="helper-line">Choose a full-length practice exam. The runner starts a timer, requests fullscreen, blocks common shortcuts, and logs tab-switch or focus violations.</p>
+          </div>
+
+          <div class="exam-grid">
+            <article class="exam-card" data-exam-id="pearson-cybersecurity-full" data-exam="Pearson Cybersecurity Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>Pearson Cybersecurity Full Length Practice Exam</h3>
+              <p>Locked exam setup from the uploaded CyberSecurity practice exam with final-only feedback and skillset scoring.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="pearson-network-security-full" data-exam="Pearson Network Security Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>Pearson Network Security Full Length Practice Exam</h3>
+              <p>Locked 50-question exam from the uploaded Network Security PDF with final-only feedback and skillset scoring.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="its-networking-exam-1-full" data-exam="ITS Networking Practice Exam 1">
+              <span class="category-chip">50 minutes</span>
+              <h3>ITS Networking Practice Exam 1</h3>
+              <p>Locked exam setup from the first uploaded networking questionnaire with final-only answer review.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="its-networking-exam-2-full" data-exam="ITS Networking Practice Exam 2">
+              <span class="category-chip">50 minutes</span>
+              <h3>ITS Networking Practice Exam 2</h3>
+              <p>Locked exam setup from the second uploaded networking questionnaire with subunit scoring.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="comptia-network-plus-full" data-exam="CompTIA Network Plus Full Length Practice Exam">
+              <span class="category-chip">50 minutes</span>
+              <h3>CompTIA Network Plus Full Length Practice Exam</h3>
+              <p>Locked exam setup for Network+ pacing. Current bank is temporary until docs are added.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+
+            <article class="exam-card" data-exam-id="comptia-security-plus-full" data-exam="CompTIA Security Plus Practice Exam">
+              <span class="category-chip">90 minutes</span>
+              <h3>CompTIA Security Plus Practice Exam</h3>
+              <p>Locked 90-question Security+ exam from the uploaded question-only document with an AI-generated answer key.</p>
+              <button class="secondary-button start-exam-button" type="button">Launch Locked Exam</button>
+            </article>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Full exams</p>
+          <strong class="mega-number">6</strong>
+          <div class="study-summary">
+            <h3 id="currentExamText">No practice exam selected yet.</h3>
+            <p id="lastExamText">Last Practice Exam: none</p>
+          </div>
+          <button class="primary-button full-width" id="resumeExamButton" type="button">Resume Last Exam</button>
+          <div class="lockdown-summary">
+            <span>Browser lockdown</span>
+            <strong>Fullscreen + violation log</strong>
+            <p>Tab switches, focus loss, copy/paste, right-click, print, and common shortcuts are logged during the exam.</p>
+          </div>
+          <div class="score-entry-panel compact-score-panel">
+            <label>
+              Practice Exam Score
+              <input id="practiceExamScoreInput" type="number" min="0" max="100" placeholder="0-100">
+            </label>
+            <button class="secondary-button full-width" id="savePracticeExamScoreButton" type="button">Save Exam Score</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="practice-exam-runner hidden" id="practiceExamRunner" aria-live="polite">
+        <div class="exam-runner-shell glass-card">
+          <div class="exam-runner-top">
+            <div>
+              <p class="panel-note">Locked Practice Exam</p>
+              <h2 id="examRunnerTitle">Select an exam to begin</h2>
+              <p id="examRunnerMeta" class="helper-line">Timer and lockdown details appear here.</p>
+            </div>
+            <div class="exam-runner-status">
+              <span class="exam-timer" id="examRunnerTimer">--:--</span>
+              <span class="badge electric" id="examRunnerLockStatus">Lockdown idle</span>
+            </div>
+          </div>
+
+          <div class="exam-runner-body" id="examRunnerBody">
+            <p>Launch a practice exam above to start the locked testing interface.</p>
+          </div>
+
+          <div class="exam-runner-actions">
+            <button class="secondary-button hidden" id="examRunnerBackButton" type="button">Back</button>
+            <button class="primary-button hidden" id="examRunnerNextButton" type="button">Next Question</button>
+            <button class="primary-button hidden" id="examRunnerReviewButton" type="button">Review Exam</button>
+            <button class="primary-button hidden" id="examRunnerSubmitButton" type="button">Submit Exam</button>
+            <button class="secondary-button hidden" id="examRunnerExitButton" type="button">Exit Exam</button>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

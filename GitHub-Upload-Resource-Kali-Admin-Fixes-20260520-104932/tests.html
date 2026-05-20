@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | QA Tests</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="tests">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="admin.html">Admin</a>
+      <span>/</span>
+      <strong>QA Tests</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="admin.html">Admin</a>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="practice-heading page-enter">
+      <h1>Local QA Tests</h1>
+      <p>Browser-based sanity checks for static localStorage features.</p>
+    </section>
+
+    <section class="session-panel glass-card">
+      <div class="panel-heading">
+        <div>
+          <p class="panel-note">No framework required</p>
+          <h2>Test Results</h2>
+        </div>
+        <button class="primary-button" id="runQaTestsButton" type="button">Run Tests</button>
+      </div>
+      <div id="qaTestResults" class="attempt-list"></div>
+    </section>
+  </main>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

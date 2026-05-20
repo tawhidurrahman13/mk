@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Resources</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="resources">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Resources</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="quizzes.html">Quiz Directory</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home"><span class="nav-icon">H</span><span>Home</span></a>
+        <a href="welcome.html" data-nav="welcome"><span class="nav-icon">W</span><span>Welcome</span></a>
+        <a href="certifications.html" data-nav="certifications"><span class="nav-icon">C</span><span>Certification</span></a>
+        <a href="quizzes.html" data-nav="quizzes"><span class="nav-icon">Q</span><span>Quizzes</span></a>
+        <a href="kali.html" data-nav="kali"><span class="nav-icon">K</span><span>Kali Guide</span></a>
+        <a href="resources.html" data-nav="resources"><span class="nav-icon">R</span><span>Resources</span></a>
+        <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true"><span class="nav-icon">D</span><span>Admin Tools</span></a>
+        <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true"><span class="nav-icon">G</span><span>Admin Dashboard</span></a>
+        <a href="login.html" data-nav="login"><span class="nav-icon">A</span><span>Login</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="mode-label"><span class="pulse-dot"></span>Dark Mode</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="practice-heading page-enter dragon-heading">
+        <p class="panel-note">Resource library</p>
+        <h1>Resources</h1>
+        <p>A clean home for study guides, certification maps, links, and reference material that can be filled in as the course grows.</p>
+      </section>
+
+      <section class="resource-library-grid">
+        <article class="resource-library-card glass-card">
+          <span class="badge electric">Certification</span>
+          <h2>Exam Objectives Map</h2>
+          <p>Open the certification tracks page to choose a certification path and jump into quiz preparation.</p>
+          <a class="secondary-button" href="certifications.html">Open Certification Page</a>
+        </article>
+        <article class="resource-library-card glass-card">
+          <span class="badge electric">Kali</span>
+          <h2>Command References</h2>
+          <p>Placeholder for approved command cheat sheets, lab workflows, and SOCAI outline updates.</p>
+          <a class="secondary-button" href="kali.html">Open Kali Guide</a>
+        </article>
+        <article class="resource-library-card glass-card">
+          <span class="badge electric">Study Guide PDF</span>
+          <h2>MTA Network Fundamentals Study Sheet</h2>
+          <p>Download or open the uploaded Network Fundamentals study guide as a PDF.</p>
+          <a class="secondary-button" href="assets/study-guides/MTA%20Network%20Fundamentals%20Study%20Sheet.pdf" target="_blank" rel="noopener" download>Open PDF Study Guide</a>
+        </article>
+        <article class="resource-library-card glass-card">
+          <span class="badge electric">Study Guide PDF</span>
+          <h2>Network Security Study Sheet</h2>
+          <p>Download or open the uploaded Network Security study guide as a PDF.</p>
+          <a class="secondary-button" href="assets/study-guides/Network%20Security%20Study%20Sheet.pdf" target="_blank" rel="noopener" download>Open PDF Study Guide</a>
+        </article>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

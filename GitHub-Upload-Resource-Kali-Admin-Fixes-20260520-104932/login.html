@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Login</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="login">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Login</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="certifications.html">Practice</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home">
+          <span class="nav-icon">H</span>
+          <span>Home</span>
+        </a>
+        <a href="welcome.html" data-nav="welcome">
+          <span class="nav-icon">W</span>
+          <span>Welcome</span>
+        </a>
+        <a href="certifications.html" data-nav="certifications">
+          <span class="nav-icon">C</span>
+          <span>Certification</span>
+        </a>
+        <a href="quizzes.html" data-nav="quizzes">
+          <span class="nav-icon">Q</span>
+          <span>Quizzes</span>
+        </a>
+        <a href="kali.html" data-nav="kali">
+          <span class="nav-icon">K</span>
+          <span>Kali Guide</span>
+        </a>
+        <a href="resources.html" data-nav="resources">
+          <span class="nav-icon">R</span>
+          <span>Resources</span>
+        </a>
+        <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true">
+          <span class="nav-icon">D</span>
+          <span>Admin Tools</span>
+        </a>
+        <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true">
+          <span class="nav-icon">G</span>
+          <span>Admin Dashboard</span>
+        </a>
+        <a href="login.html" data-nav="login">
+          <span class="nav-icon">A</span>
+          <span>Login</span>
+        </a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content login-main">
+      <section class="practice-heading page-enter">
+        <h1>SOC Account Gate</h1>
+        <p>Create or open your SOC Bootcamp profile before entering the dashboard. Progress syncs through the local auth server when it is running.</p>
+      </section>
+
+      <section class="login-layout">
+        <article class="login-card glass-card">
+          <div class="access-gate-notice">
+            <span class="status-dot"></span>
+            <p>Major training areas stay locked until a student account or the reserved admin account is active.</p>
+          </div>
+
+          <div class="login-brand-lockup">
+            <img class="login-logo-mark" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+            <span class="badge electric">SOC Secure Access</span>
+          </div>
+          <p class="panel-note">Access Terminal</p>
+
+          <div class="session-row">
+            <h2 id="authTitle">Login</h2>
+            <div class="segmented-control" aria-label="Account mode">
+              <button class="segment active" id="loginTab" type="button" data-auth-mode="login">Login</button>
+              <button class="segment" id="createTab" type="button" data-auth-mode="create">Create Account</button>
+            </div>
+          </div>
+
+          <div class="welcome-state hidden" id="welcomeState">
+            <div class="welcome-orb"></div>
+            <div>
+              <h3 id="welcomeMessage">Welcome, analyst</h3>
+              <p>Your account is active. Certification selections, Kali progress, and quiz scores will keep saving.</p>
+            </div>
+            <button class="danger-button" id="logoutButton" type="button">Logout</button>
+          </div>
+
+          <form class="auth-form" id="authForm" novalidate>
+            <div class="field-grid">
+              <div>
+                <label for="usernameInput" id="usernameInputLabel">Email Address or Admin ID</label>
+                <input id="usernameInput" name="username" type="text" autocomplete="username" placeholder="student@socbootcamp.local">
+                <p class="input-error" id="usernameError"></p>
+              </div>
+
+              <div>
+                <label for="passwordInput">Password</label>
+                <input id="passwordInput" name="password" type="password" autocomplete="current-password" placeholder="Password">
+                <p class="input-error" id="passwordError"></p>
+              </div>
+
+              <div class="email-field hidden" id="emailField">
+                <label for="emailInput">Email Address</label>
+                <input id="emailInput" name="email" type="email" autocomplete="email" placeholder="analyst@socbootcamp.local">
+                <p class="input-error" id="emailError"></p>
+              </div>
+            </div>
+            <div class="role-picker" id="rolePicker">
+              <label for="roleSelect">Account Type</label>
+              <select id="roleSelect" name="role">
+                <option value="student">Student</option>
+                <option value="admin">Admin - One Account Only</option>
+              </select>
+              <p class="helper-line" id="roleHelpText">Admin access is reserved for <strong>admin</strong> using <strong>eakhter@brooklynsteamcenter.org</strong>.</p>
+            </div>
+            <button class="primary-button" id="authSubmitButton" type="submit">Login</button>
+          </form>
+
+          <section class="oauth-panel" id="oauthPanel">
+            <p class="panel-note">Google / Chrome Sign-In</p>
+            <p class="helper-line">Use the Google account already signed into Chrome when Google asks you to choose an account. Email MFA is sent after Google confirms your identity.</p>
+            <div class="score-entry-grid">
+              <label>
+                Google Email
+                <input id="googleEmailInput" type="email" placeholder="name@gmail.com">
+              </label>
+            </div>
+            <p class="input-error" id="googleSignupError"></p>
+            <button class="secondary-button full-width google-auth-button" id="googleSignupButton" type="button">
+              <span class="google-glyph" aria-hidden="true">G</span>
+              Continue with Google
+            </button>
+            <a class="helper-line oauth-debug-link" href="oauth-debug.html">Open Google OAuth diagnostics</a>
+          </section>
+
+          <section class="mfa-panel hidden" id="mfaPanel">
+            <p class="panel-note">Email MFA</p>
+            <h3>Enter verification code</h3>
+            <p class="helper-line" id="mfaMessage">A verification code was sent to your account email.</p>
+            <div class="demo-code-line" id="mfaDemoCode"></div>
+            <label for="mfaCodeInput">MFA Code</label>
+            <input id="mfaCodeInput" type="text" inputmode="numeric" placeholder="6-digit code">
+            <p class="input-error" id="mfaError"></p>
+            <div class="home-command-row">
+              <button class="primary-button" id="verifyMfaButton" type="button">Verify MFA</button>
+              <button class="secondary-button" id="cancelMfaButton" type="button">Cancel</button>
+            </div>
+          </section>
+
+          <section class="reset-panel" id="resetPanel">
+            <div class="panel-heading compact">
+              <div>
+                <p class="panel-note">Password Recovery</p>
+                <h3>Reset by Email</h3>
+              </div>
+              <span class="badge electric">MFA Protected</span>
+            </div>
+            <p class="helper-line">Lookup uses email address instead of username. With Gmail SMTP configured, the server sends the reset code by email; otherwise a local development code appears below.</p>
+            <div class="score-entry-grid">
+              <label>
+                Account Email
+                <input id="resetEmailInput" type="email" placeholder="student@socbootcamp.local">
+              </label>
+              <label>
+                New Password
+                <input id="resetPasswordInput" type="password" placeholder="8+ characters">
+              </label>
+              <label>
+                Reset Code
+                <input id="resetCodeInput" type="text" inputmode="numeric" placeholder="email code">
+              </label>
+            </div>
+            <div class="demo-code-line" id="resetDemoCode"></div>
+            <p class="input-error" id="resetError"></p>
+            <div class="home-command-row">
+              <button class="secondary-button" id="sendResetCodeButton" type="button">Send Reset Code</button>
+              <button class="primary-button" id="confirmResetButton" type="button">Confirm Reset</button>
+            </div>
+          </section>
+        </article>
+
+        <aside class="summary-panel glass-card login-support-panel">
+          <p class="panel-note">SOC Bootcamp Access</p>
+          <img class="login-side-logo" src="assets/soc-dragon-mark-dark.svg" alt="SOC Bootcamp logo">
+          <div class="session-row">
+            <h2>What your account unlocks</h2>
+            <div class="feature-list compact-feature-list">
+              <span>Certification quizzes</span>
+              <span>Locked practice exams</span>
+              <span>Kali command coach</span>
+              <span>Saved progress dashboard</span>
+            </div>
+          </div>
+          <div class="account-gated-actions hidden" id="accountGatedActions">
+            <a class="primary-button full-width" href="certifications.html">Continue to Practice</a>
+            <a class="secondary-button full-width" href="welcome.html">Open Welcome Page</a>
+          </div>
+          <p class="micro-copy" id="lockedActionNote">Create an account or log in to unlock the dashboard.</p>
+          <a class="helper-line oauth-debug-link" href="privacy.html">Privacy notice and student-record handling</a>
+        </aside>
+      </section>
+
+      <section class="admin-score-overview glass-card hidden" id="adminScoreOverview">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-note">Admin Overview</p>
+            <h2>Website Score Overview</h2>
+          </div>
+          <span class="badge electric">Read Only</span>
+        </div>
+        <p class="helper-line">This quick view shows local score signals. Use the Admin Dashboard for per-user score viewing, editing, and certification status updates.</p>
+
+        <div class="score-overview-grid">
+          <article class="score-card">
+            <span>Certification Prep</span>
+            <strong id="adminCertificationScore">Not saved</strong>
+            <p id="adminSelectedCertification">No certification selected</p>
+          </article>
+
+          <article class="score-card">
+            <span>Practice Exams</span>
+            <strong id="adminPracticeExamScore">Not saved</strong>
+            <p id="adminSelectedPracticeExam">No practice exam selected</p>
+          </article>
+
+          <article class="score-card">
+            <span>Question Bank</span>
+            <strong id="adminQuestionBankScore">Not saved</strong>
+            <p>Question bank accuracy checkpoint</p>
+          </article>
+
+          <article class="score-card">
+            <span>Kali Quiz</span>
+            <strong id="adminKaliQuizScore">Not saved</strong>
+            <p>Latest Kali knowledge-check score</p>
+          </article>
+
+          <article class="score-card overall">
+            <span>Overall Saved Average</span>
+            <strong id="adminOverallScore">Not enough data</strong>
+            <p>Average of all numeric saved scores</p>
+          </article>
+        </div>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

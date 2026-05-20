@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Welcome</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="welcome">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Welcome</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="certifications.html">Practice</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home"><span class="nav-icon">H</span><span>Home</span></a>
+        <a href="welcome.html" data-nav="welcome"><span class="nav-icon">W</span><span>Welcome</span></a>
+        <a href="certifications.html" data-nav="certifications"><span class="nav-icon">C</span><span>Certification</span></a>
+        <a href="quizzes.html" data-nav="quizzes"><span class="nav-icon">Q</span><span>Quizzes</span></a>
+        <a href="kali.html" data-nav="kali"><span class="nav-icon">K</span><span>Kali Guide</span></a>
+        <a href="resources.html" data-nav="resources"><span class="nav-icon">R</span><span>Resources</span></a>
+        <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true"><span class="nav-icon">D</span><span>Admin Tools</span></a>
+        <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true"><span class="nav-icon">G</span><span>Admin Dashboard</span></a>
+        <a href="login.html" data-nav="login"><span class="nav-icon">A</span><span>Login</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="mode-label"><span class="pulse-dot"></span>Dark Mode</div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="welcome-hero glass-card page-enter">
+        <div>
+          <p class="panel-note">SOC Bootcamp command center</p>
+          <h1 id="welcomeUserName">Welcome to SOC Bootcamp</h1>
+          <p>Train for certifications, run focused quizzes, work through Kali Linux outlines, and keep practice exam progress ready for admin review.</p>
+          <div class="home-command-row">
+            <a class="primary-button" id="welcomeNextAction" href="certifications.html">Start Certification Prep</a>
+            <a class="secondary-button" href="resources.html">Open Resources</a>
+          </div>
+        </div>
+        <img class="welcome-logo" src="assets/soc-dragon-mark-dark.svg" alt="SOC Bootcamp logo">
+      </section>
+
+      <section class="feature-demo-grid" aria-label="SOC Bootcamp features">
+        <article class="feature-demo-card glass-card">
+          <span class="nav-icon">C</span>
+          <h2>Certification Paths</h2>
+          <p>Track Pearson and CompTIA readiness with saved quiz and practice exam scores.</p>
+        </article>
+        <article class="feature-demo-card glass-card">
+          <span class="nav-icon">E</span>
+          <h2>Practice Exams</h2>
+          <p>Timed full exams include review pages, flagging, scratchpad notes, and final feedback.</p>
+        </article>
+        <article class="feature-demo-card glass-card">
+          <span class="nav-icon">K</span>
+          <h2>Kali Guide</h2>
+          <p>Use SOCAI command search, guided sections, and the dragon coach for study support.</p>
+        </article>
+        <article class="feature-demo-card glass-card">
+          <span class="nav-icon">R</span>
+          <h2>Resources</h2>
+          <p>Use the resource hub for templates, review links, command references, and future handouts.</p>
+        </article>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

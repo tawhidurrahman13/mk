@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SOC Bootcamp | Admin Tools</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body data-page="admin">
+  <header class="app-header">
+    <div class="header-brand">
+      <button class="icon-button menu-toggle" id="menuToggle" type="button" aria-label="Toggle menu">|||</button>
+      <img class="brand-logo-img" src="assets/soc-dragon-mark-dark.svg" alt="E-LUSTIVE TECH SOC logo">
+      <strong>SOC Bootcamp</strong>
+      <a class="account-user-pill" id="accountUserPill" href="login.html" aria-label="Account page">
+        <span class="account-user-icon">U</span>
+        <span id="accountUserLabel">Guest Account</span>
+      </a>
+    </div>
+    <nav class="breadcrumbs" aria-label="Breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <span>SOC</span>
+      <span>/</span>
+      <strong>Admin Tools</strong>
+    </nav>
+    <div class="header-actions">
+      <span class="clock-pill" id="clockPill">SOC-ready</span>
+      <a class="get-started-button" href="admin-practice-grades.html">Admin Dashboard</a>
+    </div>
+  </header>
+
+  <div class="dashboard-shell">
+    <aside class="sidebar" id="sidebar">
+      <button class="hide-sidebar-button" type="button" aria-label="Hide sidebar">-</button>
+      <div class="sidebar-section-title">SOC Prep</div>
+
+      <nav class="side-nav" aria-label="Primary navigation">
+        <a href="index.html" data-nav="home"><span class="nav-icon">H</span><span>Home</span></a>
+        <a href="welcome.html" data-nav="welcome"><span class="nav-icon">W</span><span>Welcome</span></a>
+        <a href="certifications.html" data-nav="certifications"><span class="nav-icon">C</span><span>Certification</span></a>
+        <a href="quizzes.html" data-nav="quizzes"><span class="nav-icon">Q</span><span>Quizzes</span></a>
+        <a href="kali.html" data-nav="kali"><span class="nav-icon">K</span><span>Kali Guide</span></a>
+        <a href="resources.html" data-nav="resources"><span class="nav-icon">R</span><span>Resources</span></a>
+        <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true"><span class="nav-icon">D</span><span>Admin Tools</span></a>
+        <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true"><span class="nav-icon">G</span><span>Admin Dashboard</span></a>
+        <a href="login.html" data-nav="login"><span class="nav-icon">A</span><span>Login</span></a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="mode-label">
+          <span class="pulse-dot"></span>
+          Dark Mode
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <section class="practice-heading page-enter dragon-heading">
+        <p class="panel-note">Dragon command deck</p>
+        <h1>Admin Tools</h1>
+        <p>Review user certification scores, edit readiness status, and keep the GitHub/developer checklist visible.</p>
+      </section>
+
+      <section class="admin-layout">
+        <article class="session-panel glass-card">
+          <div class="panel-heading">
+            <div>
+              <p class="panel-note">User Certification Oversight</p>
+              <h2>All Learner Progress</h2>
+            </div>
+            <span class="badge electric">Admin Edit</span>
+          </div>
+          <div class="table-wrap">
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th>User</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                  <th>Certification</th>
+                  <th>Status</th>
+                  <th>Scores</th>
+                  <th>Latest Quiz</th>
+                </tr>
+              </thead>
+              <tbody id="adminUserRows"></tbody>
+            </table>
+          </div>
+        </article>
+
+        <aside class="summary-panel glass-card">
+          <p class="panel-note">Edit Score Record</p>
+          <form class="admin-edit-form" id="adminScoreForm">
+            <label>
+              User
+              <select id="adminUserSelect"></select>
+            </label>
+            <label>
+              Certification
+              <select id="adminCertificationSelect"></select>
+            </label>
+            <label>
+              Certification Prep Score
+              <input id="adminPrepScoreInput" type="number" min="0" max="100" placeholder="0-100">
+            </label>
+            <label>
+              Question Bank Score
+              <input id="adminQuestionScoreInput" type="number" min="0" max="100" placeholder="0-100">
+            </label>
+            <label>
+              Practice Exam Score
+              <input id="adminExamScoreInput" type="number" min="0" max="100" placeholder="0-100">
+            </label>
+            <label>
+              Certification Status
+              <select id="adminStatusSelect">
+                <option value="Not Started">Not Started</option>
+                <option value="Studying">Studying</option>
+                <option value="Practice Ready">Practice Ready</option>
+                <option value="Exam Ready">Exam Ready</option>
+                <option value="Certified">Certified</option>
+              </select>
+            </label>
+            <button class="primary-button full-width" type="submit">Update User Score</button>
+          </form>
+        </aside>
+      </section>
+
+      <section class="developer-notes glass-card chatgpt-format">
+        <div class="panel-heading">
+          <div>
+            <p class="panel-note">Developer Notes</p>
+            <h2>Operations Checklist</h2>
+          </div>
+          <span class="badge hot">Reminder</span>
+        </div>
+        <div class="chatgpt-block important-reminder">
+          <strong>Upload updates to GitHub.</strong>
+          <p>After local QA, commit the updated static files and push them to the SOC-Bootcamp repository.</p>
+        </div>
+        <div class="chatgpt-block">
+          <strong>MacBook Codex Update Instructions</strong>
+          <ol>
+            <li>Update macOS from System Settings before installing developer tools.</li>
+            <li>Install or update Xcode Command Line Tools with <code>xcode-select --install</code>.</li>
+            <li>Install the newest Codex desktop build, then sign back into GitHub from Codex connectors.</li>
+            <li>Open the project folder, run <code>npm start</code>, and verify <code>http://localhost:3000/login.html</code>.</li>
+            <li>If browser previews fail, restart Codex and confirm localhost permissions are allowed.</li>
+          </ol>
+        </div>
+        <div class="chatgpt-block">
+          <strong>Production Environment Variables</strong>
+          <ul>
+            <li><code>GOOGLE_CLIENT_ID</code> and <code>GOOGLE_CLIENT_SECRET</code> for real Google OAuth.</li>
+            <li><code>GOOGLE_OAUTH_REDIRECT_URI</code> for the approved callback URL.</li>
+            <li><code>EMAIL_SMTP_HOST</code>, <code>EMAIL_SMTP_PORT</code>, <code>EMAIL_SMTP_USER</code>, and <code>EMAIL_SMTP_PASS</code> for sending reset/MFA codes.</li>
+            <li><code>MFA_CODE_TTL_MINUTES</code> and <code>PASSWORD_RESET_TTL_MINUTES</code> for code expiration policy.</li>
+            <li><code>AUTH_SESSION_SECRET</code> for signing secure sessions on a backend.</li>
+          </ul>
+        </div>
+        <a class="secondary-button" href="tests.html">Open Local QA Tests</a>
+        <a class="secondary-button" href="admin-practice-grades.html">Open Practice Exam Grades</a>
+      </section>
+    </main>
+
+    <aside class="utility-rail" aria-label="Utility shortcuts">
+      <button type="button">[]</button>
+      <button type="button">**</button>
+    </aside>
+  </div>
+
+  <div class="toast-stack" id="toastStack" aria-live="polite"></div>
+  <script src="script.js"></script>
+</body>
+</html>

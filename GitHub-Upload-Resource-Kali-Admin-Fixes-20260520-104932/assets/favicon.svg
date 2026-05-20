@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs>
+    <linearGradient id="ring" x1="8" y1="8" x2="56" y2="56" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#f073ff"/>
+      <stop offset=".55" stop-color="#d65aec"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="chip" x1="18" y1="16" x2="46" y2="48" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#22d3ee"/>
+      <stop offset=".55" stop-color="#4f86ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  <circle cx="32" cy="32" r="30" fill="#171026"/>
+  <circle cx="32" cy="32" r="27" fill="#2d1958" stroke="url(#ring)" stroke-width="4"/>
+  <path fill="#42218a" d="M7 28h50v10H7z"/>
+  <g fill="none" stroke="url(#chip)" stroke-linecap="round" stroke-linejoin="round">
+    <path stroke-width="4" d="M23 23h18v18H23z"/>
+    <path stroke-width="3" d="M20 28h-5M20 36h-5M44 28h5M44 36h5M27 20v-5M32 20v-5M37 20v-5M27 44v5M32 44v5M37 44v5"/>
+  </g>
+  <g fill="#4f86ff">
+    <circle cx="29" cy="30" r="1.7"/>
+    <circle cx="35" cy="30" r="1.7"/>
+    <circle cx="29" cy="36" r="1.7"/>
+    <circle cx="35" cy="36" r="1.7"/>
+  </g>
+</svg>
