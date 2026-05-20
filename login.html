@@ -41,23 +41,39 @@
       <nav class="side-nav" aria-label="Primary navigation">
         <a href="index.html" data-nav="home">
           <span class="nav-icon">H</span>
-          Home
+          <span>Home</span>
+        </a>
+        <a href="welcome.html" data-nav="welcome">
+          <span class="nav-icon">W</span>
+          <span>Welcome</span>
         </a>
         <a href="certifications.html" data-nav="certifications">
           <span class="nav-icon">C</span>
-          Certification
+          <span>Certification</span>
         </a>
         <a href="quizzes.html" data-nav="quizzes">
           <span class="nav-icon">Q</span>
-          Quizzes
+          <span>Quizzes</span>
         </a>
         <a href="kali.html" data-nav="kali">
           <span class="nav-icon">K</span>
-          Kali Guide
+          <span>Kali Guide</span>
+        </a>
+        <a href="resources.html" data-nav="resources">
+          <span class="nav-icon">R</span>
+          <span>Resources</span>
+        </a>
+        <a class="admin-only-nav hidden" href="admin.html" data-nav="admin" data-admin-only="true">
+          <span class="nav-icon">D</span>
+          <span>Admin</span>
+        </a>
+        <a class="admin-only-nav hidden" href="admin-practice-grades.html" data-nav="admin-grades" data-admin-only="true">
+          <span class="nav-icon">G</span>
+          <span>Exam Grades</span>
         </a>
         <a href="login.html" data-nav="login">
           <span class="nav-icon">A</span>
-          Login
+          <span>Login</span>
         </a>
       </nav>
 
@@ -203,21 +219,21 @@
           </section>
         </article>
 
-        <aside class="summary-panel glass-card">
-          <p class="panel-note">Demo accounts</p>
-          <strong class="mega-number">SOC</strong>
+        <aside class="summary-panel glass-card login-support-panel">
+          <p class="panel-note">SOC Bootcamp Access</p>
+          <img class="login-side-logo" src="assets/soc-dragon-mark-dark.svg" alt="SOC Bootcamp logo">
           <div class="session-row">
-            <h2>Quick test logins:</h2>
-            <div class="pill-cluster">
-              <button class="source-pill active demo-login-button" type="button" data-demo-user="student">Student</button>
-              <button class="source-pill demo-login-button" type="button" data-demo-user="admin">Admin - Limited</button>
+            <h2>What your account unlocks</h2>
+            <div class="feature-list compact-feature-list">
+              <span>Certification quizzes</span>
+              <span>Locked practice exams</span>
+              <span>Kali command coach</span>
+              <span>Saved progress dashboard</span>
             </div>
-            <p class="helper-line">Student: <strong>student</strong> / <strong>student123</strong> / <strong>student@socbootcamp.local</strong></p>
-            <p class="helper-line">Admin: <strong>admin</strong> / <strong>akhter44</strong> / <strong>admin@socbootcamp.local</strong></p>
           </div>
           <div class="account-gated-actions hidden" id="accountGatedActions">
             <a class="primary-button full-width" href="certifications.html">Continue to Practice</a>
-            <a class="secondary-button full-width" href="index.html">Open Home Dashboard</a>
+            <a class="secondary-button full-width" href="welcome.html">Open Welcome Page</a>
           </div>
           <p class="micro-copy" id="lockedActionNote">Create an account or log in to unlock the dashboard.</p>
         </aside>
@@ -226,7 +242,7 @@
       <section class="admin-score-overview glass-card hidden" id="adminScoreOverview">
         <div class="panel-heading">
           <div>
-            <p class="panel-note">Admin - Limited</p>
+            <p class="panel-note">Admin Overview</p>
             <h2>Website Score Overview</h2>
           </div>
           <span class="badge electric">Read Only</span>

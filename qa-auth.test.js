@@ -61,7 +61,25 @@ async function main() {
     });
     assert.equal(studentMfa.status, 200);
     assert.equal(studentMfa.body.user.role, "student");
-    assert.equal(studentMfa.body.redirect, "index.html");
+    assert.equal(studentMfa.body.redirect, "welcome.html");
+    const studentCookie = getCookie(studentMfa.response);
+
+    const practiceAttempt = await postJson("/api/progress/practice-exam-attempt", {
+      title: "Pearson Network Security Full Length Practice Exam",
+      certification: "Pearson Network Security",
+      score: 37,
+      total: 50,
+      percent: 74,
+      subunitResults: [
+        { subunit: "ACL Design", percent: 55, correct: 5, total: 9 },
+        { subunit: "Threats", percent: 86, correct: 6, total: 7 }
+      ],
+      questionReview: [
+        { subunit: "ACL Design", isCorrect: false, answerState: "unanswered" }
+      ]
+    }, studentCookie);
+    assert.equal(practiceAttempt.status, 200);
+    assert.equal(practiceAttempt.body.progress.practiceExamAttempts.length, 1);
 
     const reset = await postJson("/api/auth/password-reset/request", { email: qaEmail });
     assert.equal(reset.status, 200);
@@ -111,6 +129,7 @@ async function main() {
     ]);
     const qaUser = users.body.users.find((user) => user.email === qaEmail);
     assert.ok(qaUser);
+    assert.equal(qaUser.progress.practiceExamAttempts.length, 1);
 
     const scoreUpdate = await postJson("/api/admin/scores", {
       userId: qaUser.id,
@@ -124,7 +143,18 @@ async function main() {
     assert.equal(scoreUpdate.body.progress.certifications["Pearson Cybersecurity"].prepScore, "91");
     assert.equal(scoreUpdate.body.progress.certifications["Pearson Cybersecurity"].status, "Exam Ready");
 
-    console.log("PASS: auth, MFA, password reset, Google route, admin score editing, and certification catalog checks passed.");
+    const attemptId = qaUser.progress.practiceExamAttempts[0].id;
+    const practiceScoreUpdate = await postJson("/api/admin/practice-exam-score", {
+      userId: qaUser.id,
+      attemptId,
+      percent: "89",
+      note: "Manual review correction"
+    }, adminCookie, users.body.csrfToken);
+    assert.equal(practiceScoreUpdate.status, 200);
+    assert.equal(practiceScoreUpdate.body.attempt.percent, 89);
+    assert.equal(practiceScoreUpdate.body.attempt.manuallyAdjusted, true);
+
+    console.log("PASS: auth, MFA, password reset, Google route, admin score editing, practice exam grade editing, and certification catalog checks passed.");
   } finally {
     server.kill();
     if (stderr.trim()) {

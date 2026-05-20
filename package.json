@@ -5,7 +5,7 @@
   "description": "SOC Bootcamp cybersecurity dashboard with local Node authentication.",
   "scripts": {
     "start": "node server.js",
-    "check": "node --check server.js && node --check script.js && node --check qa-auth.test.js && node --check exam-features.test.js",
-    "test": "node qa-auth.test.js && node exam-features.test.js"
+    "check": "node --check server.js && node --check script.js && node --check qa-auth.test.js && node --check exam-features.test.js && node --check app-ui.test.js",
+    "test": "node qa-auth.test.js && node exam-features.test.js && node app-ui.test.js"
   }
 }

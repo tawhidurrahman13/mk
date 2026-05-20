@@ -150,6 +150,11 @@ async function routeApi(req, res, url) {
     return;
   }
 
+  if (req.method === "POST" && url.pathname === "/api/progress/practice-exam-attempt") {
+    await handlePracticeExamAttempt(req, res);
+    return;
+  }
+
   if (req.method === "GET" && url.pathname === "/api/admin/users") {
     await handleAdminUsers(req, res);
     return;
@@ -157,6 +162,11 @@ async function routeApi(req, res, url) {
 
   if (req.method === "POST" && url.pathname === "/api/admin/scores") {
     await handleAdminScoreUpdate(req, res);
+    return;
+  }
+
+  if (req.method === "POST" && url.pathname === "/api/admin/practice-exam-score") {
+    await handleAdminPracticeExamScoreUpdate(req, res);
     return;
   }
 
@@ -258,7 +268,7 @@ async function handleMfaVerify(req, res) {
   sendJson(res, 200, {
     user: publicUser(user),
     csrfToken: session.csrf,
-    redirect: user.role === "admin" ? "admin.html" : "index.html"
+    redirect: user.role === "admin" ? "admin.html" : "welcome.html"
   });
 }
 
@@ -516,6 +526,48 @@ async function handleQuizAttempt(req, res) {
   sendJson(res, 200, { attempt, progress });
 }
 
+async function handlePracticeExamAttempt(req, res) {
+  const auth = await requireSession(req, res);
+  if (!auth) return;
+  const body = await readJsonBody(req);
+  const certification = String(body.certification || "");
+  if (!CERTIFICATIONS.includes(certification)) {
+    sendJson(res, 400, { error: "Unknown certification" });
+    return;
+  }
+
+  const store = await readStore();
+  const progress = store.progress[auth.user.id] || createEmptyProgress();
+  const attempt = {
+    ...body,
+    id: String(body.id || randomToken(10)),
+    userId: auth.user.id,
+    title: String(body.title || "Practice Exam"),
+    certification,
+    score: Number(body.score || 0),
+    total: Number(body.total || 0),
+    percent: Number(body.percent || 0),
+    timestamp: new Date().toISOString(),
+    completedAt: new Date().toISOString()
+  };
+  progress.practiceExamAttempts = [attempt, ...(progress.practiceExamAttempts || [])].slice(0, 50);
+  progress.practiceExamScore = String(attempt.percent);
+  progress.selectedPracticeExam = attempt.title;
+  progress.certifications = progress.certifications || {};
+  progress.certifications[certification] = {
+    status: attempt.percent >= 80 ? "Practice Exam Passed" : "Studying",
+    prepScore: "",
+    questionBankScore: "",
+    ...(progress.certifications[certification] || {}),
+    practiceExamScore: String(attempt.percent),
+    updatedAt: new Date().toISOString()
+  };
+  progress.updatedAt = new Date().toISOString();
+  store.progress[auth.user.id] = progress;
+  await writeStore(store);
+  sendJson(res, 200, { attempt, progress });
+}
+
 async function handleAdminUsers(req, res) {
   const auth = await requireAdmin(req, res);
   if (!auth) return;
@@ -552,6 +604,69 @@ async function handleAdminScoreUpdate(req, res) {
   });
   await writeStore(store);
   sendJson(res, 200, { progress: store.progress[userId] });
+}
+
+async function handleAdminPracticeExamScoreUpdate(req, res) {
+  const auth = await requireAdmin(req, res);
+  if (!auth) return;
+  if (!validateCsrf(req, auth.session)) {
+    sendJson(res, 403, { error: "CSRF validation failed" });
+    return;
+  }
+
+  const body = await readJsonBody(req);
+  const userId = String(body.userId || "");
+  const attemptId = String(body.attemptId || "");
+  const percent = normalizeScore(body.percent);
+  if (percent === "") {
+    sendJson(res, 400, { error: "Score must be 0-100" });
+    return;
+  }
+
+  const store = await readStore();
+  if (!store.users[userId]) {
+    sendJson(res, 404, { error: "User not found" });
+    return;
+  }
+
+  const progress = store.progress[userId] || createEmptyProgress();
+  const attempts = progress.practiceExamAttempts || [];
+  const attemptIndex = attempts.findIndex((attempt) => String(attempt.id || "") === attemptId);
+  if (attemptIndex < 0) {
+    sendJson(res, 404, { error: "Practice exam attempt not found" });
+    return;
+  }
+
+  const attempt = attempts[attemptIndex];
+  const total = Number(attempt.total || 100) || 100;
+  attempts[attemptIndex] = {
+    ...attempt,
+    score: Math.round((Number(percent) / 100) * total),
+    percent: Number(percent),
+    manualPercent: Number(percent),
+    manuallyAdjusted: true,
+    adjustmentNote: String(body.note || "Admin manual adjustment"),
+    adjustedAt: new Date().toISOString(),
+    adjustedBy: auth.user.email
+  };
+  progress.practiceExamAttempts = attempts;
+  progress.practiceExamScore = String(percent);
+  if (attempt.certification && CERTIFICATIONS.includes(attempt.certification)) {
+    progress.certifications = progress.certifications || {};
+    progress.certifications[attempt.certification] = {
+      status: Number(percent) >= 80 ? "Practice Exam Passed" : "Studying",
+      prepScore: "",
+      questionBankScore: "",
+      ...(progress.certifications[attempt.certification] || {}),
+      practiceExamScore: String(percent),
+      manuallyAdjusted: true,
+      updatedAt: new Date().toISOString()
+    };
+  }
+  progress.updatedAt = new Date().toISOString();
+  store.progress[userId] = progress;
+  await writeStore(store);
+  sendJson(res, 200, { attempt: attempts[attemptIndex], progress });
 }
 
 function scoreUpdatesFromBody(body) {
@@ -928,6 +1043,8 @@ function createEmptyProgress() {
     selectedCertification: "",
     selectedPracticeExam: "",
     certifications: {},
+    practiceExamScore: "",
+    practiceExamAttempts: [],
     quizAttempts: [],
     updatedAt: ""
   };

@@ -211,6 +211,160 @@ const practiceExamEngine = (() => {
   };
 })();
 
+const adminPracticeExamTools = (() => {
+  function isAdminRole(role) {
+    return String(role || "").toLowerCase() === "admin";
+  }
+
+  function canAccessPage(page, role) {
+    const adminPages = new Set(["admin", "admin-grades"]);
+    return !adminPages.has(page) || isAdminRole(role);
+  }
+
+  function shouldShowSidebarItem(navKey, role) {
+    const adminOnlyItems = new Set(["admin", "admin-grades"]);
+    return !adminOnlyItems.has(navKey) || isAdminRole(role);
+  }
+
+  function normalizePercent(value) {
+    const numericValue = Number(value);
+    if (!Number.isFinite(numericValue)) {
+      return null;
+    }
+
+    return Math.max(0, Math.min(100, Math.round(numericValue)));
+  }
+
+  function collectPracticeExamRows(users, progressLookup = {}) {
+    return users.flatMap((user) => {
+      const userId = user.id || user.username || user.email || "unknown-user";
+      const progress = user.progress || progressLookup[userId] || progressLookup[user.username] || createEmptyProgress();
+      const attempts = Array.isArray(progress.practiceExamAttempts) ? progress.practiceExamAttempts : [];
+
+      return attempts.map((attempt, index) => {
+        const attemptId = attempt.id || `${userId}-practice-${index}`;
+        return {
+          id: attemptId,
+          userId,
+          username: user.username || user.displayName || user.email || userId,
+          displayName: user.displayName || user.username || user.email || userId,
+          email: user.email || userId,
+          examName: attempt.title || attempt.examName || "Practice Exam",
+          certification: attempt.certification || "General Review",
+          score: Number(attempt.score || 0),
+          total: Number(attempt.total || 0),
+          percent: Number(attempt.manualPercent ?? attempt.percent ?? 0),
+          submittedAt: attempt.completedAt || attempt.timestamp || "",
+          subunitResults: Array.isArray(attempt.subunitResults) ? attempt.subunitResults : [],
+          questionReview: Array.isArray(attempt.questionReview) ? attempt.questionReview : [],
+          manuallyAdjusted: Boolean(attempt.manuallyAdjusted),
+          adjustmentNote: attempt.adjustmentNote || "",
+          rawAttempt: attempt
+        };
+      });
+    });
+  }
+
+  function summarizeHelpNeeds(attempts) {
+    const categoryMap = new Map();
+    let unansweredCount = 0;
+    let missedCount = 0;
+
+    attempts.forEach((attempt) => {
+      (attempt.subunitResults || []).forEach((result) => {
+        const subunit = result.subunit || "General Review";
+        const current = categoryMap.get(subunit) || { subunit, totalPercent: 0, count: 0, lowestPercent: 100 };
+        const percent = Number(result.percent || 0);
+        current.totalPercent += percent;
+        current.count += 1;
+        current.lowestPercent = Math.min(current.lowestPercent, percent);
+        categoryMap.set(subunit, current);
+      });
+
+      (attempt.questionReview || []).forEach((question) => {
+        if (question.isUnanswered || question.answerState === "unanswered") {
+          unansweredCount += 1;
+        }
+        if (!question.isCorrect) {
+          missedCount += 1;
+        }
+      });
+    });
+
+    const weakAreas = [...categoryMap.values()]
+      .map((item) => ({
+        subunit: item.subunit,
+        averagePercent: item.count ? Math.round(item.totalPercent / item.count) : 0,
+        lowestPercent: item.lowestPercent
+      }))
+      .filter((item) => item.averagePercent < 80 || item.lowestPercent < 70)
+      .sort((first, second) => first.averagePercent - second.averagePercent)
+      .slice(0, 4);
+
+    return {
+      weakAreas,
+      unansweredCount,
+      missedCount,
+      needsHelp: weakAreas.length > 0 || unansweredCount > 0 || missedCount > 0
+    };
+  }
+
+  function adjustPracticeExamScore(progress, attemptId, newPercent, note = "") {
+    const percent = normalizePercent(newPercent);
+    if (percent === null) {
+      return { ok: false, reason: "Score must be 0-100." };
+    }
+
+    const attempts = Array.isArray(progress.practiceExamAttempts) ? progress.practiceExamAttempts : [];
+    const attemptIndex = attempts.findIndex((attempt, index) => (attempt.id || `${attempt.userId || "user"}-practice-${index}`) === attemptId);
+    if (attemptIndex < 0) {
+      return { ok: false, reason: "Practice exam attempt not found." };
+    }
+
+    const attempt = attempts[attemptIndex];
+    const total = Number(attempt.total || 100) || 100;
+    const adjustedScore = Math.round((percent / 100) * total);
+    attempts[attemptIndex] = {
+      ...attempt,
+      score: adjustedScore,
+      percent,
+      manualPercent: percent,
+      manuallyAdjusted: true,
+      adjustmentNote: note || "Admin manual adjustment",
+      adjustedAt: new Date().toISOString()
+    };
+
+    progress.practiceExamAttempts = attempts;
+    progress.practiceExamScore = String(percent);
+    if (attempt.certification) {
+      progress.certifications = progress.certifications || {};
+      const existingRecord = progress.certifications[attempt.certification] || {};
+      progress.certifications[attempt.certification] = {
+        status: percent >= 80 ? "Practice Exam Passed" : "Studying",
+        prepScore: "",
+        questionBankScore: "",
+        ...existingRecord,
+        practiceExamScore: String(percent),
+        manuallyAdjusted: true,
+        updatedAt: new Date().toISOString()
+      };
+    }
+
+    progress.updatedAt = new Date().toISOString();
+    return { ok: true, progress, attempt: attempts[attemptIndex] };
+  }
+
+  return {
+    isAdminRole,
+    canAccessPage,
+    shouldShowSidebarItem,
+    normalizePercent,
+    collectPracticeExamRows,
+    summarizeHelpNeeds,
+    adjustPracticeExamScore
+  };
+})();
+
 const certificationCatalog = [
   "Pearson Cybersecurity",
   "Pearson Network Security",
@@ -2514,7 +2668,7 @@ function getEndlessQuizQuestion(questionIndex) {
 }
 
 if (typeof module !== "undefined" && module.exports) {
-  module.exports = { practiceExamEngine };
+  module.exports = { practiceExamEngine, adminPracticeExamTools };
 }
 
 if (typeof document !== "undefined") {
@@ -2562,6 +2716,18 @@ document.addEventListener("DOMContentLoaded", async () => {
     initializeAdminPage();
   }
 
+  if (page === "admin-grades") {
+    initializeAdminPracticeGradesPage();
+  }
+
+  if (page === "welcome") {
+    initializeWelcomePage();
+  }
+
+  if (page === "resources") {
+    initializeResourcesPage();
+  }
+
   if (page === "tests") {
     initializeTestsPage();
   }
@@ -2577,6 +2743,8 @@ function initializeGlobalUi() {
   const feedbackButton = document.getElementById("feedbackButton");
 
   updateGlobalAccountUser();
+  configureSidebarForRole();
+  initializeUtilityButtons();
 
   navLinks.forEach((link) => {
     if (link.dataset.nav === currentPage) {
@@ -2595,6 +2763,59 @@ function initializeGlobalUi() {
       showToast("Feedback terminal armed. In a real deployment, this opens a feedback form.");
     });
   }
+}
+
+function configureSidebarForRole() {
+  const account = getCurrentUserAccount();
+  document.querySelectorAll("[data-nav]").forEach((link) => {
+    const shouldShow = adminPracticeExamTools.shouldShowSidebarItem(link.dataset.nav, account.role);
+    link.classList.toggle("hidden", !shouldShow);
+    link.setAttribute("aria-hidden", shouldShow ? "false" : "true");
+  });
+}
+
+function initializeUtilityButtons() {
+  const sidebar = document.getElementById("sidebar");
+  const dashboardShell = document.querySelector(".dashboard-shell");
+  const hideSidebarButtons = document.querySelectorAll(".hide-sidebar-button");
+  hideSidebarButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (!sidebar || !dashboardShell) {
+        return;
+      }
+
+      sidebar.classList.toggle("collapsed");
+      dashboardShell.classList.toggle("sidebar-collapsed");
+      button.setAttribute("aria-label", sidebar.classList.contains("collapsed") ? "Show sidebar" : "Hide sidebar");
+    });
+  });
+
+  const utilityButtons = document.querySelectorAll(".utility-rail button");
+  utilityButtons.forEach((button, index) => {
+    button.classList.add("utility-button");
+    if (index === 0) {
+      button.setAttribute("aria-label", "Toggle sidebar");
+      button.title = "Toggle sidebar";
+      button.addEventListener("click", () => hideSidebarButtons[0]?.click());
+    } else {
+      button.setAttribute("aria-label", "Back to top");
+      button.title = "Back to top";
+      button.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+        showToast("Returned to the top of the dashboard.");
+      });
+    }
+  });
+
+  document.querySelectorAll("[data-reset-local-progress]").forEach((button) => {
+    button.addEventListener("click", () => {
+      localStorage.removeItem(storageKeys.selectedCertification);
+      localStorage.removeItem(storageKeys.lastCertification);
+      localStorage.removeItem(storageKeys.selectedPracticeExam);
+      localStorage.removeItem(storageKeys.lastPracticeExam);
+      showToast("Local dashboard filters reset.");
+    });
+  });
 }
 
 function updateGlobalAccountUser() {
@@ -2655,16 +2876,11 @@ function redirectGuestToLogin(page) {
 }
 
 function redirectUnauthorizedAdmin(page) {
-  if (page !== "admin") {
+  if (adminPracticeExamTools.canAccessPage(page, getCurrentUserAccount().role)) {
     return false;
   }
 
-  const account = getCurrentUserAccount();
-  if (account.role === "admin") {
-    return false;
-  }
-
-  localStorage.setItem(storageKeys.authNotice, "Admin dashboard is reserved for the admin account.");
+  localStorage.setItem(storageKeys.authNotice, "Admin pages are reserved for the admin account.");
   window.location.href = "index.html";
   return true;
 }
@@ -3473,7 +3689,10 @@ function initializeLoginPage() {
     authForm.reset();
 
     const account = getCurrentUserAccount();
-    const roleTarget = account.role === "admin" ? "admin.html" : (redirectTarget && redirectTarget !== "admin.html" ? redirectTarget : "index.html");
+    const adminRedirectBlocked = redirectTarget && ["admin.html", "admin-practice-grades.html"].includes(redirectTarget) && account.role !== "admin";
+    const roleTarget = account.role === "admin"
+      ? "admin.html"
+      : (redirectTarget && !adminRedirectBlocked ? redirectTarget : "welcome.html");
 
     if (redirectTarget) {
       localStorage.removeItem(storageKeys.authRedirect);
@@ -3689,6 +3908,7 @@ function saveQuizAttemptForCurrentUser(attempt) {
   const progress = getUserProgress(username);
   const savedAttempt = {
     ...attempt,
+    id: attempt.id || `practice-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
     userId: username,
     timestamp: new Date().toISOString(),
     completedAt: new Date().toISOString()
@@ -3750,6 +3970,11 @@ function savePracticeExamAttemptForCurrentUser(attempt) {
       practiceExam: attempt.title,
       practiceExamScore: attempt.percent
     })
+  }).catch(() => {});
+
+  apiFetch("/api/progress/practice-exam-attempt", {
+    method: "POST",
+    body: JSON.stringify(savedAttempt)
   }).catch(() => {});
 }
 
@@ -6255,6 +6480,227 @@ function initializeAdminPage() {
     examScoreInput.value = record.practiceExamScore || progress.practiceExamScore || "";
     statusSelect.value = record.status || "Not Started";
   }
+}
+
+function initializeAdminPracticeGradesPage() {
+  const gradeRows = document.getElementById("adminPracticeGradeRows");
+  const helpGrid = document.getElementById("adminStudentHelpGrid");
+  const userSelect = document.getElementById("gradeUserSelect");
+  const attemptSelect = document.getElementById("gradeAttemptSelect");
+  const percentInput = document.getElementById("gradePercentInput");
+  const noteInput = document.getElementById("gradeNoteInput");
+  const editForm = document.getElementById("practiceGradeEditForm");
+  const emptyState = document.getElementById("practiceGradesEmptyState");
+
+  if (!gradeRows || !editForm) {
+    return;
+  }
+
+  let adminUsers = getLocalAdminUsers();
+  let gradeRowsData = adminPracticeExamTools.collectPracticeExamRows(adminUsers);
+  renderAdminPracticeGrades();
+  loadServerPracticeGrades();
+
+  userSelect.addEventListener("change", () => {
+    hydratePracticeGradeAttemptOptions();
+  });
+
+  attemptSelect.addEventListener("change", () => {
+    hydratePracticeGradeForm();
+  });
+
+  editForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const userId = userSelect.value;
+    const attemptId = attemptSelect.value;
+    const percent = adminPracticeExamTools.normalizePercent(percentInput.value);
+    if (percent === null) {
+      showToast("Enter a practice exam score from 0 to 100.");
+      return;
+    }
+
+    if (adminUsers.some((user) => user.id === userId && user.serverBacked)) {
+      try {
+        await apiFetch("/api/admin/practice-exam-score", {
+          method: "POST",
+          body: JSON.stringify({
+            userId,
+            attemptId,
+            percent,
+            note: noteInput.value.trim()
+          })
+        });
+        showToast("Server practice exam score adjusted.");
+        await loadServerPracticeGrades();
+      } catch (error) {
+        showToast(error.message || "Practice exam score update failed.");
+      }
+      return;
+    }
+
+    const progressStore = getStoredObject(storageKeys.userProgress, {});
+    const progress = progressStore[userId] || createEmptyProgress();
+    const result = adminPracticeExamTools.adjustPracticeExamScore(progress, attemptId, percent, noteInput.value.trim());
+    if (!result.ok) {
+      showToast(result.reason);
+      return;
+    }
+
+    progressStore[userId] = result.progress;
+    localStorage.setItem(storageKeys.userProgress, JSON.stringify(progressStore));
+    showToast("Local practice exam score adjusted.");
+    adminUsers = getLocalAdminUsers();
+    gradeRowsData = adminPracticeExamTools.collectPracticeExamRows(adminUsers);
+    renderAdminPracticeGrades();
+  });
+
+  async function loadServerPracticeGrades() {
+    try {
+      const data = await apiFetch("/api/admin/users");
+      if (!data.users || !data.users.length) {
+        return;
+      }
+
+      adminUsers = data.users.map((user) => ({ ...user, serverBacked: true }));
+      gradeRowsData = adminPracticeExamTools.collectPracticeExamRows(adminUsers);
+      renderAdminPracticeGrades();
+    } catch {
+      // Static/localStorage mode remains available when the Node server is offline.
+    }
+  }
+
+  function renderAdminPracticeGrades() {
+    const hasRows = gradeRowsData.length > 0;
+    gradeRows.innerHTML = hasRows ? gradeRowsData.map((row) => `
+      <tr>
+        <td>${escapeAdminHtml(row.displayName)}</td>
+        <td>${escapeAdminHtml(row.email)}</td>
+        <td>${escapeAdminHtml(row.examName)}</td>
+        <td>${row.score}/${row.total}</td>
+        <td>${row.percent}%${row.manuallyAdjusted ? ` <span class="badge hot">Adjusted</span>` : ""}</td>
+        <td>${row.submittedAt ? new Date(row.submittedAt).toLocaleString() : "Not recorded"}</td>
+        <td>${renderSubunitSummary(row.subunitResults)}</td>
+      </tr>
+    `).join("") : "";
+
+    if (emptyState) {
+      emptyState.classList.toggle("hidden", hasRows);
+    }
+
+    renderStudentHelpInsights();
+    hydratePracticeGradeUserOptions();
+  }
+
+  function renderStudentHelpInsights() {
+    if (!helpGrid) {
+      return;
+    }
+
+    const userCards = adminUsers.map((user) => {
+      const attempts = gradeRowsData.filter((row) => row.userId === (user.id || user.username || user.email));
+      const insight = adminPracticeExamTools.summarizeHelpNeeds(attempts.map((row) => row.rawAttempt));
+      const weakAreas = insight.weakAreas.length
+        ? insight.weakAreas.map((area) => `<li>${escapeAdminHtml(area.subunit)}: ${area.averagePercent}% avg</li>`).join("")
+        : "<li>No weak category detected yet.</li>";
+      return `
+        <article class="insight-card">
+          <span class="badge ${insight.needsHelp ? "hot" : "electric"}">${insight.needsHelp ? "Needs support" : "On track"}</span>
+          <h3>${escapeAdminHtml(user.displayName || user.username || user.email || "Learner")}</h3>
+          <p>${escapeAdminHtml(user.email || user.id || "No email")}</p>
+          <ul>${weakAreas}</ul>
+          <p class="helper-line">${insight.missedCount} missed question${insight.missedCount === 1 ? "" : "s"} tracked; ${insight.unansweredCount} unanswered response${insight.unansweredCount === 1 ? "" : "s"}.</p>
+        </article>
+      `;
+    });
+
+    helpGrid.innerHTML = userCards.join("") || `<p class="helper-line">No student help insights available yet.</p>`;
+  }
+
+  function hydratePracticeGradeUserOptions() {
+    if (!userSelect || !attemptSelect) {
+      return;
+    }
+
+    const usersWithAttempts = adminUsers.filter((user) => {
+      const userId = user.id || user.username || user.email;
+      return gradeRowsData.some((row) => row.userId === userId);
+    });
+    userSelect.innerHTML = usersWithAttempts.map((user) => {
+      const userId = user.id || user.username || user.email;
+      const label = user.displayName || user.username || user.email || userId;
+      return `<option value="${escapeAdminHtml(userId)}">${escapeAdminHtml(label)}</option>`;
+    }).join("");
+    hydratePracticeGradeAttemptOptions();
+  }
+
+  function hydratePracticeGradeAttemptOptions() {
+    const userRows = gradeRowsData.filter((row) => row.userId === userSelect.value);
+    attemptSelect.innerHTML = userRows.map((row) => `
+      <option value="${escapeAdminHtml(row.id)}">${escapeAdminHtml(row.examName)} - ${row.percent}%</option>
+    `).join("");
+    hydratePracticeGradeForm();
+  }
+
+  function hydratePracticeGradeForm() {
+    const row = gradeRowsData.find((candidate) => candidate.userId === userSelect.value && candidate.id === attemptSelect.value);
+    percentInput.value = row ? row.percent : "";
+    noteInput.value = row?.adjustmentNote || "";
+  }
+
+  function renderSubunitSummary(results) {
+    if (!results || !results.length) {
+      return "No category breakdown";
+    }
+
+    return results.slice(0, 3).map((result) => `${escapeAdminHtml(result.subunit)} ${Number(result.percent || 0)}%`).join("<br>");
+  }
+}
+
+function getLocalAdminUsers() {
+  const accounts = getStoredObject(storageKeys.accounts, {});
+  const progressStore = getStoredObject(storageKeys.userProgress, {});
+  return Object.keys(accounts).map((username) => ({
+    id: username,
+    username,
+    displayName: accounts[username].displayName || username,
+    email: accounts[username].email || username,
+    role: accounts[username].role || "student",
+    progress: progressStore[username] || createEmptyProgress()
+  }));
+}
+
+function escapeAdminHtml(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (character) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    "\"": "&quot;",
+    "'": "&#39;"
+  }[character]));
+}
+
+function initializeWelcomePage() {
+  const welcomeName = document.getElementById("welcomeUserName");
+  const nextAction = document.getElementById("welcomeNextAction");
+  const username = getCurrentUsername();
+  const account = getCurrentUserAccount();
+
+  if (welcomeName) {
+    welcomeName.textContent = username ? `Welcome, ${account.displayName || username}` : "Welcome to SOC Bootcamp";
+  }
+
+  if (nextAction) {
+    nextAction.href = account.role === "admin" ? "admin.html" : "certifications.html";
+    nextAction.textContent = account.role === "admin" ? "Open Admin Dashboard" : "Start Certification Prep";
+  }
+}
+
+function initializeResourcesPage() {
+  document.querySelectorAll("[data-resource-toast]").forEach((button) => {
+    button.addEventListener("click", () => {
+      showToast(button.dataset.resourceToast || "Resource placeholder saved for future content.");
+    });
+  });
 }
 
 function initializeTestsPage() {
